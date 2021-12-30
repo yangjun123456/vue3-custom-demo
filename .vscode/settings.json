@@ -1,0 +1,138 @@
+// settings.json
+{
+    "workbench.startupEditor": "newUntitledFile",
+    "files.autoSave": "off", // 关闭文件自动保存，避免开发时候页面变化
+    "editor.tabSize": 4, // tab距离
+    "editor.formatOnSave": false, // 在保存时自动格式化
+    "editor.minimap.enabled": true, // 关闭右侧快速预览
+    "files.eol": "\n", // 设定文件的换行符,\n（linux模式）或\r\n(win模式)
+    "editor.detectIndentation": false, // 关闭vscode的缩进检查
+    "editor.fontSize": 14, //设置文字大小
+    "editor.lineHeight": 0, //设置文字行高
+    "editor.lineNumbers": "on", //开启行数提示
+    "editor.quickSuggestions": {
+      //开启自动显示建议
+      "other": true,
+      "comments": true,
+      "strings": true
+    }, // 调整窗口的缩放级别
+    //根据文件后缀名定义vue文件类型
+    "files.associations": {
+      "*.vue": "vue"
+    },
+    // 为各类文件制定Fatmatter插件
+    "[html]": {
+      "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue]": {
+      // "editor.defaultFormatter": "esbenp.prettier-vscode"  // 采用prettier处理格式化
+      "editor.defaultFormatter": "octref.vetur" // 采用vetur来处理Fatmatter
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[ts]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    // Vetur 的各类设定,仅当上面[vue]的editor.defaultFormatter的值为octref.vetur的时候，才起效
+    "vetur.format.options.tabSize": 4,
+    "vetur.format.styleInitialIndent": false, // 关闭vue中script标签初始缩进，开启会和eslint的缩进校验冲突
+    "vetur.format.scriptInitialIndent": false, // 关闭vue中style标签初始缩进，开启会和eslint的缩进校验冲突
+    "vetur.format.defaultFormatter.html": "js-beautify-html", // 针对vue中的template部分的风格模版，也可以是：prettier
+    "vetur.format.defaultFormatter.js": "prettier-eslint", // 针对vue中的style部分的风格模版
+    "vetur.format.defaultFormatterOptions": {
+      "js-beautify-html": {
+        // 配置不能和prettier的配置冲突，eslint校验的时候采用的prettier的风格
+        // 给js-beautify-html设置属性隔断
+        "wrap_line_length": 220, //换行长度
+        // 属性换行
+        // 对属性进行换行。
+        // - auto: 仅在超出行长度时才对属性进行换行。
+        // - force: 对除第一个属性外的其他每个属性进行换行。
+        // - force-aligned: 对除第一个属性外的其他每个属性进行换行，并保持对齐。
+        // - force-expand-multiline: 对每个属性进行换行。
+        // - aligned-multiple: 当超出折行长度时，将属性进行垂直对齐。
+        "wrap_attributes": "force",
+        // Maximum number of line breaks to be preserved in one chunk (0 disables)
+        // "max_preserve_newlines": 0,
+        "end_with_newline": false,
+  
+        "indent_size": 2,
+      //   "indent_char": " ",
+      //   "indent_with_tabs": false,
+      //   "editorconfig": false,
+      //   "eol": "\n",
+      //   "indent_level": 0,
+      //   "preserve_newlines": true,
+      //   "max_preserve_newlines": 10,
+      //   "space_in_paren": false,
+      //   "space_in_empty_paren": false,
+      //   "jslint_happy": false,
+      //   "space_after_anon_function": false,
+      //   "space_after_named_function": false,
+      //   "brace_style": "collapse",
+      //   "unindent_chained_methods": false,
+      //   "break_chained_methods": false,
+      //   "keep_array_indentation": false,
+      //   "unescape_strings": false,
+      //   "e4x": false,
+      //   "comma_first": false,
+      //   "operator_position": "before-newline",
+      //   "indent_empty_lines": false,
+      //   "templating": ["auto"]
+      },
+      "prettyhtml": {
+        "printWidth": 220,
+        "singleQuote": true,
+        "wrapAttributes": false,
+        "sortAttributes": false
+      },
+      "prettier": {
+        // Prettier option here
+        "printWidth": 150,
+        "trailingComma": "none", // 多行时，尽可能打印尾随的逗号
+        "tabWidth": 2, // 会忽略vetur的tabSize配置
+        "useTabs": true, // 是否利用tab替代空格
+        "semi": true, // 句尾是否加;
+        "singleQuote": true, // 使用单引号而不是双引号
+        "arrowParens": "avoid", // allow paren-less arrow functions 箭头函数的参数使用圆括号
+        "eslintIntegration": false, // 让prettier使用eslint的代码格式进行校验
+        "tslintIntegration": false, // 让prettier使用tslint的代码格式进行校验
+        "bracketSpacing": true, // 是否在对象属性添加空格，这里选择是
+        "jsxBracketSameLine": false // 在多行jsx中最后一行> 是否不另起一行
+      }
+    },
+    // ESLint 的相关配置
+    "eslint.validate": ["javascript", "javascriptreact", "vue"], // eslint校验的文件类型
+    // 该属性相当于配置js文件的操作
+    // "[javascript]": {
+    //   "editor.formatOnSave": true,
+    //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // },
+    // "eslint.autoFixOnSave": true,  很多插件提示这么设定，但实际vscode中已经弃用这个设置，改用下面的方式。
+    "editor.codeActionsOnSave": {
+      // 保存时触发的事件
+      "source.fixAll.eslint": true // 自动fix eslint
+    },
+    "eslint.run": "onSave", // 保存就校验
+    // 函数名后增加空格
+    "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+    "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+    "prettier.vueIndentScriptAndStyle": true,
+    "window.zoomLevel": -2,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+  }
+  
