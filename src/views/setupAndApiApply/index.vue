@@ -31,7 +31,12 @@
     <hr />
     <hr />
     <section class="test-api">
-      <TestApi></TestApi>
+      <TestApi :room="'room'"
+        ref="TestApi"
+        :teacher="'MR.yang'"
+        :title="'title test'"
+        :state="state"
+        :age="28"></TestApi>
     </section>
     <hr />
   </div>
