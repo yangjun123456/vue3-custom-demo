@@ -1,5 +1,7 @@
-# vue3 常用的API方法
+# vue3 常用的 API 方法
+
 #### setup
+
 ```
 其实 setup 函数还有两个参数，分别是 props 、context，前者存储着定义当前组件允许外界传递过来的参数名称以及对应的值；后者是一个上下文对象，能从中访问到 attr 、emit 、slots
 
@@ -35,16 +37,18 @@ unMounted(() => {
 ```
 
 #### ref 和 reactive
-> ref可以创建响应式值或者对象,ref(12),ref(true),ref(null),ref(undefined),ref({a:'1',f:{m:'123'}});,不会修改原始值，会更新dom，如果ref内创建的是引用类型值，会修改原始值，会更新dom， 并且可以被watch监听到
-> reactive 创建响应式对象 reactive({a:'1',f:{m:'123'}}); 会修改原始值，会更新dom， 数组也可以响应式和更新到dom， 并且可以被watch监听到
+
+> ref 可以创建响应式值或者对象,ref(12),ref(true),ref(null),ref(undefined),ref({a:'1',f:{m:'123'}});,不会修改原始值，会更新 dom，如果 ref 内创建的是引用类型值，会修改原始值，会更新 dom， 并且可以被 watch 监听到
+> reactive 创建响应式对象 reactive({a:'1',f:{m:'123'}}); 会修改原始值，会更新 dom， 数组也可以响应式和更新到 dom， 并且可以被 watch 监听到
 
 #### shallowRef 和 shallowReactive
+
 ```
 shallowRef
 shallowRef 有 triggerRef() 方法
 shallowRef 定义一个浅层的响应式对象，只有修改.value 的值才会是响应式的
-例如 
-const shallowRefObj = shallowRef({num:123,obj:{name: '12222'}}); 
+例如
+const shallowRefObj = shallowRef({num:123,obj:{name: '12222'}});
 只有修改shallowRefObj.value 的值才会更新到dom，才是响应式的，才可以被watch监听到
 如果修改shallowRefObj.value.obj.name 的值后调用了triggerRef(shallowRefObj) 也会更新到dom，也是响应式的，也可以被watch监听到
 只修改shallowRefObj.value.name 不会更新dom，也不会被监听到
@@ -56,13 +60,14 @@ const shallowRefObj = shallowRef({num:123,obj:{name: '12222'}});
 shallowReactive
 shallowReactive 没有 triggerRef() 方法
 shallowReactive 定义一个浅层的响应式对象，只有修改第一层的的值才会是响应式的
-例如 
-const shallowReactiveObj = shallowReactive({num:123,obj:{name: '12222'}}); 
+例如
+const shallowReactiveObj = shallowReactive({num:123,obj:{name: '12222'}});
 只有修改shallowReactiveObj.num,或者整体shallowReactiveObj.obj 重新赋值 才会更新到dom，才是响应式的，才可以被watch监听到
 只修改shallowReactiveObj.obj.name 不会更新dom，也不会被监听到，即使有其他的值更新了dom连带着本次的数据变化更新到了dom，也不会触发watch监听
 ```
 
 #### toRef 和 toRefs
+
 ```
 toRef
 可以用来为源响应式对象上的某个 property 新创建一个 ref。然后，ref 可以被传递，它会保持对其源 property 的响应式连接。
@@ -103,8 +108,9 @@ watch(
 ```
 
 #### watch 和 watchEffect
+
 ```
-详情demo在TestApi.vue 的toRefs的逻辑下
+详情demo在 toRef-toRefs.vue 的toRefs的逻辑下
 只可以监听响应式的数据，不可以监听普通对象
 watch
 // watch 监听toRefs 后的数据，newVal等于oldVal
@@ -117,107 +123,26 @@ watch
 watchEffect 内包含的内容如果有响应式数据变化了，会自动出发watchEffect监听
 ```
 
-#### 
-
-#### reactive
-`reactive 方法是用来创建一个响应式的数据对象`
-
-#### ref
-`const count=ref(0)`
+#### getCurrentInstance 获取实例
 
 ```
-基本类型值（String 、Nmuber 、Boolean 等）或单值对象（类似像 {count: 3} 这样只有一个属性值的对象）使用 ref
-引用类型值（Object 、Array）使用 reactive
-```
+import { getCurrentInstance } from 'vue';
+setup 方法中使用 getCurrentInstance 获取到元素实例
+如下
+<div class="test-api-body" ref="testApiBodyEl"></div>
 
-#### toRef
-```
-toRef 是将某个对象中的某个值转化为响应式数据，其接收两个参数，第一个参数为 obj 对象；第二个参数为对象中的属性名
-```
+setup(){
+    const instance = getCurrentInstance();
+    const testApiBodyEl = ref(null); // 变量名必须定义与html中的res相同名称
 
-### ref 和 toRef 的区别
-```
-ref 是对传入数据的拷贝；toRef 是对传入数据的引用
-ref 的值改变会更新视图；toRef 的值改变不会更新视图
-```
-
-#### toRefs
-```
-将传入的对象里所有的属性的值都转化为响应式数据对象，该函数支持一个参数，即 obj 对象
-```
-
-#### shallowReactive
-```
-shallowReactive 监听了第一层属性的值，一旦发生改变，则更新视图
-```
-
-#### shallowRef
-```
-shallowReactive 是监听对象第一层的数据变化用于驱动视图更新，那么 shallowRef 则是监听 .value 的值的变化来更新视图的
-
-这么一看，未免也太过麻烦了，改个数据还要重新赋值，不要担心，此时我们可以用到另一个API，叫做 triggerRef ，调用它就可以立马更新视图，其接收一个参数 state ，即需要更新的 ref 对象
-```
-
-#### toRaw
-```
-toRaw 方法是用于获取 ref 或 reactive 对象的原始数据的
-```
-
-#### markRaw
-```
-markRaw 方法可以将原始数据标记为非响应式的，即使用 ref 或 reactive 将其包装，仍无法实现数据响应式，其接收一个参数，即原始数据，并返回被标记后的数据
-``` 
-
-#### provide && inject
-```
-provide ：向子组件以及子孙组件传递数据。接收两个参数，第一个参数是 key，即数据的名称；第二个参数为 value，即数据的值
-setup() {
-    const obj= {
-        name: '前端印象',
-        age: 22
-    }
-
-    // 向子组件以及子孙组件传递名为info的数据
-    provide('info', obj)
-}
-inject ：接收父组件或祖先组件传递过来的数据。接收一个参数 key，即父组件或祖先组件传递的数据名称
-setup() {   
-    // 接收A.vue传递过来的数据
-    inject('info')  // {name: '前端印象', age: 22}
-}
-```
-
-#### watch && watchEffect
-```
-watch 监听一个或多个值，需要传入监听的值，更新的方法，返回一个stop函数
-watchEffect 自动检测需要监听的值，只有一个方法
-```
-
-#### getCurrentInstance
-```
-import {ref, getCurrentInstance} from 'vue'
-setup() {   
-    const num = ref(3)
-    const instance = getCurrentInstance()
-    console.log(instance)
-
-    return {num}
-}
-```
-
-#### 获取标签元素
-```
-<div ref="el">div元素</div>
-setup() {
-    // 创建一个DOM引用，名称必须与元素的ref属性名相同
-    const el = ref(null)
-
-    // 在挂载后才能通过 el 获取到目标元素
     onMounted(() => {
-    el.value.innerHTML = '内容被修改'
+      <!-- 只有Mounted后才能访问到 -->
+      console.log('testApiBodyEl', instance);
+      console.log('testApiBodyEl', instance?.refs); // 使用instance.refs 访问可以不用setup方法导出
+      console.log('testApiBodyEl', testApiBodyEl);
     })
-
-    // 把创建的引用 return 出去
-    return {el}
+    return {
+        testApiBodyEl // 只有导出才能使用 testApiBodyEl 变量直接获取到
+    }
 }
 ```

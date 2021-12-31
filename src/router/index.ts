@@ -5,6 +5,7 @@ import {
   createWebHashHistory
 } from 'vue-router';
 import { echartsRouteOptions } from './modules/echarts';
+import { vue3DemoOptions } from './modules/vue3-demo';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,20 +15,16 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        redirect: 'setupAndApiApply'
+        redirect: 'testCommunication'
       },
       ...echartsRouteOptions,
-      {
-        path: 'setupAndApiApply',
-        name: 'SetupAndApiApply',
-        component: () => import('../views/setupAndApiApply/index.vue')
-      }
+      ...vue3DemoOptions
     ]
   },
   {
     path: '/home',
     name: 'Home',
-    component: () => import('../views/Home.vue')
+    component: () => import('../views/home.vue')
   },
   {
     path: '/login',

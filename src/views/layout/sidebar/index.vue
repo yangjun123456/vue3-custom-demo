@@ -138,10 +138,40 @@ export default defineComponent({
         icon: '',
         children: [
           {
-            content: 'setup and api apply',
-            url: '/setupAndApiApply',
+            content: '测试父子通信',
+            url: '/testCommunication',
             icon: '',
             index: '2-1'
+          },
+          {
+            content: '测试ref 和 reactive',
+            url: '/refAndReactive',
+            icon: '',
+            index: '2-2'
+          },
+          {
+            content: '测试shallowRef 和 shallowReactive',
+            url: '/shallowRefAndShallowReactive',
+            icon: '',
+            index: '2-3'
+          },
+          {
+            content: '测试toRaw 和 makeRaw',
+            url: '/toRawAndMakeRaw',
+            icon: '',
+            index: '2-4'
+          },
+          {
+            content: '测试toRef 和 toRefs',
+            url: '/toRefAndToRefs',
+            icon: '',
+            index: '2-5'
+          },
+          {
+            content: '测试watch 和 watchEffect',
+            url: '/watchAndWatchEffect',
+            icon: '',
+            index: '2-6'
           }
         ]
       }
@@ -185,7 +215,9 @@ export default defineComponent({
 		flex: 1;
 		overflow-y: auto;
 		overflow-x: hidden;
-		width: 200px;
+		width: 250px;
+        border: none;
+
 	}
 	.el-menu.el-menu--collapse {
 		width: inherit;
@@ -197,6 +229,7 @@ export default defineComponent({
 		align-items: center;
 		justify-content: center;
 		i {
+            cursor: pointer;
 			color: #000;
 		}
 	}

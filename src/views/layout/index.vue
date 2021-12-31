@@ -1,17 +1,17 @@
 <template>
-    <el-container class="layout-body"
-        height="100%">
-        <el-header class="header">Header</el-header>
-        <el-container class="content"
-            style="height: calc(100% - 56px);">
-            <section class="aside">
-                <SideBar></SideBar>
-            </section>
-            <el-main class="main">
-                <router-view />
-            </el-main>
-        </el-container>
+  <el-container class="layout-body"
+    height="100%">
+    <el-header class="header">Header</el-header>
+    <el-container class="content"
+      style="height: calc(100% - 56px);">
+      <section class="aside">
+        <SideBar></SideBar>
+      </section>
+      <el-main class="main">
+        <router-view />
+      </el-main>
     </el-container>
+  </el-container>
 </template>
 
 <script lang="ts">
@@ -42,7 +42,9 @@ export default class Layout extends Vue {
 		display: flex;
 		justify-content: space-between;
 		.main {
+			box-shadow: 0px 0px 10px 0px #888888;
 			flex: 1;
+			z-index: 1;
 		}
 	}
 }

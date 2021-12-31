@@ -6,11 +6,12 @@ import router from '@/router/index';
 import store from '@/store/index';
 
 const app = createApp(App);
-
+console.info(app.version);
 app.config.globalProperties = {
   // element-plus 全局配置
   $ELEMENT: {}
 };
+app.config.performance = true;
 
 // 全局引入的两种方法，在bar-echarts/index.vue 文件中应用---start
 app.provide('$getUuidv4', uuidv4); // 组件内需使用inject 引入

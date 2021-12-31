@@ -25,7 +25,7 @@ export default class LineEcharts extends Vue {
   /* Prop 传参------------end */
 
   /* 声明定义全局变量值，避免ts检查报错-----------start */
-  $uuid!: any; // 声明定义变量 避免ts检查找不到报错，其值会获取全局定义的值
+  $uuid!: any; // 声明定义变量 避免ts检查找不到报错，全局定义的具有优先级
   $getUuidv4!: any;
   /* 声明定义全局变量值，避免ts检查报错-----------end */
 

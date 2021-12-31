@@ -133,6 +133,9 @@
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "[typescript]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "path-intellisense.mappings": {
+        "@": "${workspaceRoot}/src"
+      }
   }
   
