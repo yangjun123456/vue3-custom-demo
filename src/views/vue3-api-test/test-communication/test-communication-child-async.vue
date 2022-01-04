@@ -1,7 +1,8 @@
 <template>
-  <div class="test-setup-params-child-body"
+  <div class="test-setup-params-child-async-body"
     style="background: orange;margin-top: 30px;">
-    <h1>我是子组件 不带async <br> TestCommunicationChild 测试子组件调用父组件方法</h1>
+    <h1>说明： 本组件为异步组件，测试父组件中 defineAsyncComponent 和 Suspense 的使用，异步组件加载完成之前渲染 Suspense 中fallback的内容</h1>
+    <h1>我是子组件 带有async <br> TestCommunicationChild 测试子组件调用父组件方法</h1>
     <div class="aaaaaaa"
       @click="sonClick">
       我是子组件 通过emit 调用父组件方法
@@ -26,9 +27,19 @@
 import { interval, take } from 'rxjs';
 import { computed, defineComponent, onMounted, ref, toRef, toRefs } from 'vue';
 
+const getArticleInfo = async () => {
+  // wait 3 seconds to mimic API call
+  await new Promise((resolve, reject) => setTimeout(resolve, 3000));
+  const article: any = {
+    title: 'My Vue 3 Article',
+    author: 'Matt Maribojoc'
+  }
+  return article
+}
+
 // setup 中使用watch、computed、ref、reactive
-const TestCommunicationChild = defineComponent({
-  name: 'TestCommunicationChild',
+const TestCommunicationChildAsync = defineComponent({
+  name: 'TestCommunicationChildAsync',
   components: {},
   props: {
     title: {
@@ -71,7 +82,7 @@ const TestCommunicationChild = defineComponent({
       deep: true
     }
   },
-  setup(props, context) {
+  async setup(props, context) {
     const copyTitle = ref(props.title);
     console.log(context);
     const { emit, slots, attrs, expose }: any = context;
@@ -86,12 +97,12 @@ const TestCommunicationChild = defineComponent({
 
     // 定义子组件方法
     const sonClick = () => {
-      emit('childClick', { value: '子组件通过emit调用父组件成功' });
+      emit('childClick', { value: '带有async 的子组件通过emit调用父组件成功' });
     };
 
     // 定义通过父组件调用的方法
     const parentClick = () => {
-      console.log('通过expose导出方法提供父组件调用，父组件通过refs调用了子组件事件');
+      console.log('带有async 的通过expose导出方法提供父组件调用，父组件通过refs调用了子组件事件');
     };
 
     // 暴露方法
@@ -105,11 +116,17 @@ const TestCommunicationChild = defineComponent({
       console.log(copyTitle.value);
     };
 
-    return { props, context, sonClick, copyTitle, changeTitleEmitParent };
+    let article = ref({ title: '', author: '' });
+    try {
+      article = await getArticleInfo();
+    } catch (error) {
+      console.log(error);
+    }
+    return { props, context, sonClick, copyTitle, changeTitleEmitParent, article };
   }
 });
 
-export default TestCommunicationChild;
+export default TestCommunicationChildAsync;
 </script>
 
 <style scoped lang="scss">

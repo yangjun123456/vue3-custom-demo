@@ -146,3 +146,12 @@ setup(){
     }
 }
 ```
+
+
+### v-memo
+```
+valueA 和 valueB等组成了一个条件list， 只要有一个条件产生了变化，那么更新子树dom， 如果全部相同，那么跳过子树dom的更新
+<div v-memo="[valueA, valueB]">
+  ...
+</div>
+```

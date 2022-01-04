@@ -28,5 +28,15 @@ export const vue3DemoOptions = [
     path: 'watchAndWatchEffect',
     name: 'WatchAndWatchEffect',
     component: () => import('../../views/vue3-api-test/watch-watchEffect.vue')
+  },
+  {
+    path: 'getSetupJsColor',
+    name: 'GetSetupJsColor',
+    component: () => import('../../views/vue3-api-test/get-setup-js-color.vue')
+  },
+  {
+    path: 'vMemo',
+    name: 'VMemo',
+    component: () => import('../../views/vue3-api-test/v-memo.vue')
   }
 ]

@@ -13,6 +13,8 @@ app.config.globalProperties = {
 };
 app.config.performance = true;
 
+app.config.compilerOptions.isCustomElement = tag => tag.startsWith('defined-custom-')
+
 // 全局引入的两种方法，在bar-echarts/index.vue 文件中应用---start
 app.provide('$getUuidv4', uuidv4); // 组件内需使用inject 引入
 app.config.globalProperties.$uuid = uuidv4; // 组件内需声明，不然this上找不到

@@ -54,15 +54,7 @@ import {
   inject,
   triggerRef
 } from 'vue';
-const getArticleInfo = async () => {
-  // wait 3 seconds to mimic API call
-  await new Promise(resolve => setTimeout(resolve, 3000));
-  const article = {
-    title: 'My Vue 3 Article',
-    author: 'Matt Maribojoc'
-  }
-  return article
-}
+
 // setup 中使用watch、computed、ref、reactive
 const RefAndReactive = defineComponent({
   name: 'RefAndReactive',
@@ -143,8 +135,6 @@ const RefAndReactive = defineComponent({
 
     /* ref-----------------------------------------------------end */
 
-    const article = await getArticleInfo()
-    console.log(article)
     return {
       props,
       context,
@@ -160,8 +150,7 @@ const RefAndReactive = defineComponent({
       refClick2,
       reactiveList1,
       reactiveClick,
-      reactiveClick1,
-      article
+      reactiveClick1
     };
   }
 });

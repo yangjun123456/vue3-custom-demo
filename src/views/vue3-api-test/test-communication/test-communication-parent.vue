@@ -3,7 +3,7 @@
     <div class="test-communication-body"
       style="background-color:purple;">
       <h1 class="title"
-        ref="testCommunicationTitle"></h1>
+        ref="testCommunicationTitleEl"></h1>
       <h1 style="font-size: 20px">
         我是父组件 <br> 测试父子组件通信 <br> 测试setup中的props和context 用法
       </h1>
@@ -21,22 +21,34 @@
         </div>
       </div>
     </div>
+    <TestCommunicationChild ref="testCommunicationChild"
+      :room="'room'"
+      :teacher="'MR.yang'"
+      :title="title"
+      :state="state"
+      :age="28"
+      @childClick="childClick"
+      @getChildTitle="getChildTitle"></TestCommunicationChild>
+    <!-- 异步组件的展示方式html，需用Suspense包装，#default 默认模板，#fallback 等待时渲染的内容-------------start -->
     <Suspense>
       <template #default>
-        <TestCommunicationChild ref="testCommunicationChild"
+        <TestCommunicationChildAsync ref="testCommunicationChildAsync"
           :room="'room'"
           :teacher="'MR.yang'"
           :title="title"
           :state="state"
           :age="28"
           @childClick="childClick"
-          @getChildTitle="getChildTitle"></TestCommunicationChild>
+          @getChildTitle="getChildTitle"></TestCommunicationChildAsync>
       </template>
       <template #fallback>
+        <div>
           <ToRawAndMakeRaw></ToRawAndMakeRaw>
-        <!-- <p style="position:absolute;left:0;top:0;font-size: 100px;"> Loading... </p> -->
+          <p style="position:absolute;left:0;top:0;font-size: 100px;"> Loading... </p>
+        </div>
       </template>
     </Suspense>
+    <!-- 异步组件的展示方式html，需用Suspense包装，#default 默认模板，#fallback 等待时渲染的内容-------------end -->
   </div>
 </template>
 
@@ -58,27 +70,30 @@ import {
 } from 'vue';
 import { useStore } from 'vuex';
 import { NavModule } from '@/store/modules/nav';
-import TestCommunicationChild from '@/views/vue3-api-test/test-communication/test-communication-child.vue';
+import TestCommunicationChildAsync from '@/views/vue3-api-test/test-communication/test-communication-child-async.vue';
 import WatchAndWatchEffect from '@/views/vue3-api-test/watch-watchEffect.vue';
 
 // setup 中使用watch、computed、ref、reactive
 const TestCommunication = defineComponent({
   name: 'TestCommunication',
   components: {
+    TestCommunicationChild: defineAsyncComponent(() => import('./test-communication-child.vue')), // defineAsyncComponent 普通的组件异步加载方式
+    // 组件异步加载的配置------------------------------------------------------------------------------------------------------------------------start
+    // 说明： 在test-communication-child-async 中有一个async await 阻碍了组件加载，在组件加载完成之前先渲染fallback中的内容就是toRawAndMakeRaw 组件，
     ToRawAndMakeRaw: defineAsyncComponent(() => import('../toRaw-makeRaw.vue')),
-    // TestCommunicationChild: defineAsyncComponent(() => import('./test-communication-child.vue'))
-    TestCommunicationChild: defineAsyncComponent({
-      //   loader: () => import('./test-communication-child.vue'),
-      loader: () => import('../ref-reactive.vue'),
+    TestCommunicationChildAsync: defineAsyncComponent({
+      loader: () => import('./test-communication-child-async.vue'),
+      //   【注意】：下边的配置基本不生效，仅用loader 和 Suspense 标签配合可以显示异步组件 await 完成之前显示什么内容
+
       // 加载异步组件时要使用的组件
-      loadingComponent: TestCommunicationChild,
+      loadingComponent: WatchAndWatchEffect,
       // 加载失败时要使用的组件
       errorComponent: WatchAndWatchEffect,
       // 在显示 loadingComponent 之前的延迟 | 默认值：200（单位 ms）
-      delay: 200,
+      delay: 1000,
       //   // 如果提供了 timeout ，并且加载组件的时间超过了设定值，将显示错误组件
       //   // 默认值：Infinity（即永不超时，单位 ms）
-      timeout: 3000,
+      timeout: 2500,
       // 定义组件是否可挂起 | 默认值：true
       suspensible: true,
       onError(error, retry, fail, attempts) {
@@ -92,24 +107,28 @@ const TestCommunication = defineComponent({
         }
       }
     })
+    // 组件异步加载的配置------------------------------------------------------------------------------------------------------------------------end
   },
   setup(props, context) {
     const state = reactive({ val: 0, name: 'aaaaaa' });
     const store = useStore();
     const instance = getCurrentInstance();
-    const testCommunicationTitle: any = ref(null);
+    const testCommunicationTitleEl: any = ref(null);
     const title = ref('title test');
-    const testCommunicationChildIsShow = ref(false);
+
+    onMounted(() => {
+      testCommunicationTitleEl.value.innerHTML = '说明： 测试父子组件通信'
+    })
 
     const childClick = (params: any) => {
       console.log('通过emit 触发了父组件方法', params);
     };
     const parentClick = (params: any) => {
       console.log(instance);
-      testCommunicationChildIsShow.value = true;
-      timer(1000).subscribe(() => {
-        (instance as any).refs.testCommunicationChild.parentClick();
-      });
+      (instance as any).refs.testCommunicationChild.parentClick();
+      if ((instance as any).refs.testCommunicationChildAsync) {
+        (instance as any).refs.testCommunicationChildAsync.parentClick();
+      }
     };
     const getChildTitle = (params: any) => {
       console.log(params);
@@ -120,15 +139,17 @@ const TestCommunication = defineComponent({
 
     return {
       state,
-      testCommunicationTitle,
+      testCommunicationTitleEl,
       childClick,
       parentClick,
       title,
-      getChildTitle,
-      testCommunicationChildIsShow
+      getChildTitle
     };
   }
 });
 
 export default TestCommunication;
 </script>
+<style lang="scss" scoped>
+
+</style>

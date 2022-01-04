@@ -172,6 +172,18 @@ export default defineComponent({
             url: '/watchAndWatchEffect',
             icon: '',
             index: '2-6'
+          },
+          {
+            content: '通过v-bind获取js中的样式并且实现响应式更新',
+            url: '/getSetupJsColor',
+            icon: '',
+            index: '2-7'
+          },
+          {
+            content: 'v-memo',
+            url: '/vMemo',
+            icon: '',
+            index: '2-8'
           }
         ]
       }
