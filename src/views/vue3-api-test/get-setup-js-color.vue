@@ -1,6 +1,7 @@
 <template>
   <div style="overflow:auto;">
     <h1>说明： 测试在scss 使用v-bind获取js中的object 的响应式的 css样式object</h1>
+    <br>
     <h1 class="getSetUpJsColor">scss中通过v-bind获取js中的样式并且实现响应式更新</h1>
   </div>
 </template>
