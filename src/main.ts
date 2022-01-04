@@ -5,8 +5,16 @@ import App from './App.vue';
 import router from '@/router/index';
 import store from '@/store/index';
 
+import IconSvg from '@/icons/IconSvg.vue';
+import '@/icons/index';
+
 const app = createApp(App);
+
+app.component('svg-icon', IconSvg);
+
 console.info(app.version);
+
+// config 配置---------------------------------------------------start
 app.config.globalProperties = {
   // element-plus 全局配置
   $ELEMENT: {}
@@ -19,6 +27,7 @@ app.config.compilerOptions.isCustomElement = tag => tag.startsWith('defined-cust
 app.provide('$getUuidv4', uuidv4); // 组件内需使用inject 引入
 app.config.globalProperties.$uuid = uuidv4; // 组件内需声明，不然this上找不到
 // 全局引入的两种方法，在bar-echarts/index.vue 文件中应用---end
+// config 配置---------------------------------------------------end
 
 app.use(ElementPlus);
 app.use(store).use(router).mount('#app');

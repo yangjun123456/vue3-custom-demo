@@ -4,6 +4,7 @@
     <br>
     <h1 class="getSetUpJsStyle">scss中通过v-bind获取js中的样式并且实现响应式更新</h1>
     <div id="defineCustomComponentId"></div>
+    <svg-icon :filename="'sql-import'" :hover="'sql-import-s'"></svg-icon>
   </div>
 </template>
 

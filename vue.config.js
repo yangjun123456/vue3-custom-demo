@@ -33,6 +33,25 @@ module.exports = {
         .end();
     });
     config.resolve.alias.set('assets', resolve('src/assets'));
+
+    // 清除已有的loader, 如果不这样做会添加在此loader之后
+    config.module.rule('svg').uses.clear().end();
+    // 则匹配排除node_modules目录
+    config.module
+      .rule('svg')
+      .exclude.add(/node_modules/)
+      .end();
+    // 添加svg新的loader处理
+    config.module
+      .rule('svg')
+      .test(/\.svg$/)
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end();
+
     config.module
       .rule('thread-loader')
       .test(/\.js$/)
