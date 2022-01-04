@@ -155,3 +155,15 @@ valueA 和 valueB等组成了一个条件list， 只要有一个条件产生了�
   ...
 </div>
 ```
+
+### defineCustomElement
+```
+动态自定义组件的方式
+文件 define-custom-element.ts 动态创建组件 在 get-setup-js-color 组件中 使用 append插入dom元素的方式引入
+```
+
+### mixin
+```
+说明： 混合
+mixins-parent.vue 文件
+```

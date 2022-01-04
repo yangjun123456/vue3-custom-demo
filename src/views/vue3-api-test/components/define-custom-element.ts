@@ -1,10 +1,11 @@
 import { defineCustomElement } from 'vue';
-const MyCustomComponent = defineCustomElement({
+const DefinedCustomVueElement = defineCustomElement({
   // 这里是普通的 Vue 组件选项
   props: {},
   emits: {},
   template: `
     <section class="test-difine-custom-element">
+        <h1>说明: 创建自定义组件成功，和普通的vue组件没有太大区别， 在getSetUpJsStyle.vue 组件中引入使用</h1>
         <h1>test defineCustomElement 成功</h1>
     </section>
   `,
@@ -12,23 +13,14 @@ const MyCustomComponent = defineCustomElement({
   styles: [`
     .test-difine-custom-element{
         color:red;
-        font-size: 100px;
-        z-index: 100;
-        position: absolute;
-        left:0;
-        top:0;
+        font-size: 30px;
     }
   `]
 });
 // 注册该自定义元素。
-// 注册过后，页面上所有的 `<my-vue-element>` 标记会被升级。
-customElements.define('defined-custom-vue-element', MyCustomComponent);
+// 注册过后，页面上所有的 `<defined-custom-vue-element>` 标记会被升级。
+customElements.define('defined-custom-vue-element', DefinedCustomVueElement);
 // 你也可以用编程的方式初始化这个元素：
 // (在注册之后才可以这样做)
-document.body.appendChild(
-  new MyCustomComponent({
-    // 初始化的 prop (可选)
-  })
-);
 
-// export default MyCustomComponent;
+export default DefinedCustomVueElement;

@@ -88,7 +88,7 @@ const WatchAndWatchEffect = defineComponent({
           console.log('watch--------complete');
           timer(0).subscribe(() => {
             testWatchStop(); // 清除watch
-            timer(100).subscribe(() => {
+            timer(100).pipe(take(1)).subscribe(() => {
               // 再触发监听不到了
               testWatch.value++; // 但还是响应式的仍可以触发dom更新
             });
@@ -98,11 +98,11 @@ const WatchAndWatchEffect = defineComponent({
     /* watch------------------------------------------------------------------------------------end */
 
     /* watchEffect------------------------------------------------------------------------------------start */
-    const testWatchEffect = ref(0);
+    const testWatchEffect = ref(1);
     watchEffect(() => {
       console.log('testWatchEffect--------', testWatchEffect.value);
     });
-    timer(3000).subscribe(
+    timer(3000).pipe(take(!!testWatchEffect.value)).subscribe(
       () => {
         interval(1000)
           .pipe(take(3))

@@ -30,13 +30,18 @@ export const vue3DemoOptions = [
     component: () => import('../../views/vue3-api-test/watch-watchEffect.vue')
   },
   {
-    path: 'getSetupJsColor',
-    name: 'GetSetupJsColor',
-    component: () => import('../../views/vue3-api-test/get-setup-js-color.vue')
+    path: 'getSetupJsStyle',
+    name: 'GetSetupJsStyle',
+    component: () => import('../../views/vue3-api-test/get-setup-js-style.vue')
   },
   {
     path: 'vMemo',
     name: 'VMemo',
     component: () => import('../../views/vue3-api-test/v-memo.vue')
+  },
+  {
+    path: 'mixinTest',
+    name: 'MixinTest',
+    component: () => import('../../views/vue3-api-test/mixins-test/mixins-parent.vue')
   }
 ]

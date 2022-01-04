@@ -175,7 +175,7 @@ export default defineComponent({
           },
           {
             content: '通过v-bind获取js中的样式并且实现响应式更新',
-            url: '/getSetupJsColor',
+            url: '/getSetupJsStyle',
             icon: '',
             index: '2-7'
           },
@@ -184,6 +184,12 @@ export default defineComponent({
             url: '/vMemo',
             icon: '',
             index: '2-8'
+          },
+          {
+            content: 'mixin-test',
+            url: '/mixinTest',
+            icon: '',
+            index: '2-9'
           }
         ]
       }

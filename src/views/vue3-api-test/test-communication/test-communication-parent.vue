@@ -70,7 +70,6 @@ import {
 } from 'vue';
 import { useStore } from 'vuex';
 import { NavModule } from '@/store/modules/nav';
-import TestCommunicationChildAsync from '@/views/vue3-api-test/test-communication/test-communication-child-async.vue';
 import WatchAndWatchEffect from '@/views/vue3-api-test/watch-watchEffect.vue';
 
 // setup 中使用watch、computed、ref、reactive

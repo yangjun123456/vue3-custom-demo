@@ -8,6 +8,7 @@ const BundleAnalyzerPlugin =
 
 module.exports = {
   productionSourceMap: false,
+  runtimeCompiler: true, // 更换编译模式
   devServer: {
     hot: true, // 自动保存
     open: true // 自动启动

@@ -41,10 +41,10 @@ const VMemo = defineComponent({
       { name: 'q', id: '20', key: '18' }
     ]);
 
-    timer(2000).subscribe(() => {
+    timer(2000).pipe(take(!!list.value)).subscribe(() => {
       list.value[1].name = '111111';
     })
-    timer(5000).subscribe(() => {
+    timer(5000).pipe(take(!!list.value)).subscribe(() => {
       console.log('timer调用了');
       list.value[10].name = 'new name';
     });

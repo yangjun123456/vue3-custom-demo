@@ -5,7 +5,6 @@
       style="background-color: orange">
       <h3 style="font-size: 18px">reactive 测试</h3>
       <button @click="reactiveClick">reactiveClick reactive 会影响原始值 包装的数组或者对象都可以实时响应页面</button>
-      <div>reactiveList1[0] === {{ article }}</div>
       <div>reactiveList1[0] === {{ reactiveList1[0] }}</div>
       <div>reactiveObj1.date === {{ reactiveObj1.date }}</div>
       <div>reactiveObj1.age === {{ reactiveObj1.age }}</div>
@@ -75,7 +74,7 @@ const RefAndReactive = defineComponent({
       default: ''
     }
   },
-  async setup(props, context) {
+  setup(props, context) {
     /* reactive-----------------------------------------------------start */
     const reactiveObj1Raw = {
       count: 0,
