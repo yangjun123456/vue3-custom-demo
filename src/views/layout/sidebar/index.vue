@@ -112,6 +112,12 @@ export default defineComponent({
   setup() {
     const menus = [
       {
+        title: 'home',
+        url: '/home',
+        index: '0',
+        icon: ''
+      },
+      {
         title: 'echarts',
         url: '',
         index: '1',

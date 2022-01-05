@@ -31,3 +31,5 @@ app.config.globalProperties.$uuid = uuidv4; // 组件内需声明，不然this�
 
 app.use(ElementPlus);
 app.use(store).use(router).mount('#app');
+
+// setTimeout(() => app.unmount(), 5000) // 卸载根组件，从html中移除app
