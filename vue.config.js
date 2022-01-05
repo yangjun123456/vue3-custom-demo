@@ -34,23 +34,23 @@ module.exports = {
     });
     config.resolve.alias.set('assets', resolve('src/assets'));
 
-    // 清除已有的loader, 如果不这样做会添加在此loader之后
-    config.module.rule('svg').uses.clear().end();
-    // 则匹配排除node_modules目录
+    // src/icons 下的svg图片不使用原有的loader
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end();
+
+    // 给icons下的svg图片单独添加svg-sprite-loader
     config.module
-      .rule('svg')
-      .exclude.add(/node_modules/)
-      .end();
-    // 添加svg新的loader处理
-    config.module
-      .rule('svg')
+      .rule('icons')
       .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
       .options({
         symbolId: 'icon-[name]'
       })
       .end();
+
+    config.output.filename('assets/js/[name].[hash].js').chunkFilename('assets/js/[name].[hash].js').end(); // 开发环境打包hash
 
     config.module
       .rule('thread-loader')
