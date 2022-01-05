@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <TestCommunicationChild ref="testCommunicationChild"
+    <TestCommunicationChild ref="testCommunicationChildEl"
       :room="'room'"
       :teacher="'MR.yang'"
       :title="title"
@@ -32,7 +32,7 @@
     <!-- 异步组件的展示方式html，需用Suspense包装，#default 默认模板，#fallback 等待时渲染的内容-------------start -->
     <Suspense>
       <template #default>
-        <TestCommunicationChildAsync ref="testCommunicationChildAsync"
+        <TestCommunicationChildAsync ref="testCommunicationChildAsyncEl"
           :room="'room'"
           :teacher="'MR.yang'"
           :title="title"
@@ -113,6 +113,8 @@ const TestCommunication = defineComponent({
     const store = useStore();
     const instance = getCurrentInstance();
     const testCommunicationTitleEl: any = ref(null);
+    const testCommunicationChildEl: any = ref(null);
+    const testCommunicationChildAsyncEl: any = ref(null);
     const title = ref('title test');
 
     onMounted(() => {
@@ -124,9 +126,13 @@ const TestCommunication = defineComponent({
     };
     const parentClick = (params: any) => {
       console.log(instance);
-      (instance as any).refs.testCommunicationChild.parentClick();
-      if ((instance as any).refs.testCommunicationChildAsync) {
-        (instance as any).refs.testCommunicationChildAsync.parentClick();
+      //   (instance as any).refs.testCommunicationChild.parentClick();
+      testCommunicationChildEl.value.parentClick();
+      //   if ((instance as any).refs.testCommunicationChildAsync) {
+      //     (instance as any).refs.testCommunicationChildAsync.parentClick();
+      //   }
+      if (testCommunicationChildAsyncEl.value) {
+        testCommunicationChildAsyncEl.value.parentClick();
       }
     };
     const getChildTitle = (params: any) => {
@@ -139,6 +145,8 @@ const TestCommunication = defineComponent({
     return {
       state,
       testCommunicationTitleEl,
+      testCommunicationChildEl,
+      testCommunicationChildAsyncEl,
       childClick,
       parentClick,
       title,
