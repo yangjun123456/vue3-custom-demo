@@ -68,7 +68,7 @@
                 </el-sub-menu>
                 <el-menu-item v-else
                     :key="item.title"
-                    :index="url"
+                    :index="item.title||item.content"
                     @click="routerTo(item.url)">
                     <template #title>
                         <el-icon>

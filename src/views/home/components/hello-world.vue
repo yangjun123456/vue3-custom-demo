@@ -24,11 +24,14 @@ import { NavModule } from '@/store/modules/nav';
 
 // setup 中使用watch、computed、ref、reactive
 const HellowWord = defineComponent({
-  name: 'SetupAndApiApply',
+  name: 'HellowWord',
   inject: ['$getUuidv4'],
-  //   props: {
-  //     msg:
-  //   },
+  props: {
+    msg: {
+      type: String,
+      default: ''
+    }
+  },
   setup(props, context) {
     return {
       props,

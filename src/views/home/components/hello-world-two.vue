@@ -26,9 +26,12 @@ import { NavModule } from '@/store/modules/nav';
 const HellowWordTwo = defineComponent({
   name: 'HellowWordTwo',
   inject: ['$getUuidv4'],
-  //   props: {
-  //     msg:
-  //   },
+  props: {
+    msg: {
+      type: String,
+      default: ''
+    }
+  },
   setup(props, context) {
     return {
       props,
