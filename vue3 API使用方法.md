@@ -167,3 +167,27 @@ valueA 和 valueB等组成了一个条件list， 只要有一个条件产生了�
 说明： 混合
 mixins-parent.vue 文件
 ```
+
+
+### effectScope
+> 创建一个 effect 作用域对象，以捕获在其内部创建的响应式 effect (例如计算属性或侦听器)，使得这些 effect 可以一起被处理。
+
+```
+const scope = effectScope();
+const counter = ref(1);
+
+scope.run(() => {
+    const doubled = computed(() => counter.value * 2);
+
+    watch(doubled, () => console.log(doubled.value));
+
+    watchEffect(() => console.log('Count: ', doubled.value));
+});
+counter.value++;
+timer(2000).subscribe(() => {
+    // 处理该作用域内的所有 effect
+    counter.value++;
+    scope.stop(); // 统一清除scope内的所有监听，处理后下边的counter的变化，不能被watch和watchEffect监听到了
+    counter.value++;
+});
+```
