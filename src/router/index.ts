@@ -6,6 +6,7 @@ import {
 } from 'vue-router';
 import { echartsRouteOptions } from './modules/echarts';
 import { vue3DemoOptions } from './modules/vue3-demo';
+import { componentRouteOptions } from './modules/component-test';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,7 +19,8 @@ const routes: Array<RouteRecordRaw> = [
         redirect: 'testCommunication'
       },
       ...echartsRouteOptions,
-      ...vue3DemoOptions
+      ...vue3DemoOptions,
+      ...componentRouteOptions
     ]
   },
   {

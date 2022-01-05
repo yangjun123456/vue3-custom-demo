@@ -1,10 +1,8 @@
 <template>
   <div style="overflow:auto;">
     <h1>说明： 测试在scss 使用v-bind获取js中的object 的响应式的 css样式object</h1>
-    <br>
     <h1 class="getSetUpJsStyle">scss中通过v-bind获取js中的样式并且实现响应式更新</h1>
     <div id="defineCustomComponentId"></div>
-    <svg-icon :filename="'sql-import'" :hover="'sql-import-s'"></svg-icon>
   </div>
 </template>
 
@@ -21,7 +19,7 @@ const GetSetUpJsStyle = defineComponent({
     });
 
     interval(1000)
-      .pipe(take(100))
+      .pipe(take(5))
       .subscribe(() => {
         colorStyle.value.color = colorStyle.value.color === 'red' ? 'orange' : 'red';
         colorStyle.value.fontSize = colorStyle.value.fontSize === '20px' ? '30px' : '20px';
@@ -29,11 +27,11 @@ const GetSetUpJsStyle = defineComponent({
       });
     onMounted(() => {
       // 动态创建元素标签
-    //   (document.getElementById('defineCustomComponentId') as any).appendChild(
-    //     new DefinedCustomVueElement({
-    //       // 初始化的 prop (可选)
-    //     })
-    //   );
+      //   (document.getElementById('defineCustomComponentId') as any).appendChild(
+      //     new DefinedCustomVueElement({
+      //       // 初始化的 prop (可选)
+      //     })
+      //   );
     });
     return { colorStyle };
   }

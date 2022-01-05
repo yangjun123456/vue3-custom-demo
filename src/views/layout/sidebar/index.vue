@@ -192,6 +192,20 @@ export default defineComponent({
             index: '2-9'
           }
         ]
+      },
+      {
+        title: '组件测试',
+        url: '',
+        index: '3',
+        icon: '',
+        children: [
+          {
+            content: 'svg-icon',
+            url: '/iconSvg',
+            icon: '',
+            index: '3-1'
+          }
+        ]
       }
     //   {
     //     title: 'lodash',
