@@ -12,6 +12,7 @@
 import { interval } from 'rxjs';
 import { defineAsyncComponent, defineComponent, ref } from 'vue';
 import { Options, Vue } from 'vue-class-component';
+import websocket from '@/websocket/websocket';
 
 const Home = defineComponent({
   name: 'Home',
@@ -24,6 +25,13 @@ const Home = defineComponent({
     interval(2000).subscribe(() => {
       helloWorldComponent.value = helloWorldComponent.value === 'HelloWorld' ? 'HelloWorldTwo' : 'HelloWorld';
     })
+
+    // const websocketInit = websocket();
+
+    // interval(2000).subscribe(() => {
+    //   websocketInit.send('发送成功');
+    // })
+
     return { props, context, helloWorldComponent };
   }
 
