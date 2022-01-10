@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 export default function () {
+  // 没有后端，没有测试成功
   const websocket: any = ref(null);
   if ('WebSocket' in window) {
     websocket.value = new WebSocket('ws://127.0.0.1:3000');

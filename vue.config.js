@@ -11,7 +11,18 @@ module.exports = {
   runtimeCompiler: true, // 更换编译模式
   devServer: {
     hot: true, // 自动保存
-    open: true // 自动启动
+    open: true, // 自动启动
+    // https: false, // 是否开启 https
+    host: '0.0.0.0',
+    proxy: {
+      '/api': {
+        target: 'http://49.232.143.65:9007/',
+        changeOrigin: true,
+        secure: false, // 如果是https接口，需要配置这个参数
+        // ws: true, //websocket支持
+        rewrite: (_path) => _path.replace(/^\/api/, '')
+      }
+    }
   },
   //   output: {
   //     path: 'dist',

@@ -196,6 +196,12 @@ export default defineComponent({
             url: '/mixinTest',
             icon: '',
             index: '2-9'
+          },
+          {
+            content: 'test-axios测试axios请求',
+            url: '/testAxios',
+            icon: '',
+            index: '2-10'
           }
         ]
       },
