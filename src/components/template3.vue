@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent, onMounted, ref, reactive, shallowRef, triggerRef } from 'vue';
+import { defineProps, defineEmits, defineExpose, defineComponent, onMounted, ref, reactive, shallowRef, triggerRef } from 'vue';
 import { interval, take, timer } from 'rxjs';
 
 import { useStore } from 'vuex';
