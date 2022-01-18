@@ -216,6 +216,12 @@ export default defineComponent({
             url: '/iconSvg',
             icon: '',
             index: '3-1'
+          },
+          {
+            content: 'el-tabs 测试tabs中是否能获取到refs',
+            url: '/elTabs',
+            icon: '',
+            index: '3-2'
           }
         ]
       }
