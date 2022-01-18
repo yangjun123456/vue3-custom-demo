@@ -16,8 +16,8 @@ console.info(app.version);
 
 // config 配置---------------------------------------------------------------------------------------------------------------------------------------start
 app.config.globalProperties = {
-  // element-plus 全局配置
-  $ELEMENT: {}
+    // element-plus 全局配置
+    $ELEMENT: {}
 };
 app.config.performance = true;
 

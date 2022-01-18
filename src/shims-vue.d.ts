@@ -12,4 +12,5 @@ declare module "vuex-module-decorators";
 declare module "rxjs";
 declare module "uuid";
 declare module "xe-utils";
+// declare module "axios";
 declare module "element-plus";

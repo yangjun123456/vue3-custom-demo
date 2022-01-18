@@ -10,9 +10,9 @@ export const messagePage = (data: {
   startTime: string;
   endTime: string;
 }) => {
-  return axios.request({
-    url: '/api/comm/message/page',
-    method: 'post',
-    data
-  });
+    return axios.request({
+        url: '/api/comm/message/page',
+        method: 'post',
+        data
+    });
 };

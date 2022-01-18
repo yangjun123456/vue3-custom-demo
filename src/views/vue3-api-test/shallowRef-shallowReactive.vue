@@ -33,117 +33,117 @@
 // 本组件调试setup的两个参数
 import { interval, take } from 'rxjs';
 import {
-  defineComponent,
-  markRaw,
-  toRef,
-  toRefs,
-  toRaw,
-  reactive,
-  ref,
-  onMounted,
-  watchEffect,
-  watch,
-  computed,
-  getCurrentInstance,
-  shallowRef,
-  shallowReactive,
-  inject,
-  triggerRef
+    defineComponent,
+    markRaw,
+    toRef,
+    toRefs,
+    toRaw,
+    reactive,
+    ref,
+    onMounted,
+    watchEffect,
+    watch,
+    computed,
+    getCurrentInstance,
+    shallowRef,
+    shallowReactive,
+    inject,
+    triggerRef
 } from 'vue';
 
 // setup 中使用watch、computed、ref、reactive
 const ShallowRefAndShallowReactive = defineComponent({
-  name: 'ShallowRefAndShallowReactive',
-  components: {
-  },
-  props: {
-    room: {
-      type: String,
-      default: ''
+    name: 'ShallowRefAndShallowReactive',
+    components: {
     },
-    state: {
-      type: Object,
-      default: () => {
-        return {};
-      }
+    props: {
+        room: {
+            type: String,
+            default: ''
+        },
+        state: {
+            type: Object,
+            default: () => {
+                return {};
+            }
+        },
+        title: {
+            type: String,
+            default: ''
+        }
     },
-    title: {
-      type: String,
-      default: ''
-    }
-  },
-  setup(props, context) {
+    setup(props, context) {
     /* shallowRef-----------------------------------------------------start */
     // shallowReactive 同理，只有修改第一层数据才会是响应式，其他不是
     // shallowRef 深层数据不会实时更新到dom，但是如果有其它更新了dom，本次变更也会更新
-    const shallowRefObj: any = shallowRef({ count: { name: { val: 0 } } });
-    {
-      const a = 0;
-      shallowRefObj.value = { count: { name: { val: 123 } } };
-    }
-    const changeShallowRefObj = () => {
-      shallowRefObj.value = shallowRefObj.value ? shallowRefObj.value : 0;
-      shallowRefObj.value++;
-    };
-    const changeShallowRefObjDeep = () => {
-      shallowRefObj.value.count.name.val++;
-      triggerRef(shallowRefObj);
-    };
-    watch(
-      shallowRefObj,
-      (newVal: any, oldVal: any) => {
-        console.log('watch shallowRefObj==============', newVal, oldVal);
-      },
-      { deep: true }
-    );
-    console.log('shallowRefObj=====', shallowRefObj);
-    /* shallowRef-----------------------------------------------------end */
+        const shallowRefObj: any = shallowRef({ count: { name: { val: 0 } } });
+        {
+            const a = 0;
+            shallowRefObj.value = { count: { name: { val: 123 } } };
+        }
+        const changeShallowRefObj = () => {
+            shallowRefObj.value = shallowRefObj.value ? shallowRefObj.value : 0;
+            shallowRefObj.value++;
+        };
+        const changeShallowRefObjDeep = () => {
+            shallowRefObj.value.count.name.val++;
+            triggerRef(shallowRefObj);
+        };
+        watch(
+            shallowRefObj,
+            (newVal: any, oldVal: any) => {
+                console.log('watch shallowRefObj==============', newVal, oldVal);
+            },
+            { deep: true }
+        );
+        console.log('shallowRefObj=====', shallowRefObj);
+        /* shallowRef-----------------------------------------------------end */
 
-    /* shallowReactive-----------------------------------------------------start */
-    // shallowReactive 同理，只有修改第一层数据才会是响应式，其他不是
-    // shallowReactive 深层数据不会实时更新到dom，但是如果有其它更新了dom，本次变更也会更新
-    const shallowReactiveObj: any = shallowReactive({ num: 0, count: { name: { val: 0 } } });
-    {
-      const a = 0;
-      shallowReactiveObj.value = { count: { name: { val: 123 } } };
-    }
-    const changeShallowReactiveObj = () => {
-      shallowReactiveObj.num = shallowReactiveObj.num ? shallowReactiveObj.num : 0;
-      shallowReactiveObj.num++;
-      console.log(shallowReactiveObj.num);
-    };
-    const changeShallowReactiveObjDeep = () => {
-      shallowReactiveObj.count.name.val++;
-      console.log(shallowReactiveObj.count);
-    };
-    watch(
-      () => shallowReactiveObj.count.name.val,
-      (newVal: any, oldVal: any) => {
-        console.log('watch shallowReactiveObj.count.name.val==============', newVal, oldVal);
-      },
-      { deep: true }
-    );
-    watch(
-      () => shallowReactiveObj.num,
-      (newVal: any, oldVal: any) => {
-        console.log('watch shallowReactiveObj.num==============', newVal, oldVal);
-      },
-      { deep: true }
-    );
-    console.log('shallowReactiveObj=====', shallowReactiveObj.num, shallowReactiveObj.count); // 第一个是非响应式的，第二个是响应式的
-    /* shallowReactive-----------------------------------------------------end */
+        /* shallowReactive-----------------------------------------------------start */
+        // shallowReactive 同理，只有修改第一层数据才会是响应式，其他不是
+        // shallowReactive 深层数据不会实时更新到dom，但是如果有其它更新了dom，本次变更也会更新
+        const shallowReactiveObj: any = shallowReactive({ num: 0, count: { name: { val: 0 } } });
+        {
+            const a = 0;
+            shallowReactiveObj.value = { count: { name: { val: 123 } } };
+        }
+        const changeShallowReactiveObj = () => {
+            shallowReactiveObj.num = shallowReactiveObj.num ? shallowReactiveObj.num : 0;
+            shallowReactiveObj.num++;
+            console.log(shallowReactiveObj.num);
+        };
+        const changeShallowReactiveObjDeep = () => {
+            shallowReactiveObj.count.name.val++;
+            console.log(shallowReactiveObj.count);
+        };
+        watch(
+            () => shallowReactiveObj.count.name.val,
+            (newVal: any, oldVal: any) => {
+                console.log('watch shallowReactiveObj.count.name.val==============', newVal, oldVal);
+            },
+            { deep: true }
+        );
+        watch(
+            () => shallowReactiveObj.num,
+            (newVal: any, oldVal: any) => {
+                console.log('watch shallowReactiveObj.num==============', newVal, oldVal);
+            },
+            { deep: true }
+        );
+        console.log('shallowReactiveObj=====', shallowReactiveObj.num, shallowReactiveObj.count); // 第一个是非响应式的，第二个是响应式的
+        /* shallowReactive-----------------------------------------------------end */
 
-    return {
-      props,
-      context,
-      shallowRefObj,
-      changeShallowRefObj,
-      changeShallowRefObjDeep,
-      shallowReactiveObj,
-      changeShallowReactiveObj,
-      changeShallowReactiveObjDeep
-    };
-  }
+        return {
+            props,
+            context,
+            shallowRefObj,
+            changeShallowRefObj,
+            changeShallowRefObjDeep,
+            shallowReactiveObj,
+            changeShallowReactiveObj,
+            changeShallowReactiveObjDeep
+        };
+    }
 });
 
 export default ShallowRefAndShallowReactive;
