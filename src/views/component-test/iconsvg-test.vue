@@ -44,7 +44,7 @@
 		<div>
 			<br>
 			<br>
-			<h1 style="color: red">svg 背景图引用icons 下的 svg图标========不能正常引用</h1>
+			<h1 style="color: red">svg 背景图引用icons 下的 svg图标========不能正常引用----------会打包失败，反正无法应用，就删掉了</h1>
 			<h1>因为使用了svg-sprite-loader 处理了这些icon，只能用于svg-icon组件使用，F12可以看到实际上引用的是svg代码</h1>
 			<div class="icon-svg"></div>
 
@@ -76,6 +76,7 @@ const IconSvgTest = defineComponent({
 });
 export default IconSvgTest;
 </script>
+
 <style lang="scss" scoped>
 .icon-svg,
 .assets-svg,
@@ -85,14 +86,14 @@ export default IconSvgTest;
 	background-size: 50px 50px;
 	margin: 0 auto;
 }
-.icon-svg {
-	background-image: url('~@/icons/svg/add.svg');
-}
+// .icon-svg {
+// 	background-image: url('../../icons/svg/add.svg');
+// }
 .assets-svg {
-	background-image: url('~@/assets/svgs/cancel.svg');
+	background-image: url('../../assets/svgs/cancel.svg');
 }
 .assets-png {
-	background-image: url('~@/assets/logo.png');
+	background-image: url('../../assets/logo.png');
 }
 
 .icon-test {
