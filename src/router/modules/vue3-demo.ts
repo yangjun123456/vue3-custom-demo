@@ -48,5 +48,10 @@ export const vue3DemoOptions = [
         path: 'testAxios',
         name: 'TestAxios',
         component: () => import('@/views/vue3-api-test/test-axios.vue')
+    },
+    {
+        path: 'vueI18n',
+        name: 'VueI18n',
+        component: () => import('@/views/vue3-api-test/vue-i18n.vue')
     }
 ]

@@ -202,6 +202,12 @@ export default defineComponent({
                         url: '/testAxios',
                         icon: '',
                         index: '2-10'
+                    },
+                    {
+                        content: 'vueI18n-测试',
+                        url: '/vueI18n',
+                        icon: '',
+                        index: '2-11'
                     }
                 ]
             },
