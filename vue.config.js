@@ -32,7 +32,7 @@ module.exports = {
     // 指定子路径。比如，如果你的应用部署在
     // https://www.foobar.com/my-app/
     // 那么将这个值改为 `/my-app/`
-    publicPath: '/dist/',　　/* 这个是我存放在github在线预览的Reader项目*/
+    publicPath: process.env.NODE_ENV === 'development' ? './' : '/dist/',　　/* 这个是我存放在github在线预览的Reader项目*/
 
     // 将构建好的文件输出到哪里（或者说将编译的文件）
     outputDir: 'dist',
