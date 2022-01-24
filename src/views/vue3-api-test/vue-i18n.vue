@@ -10,8 +10,10 @@
 			</el-button>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item class="drop-menu" @click="changeLanguage('zh')">{{$t('changeLanguage.zh')}}</el-dropdown-item>
-					<el-dropdown-item class="drop-menu" @click="changeLanguage('en')">{{$t('changeLanguage.en')}}</el-dropdown-item>
+					<el-dropdown-item class="drop-menu"
+						@click="changeLanguage('zh')">{{$t('changeLanguage.zh')}}</el-dropdown-item>
+					<el-dropdown-item class="drop-menu"
+						@click="changeLanguage('en')">{{$t('changeLanguage.en')}}</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -80,7 +82,7 @@ export default VueI18n;
 <style lang="scss" scoped>
 </style>
 <style lang="scss">
-.drop-menu{
-    width: 100px;
+.drop-menu {
+	width: 100px;
 }
 </style>

@@ -9,6 +9,9 @@
     <el-button @click="mixinChildOneClick">one 写法无法在 setup 下使用, 可以使用Options 配置的方式进行开发, 可以直接在 methods 下使用this调用</el-button>
     <br>
     <br>
+    <div>mixinChildOneData.name === {{mixinChildOneData.name}}</div>
+    <br>
+    <br>
     <el-button @click="mixinChildTwoClick">two 写法可以在 setup 下使用, 在setup方法下导出后， 也可以在methods 下的方法中使用this调用</el-button>
     <br>
     <br>
@@ -40,6 +43,7 @@ const MiXinParent = defineComponent({
         mixinChildOneClick() {
             console.log('');
             console.log('oneClick');
+            this.mixinChildOneData.name = '123123123123'; // 可以修改mixin-child-two中的值
             this.funOne();
             console.log(this);
         },

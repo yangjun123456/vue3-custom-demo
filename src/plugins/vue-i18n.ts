@@ -12,7 +12,7 @@ const localeData = {
     // // 调用方法
     $t(key: any) {
         console.log(key);
-        debugger;
+        // debugger;
         // return (this as any).messages[this.locale][key];
     }
 }
