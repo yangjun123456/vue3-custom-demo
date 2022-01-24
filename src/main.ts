@@ -26,7 +26,6 @@ import IconSvg from '@/icons/IconSvg.vue';
 import '@/icons/index'; // 组件内需声明，不然this上找不到
 // 全局引入的两种方法，在bar-echarts/index.vue 文件中应用---end
 // config 配置-----------------------------------------------------------------------------------------------------------------------------------------end
-import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 // 初始化app
@@ -46,10 +45,9 @@ app.config.compilerOptions.isCustomElement = (tag) =>
 // 全局引入的两种方法，在bar-echarts/index.vue 文件中应用---start
 app.provide('$getUuidv4', uuidv4); // 组件内需使用inject 引入
 app.config.globalProperties.$uuid = uuidv4;
-app.use(ElementPlus);
 // app.use 应用
+setupElementPlus(app);
 setupI18n(app);
-// setupElementPlus(app);
 app.use(store).use(router).mount('#app');
 
 // setTimeout(() => app.unmount(), 5000) // 卸载根组件，从html中移除app
