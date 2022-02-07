@@ -7,7 +7,7 @@ import { setupElementPlus } from '@/plugins/element-plus';
 import { setupI18n } from '@/plugins/vue-i18n';
 
 // uuid
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, v3 as uuidv3 } from 'uuid';
 
 // app根组件
 import App from './App.vue';
@@ -45,6 +45,8 @@ app.config.compilerOptions.isCustomElement = (tag) =>
 // 全局引入的两种方法，在bar-echarts/index.vue 文件中应用---start
 app.provide('$getUuidv4', uuidv4); // 组件内需使用inject 引入
 app.config.globalProperties.$uuid = uuidv4;
+app.provide('$getUuidv3', uuidv3); // 组件内需使用inject 引入
+app.config.globalProperties.$uuidv3 = uuidv3;
 // app.use 应用
 setupElementPlus(app);
 setupI18n(app);
