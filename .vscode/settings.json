@@ -41,7 +41,7 @@
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[ts]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+      "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     // Vetur 的各类设定,仅当上面[vue]的editor.defaultFormatter的值为octref.vetur的时候，才起效
     "vetur.format.options.tabSize": 4,

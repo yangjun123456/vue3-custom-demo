@@ -5,20 +5,26 @@ import XEUtils from 'xe-utils';
 /**
  * 方法说明 获取随机数设置id，类似于uuid
  * @method getRandom
+ * @param {number|undefined} count 需要多少位数的随机数
  * @return {string} 随机数
  */
-const getRandom = () => {
-    console.log(router);
+const getRandom = (count: number = 10) => {
+    count = count < 10 ? 10 : count;
     const random = Math.random();
-    const index = Number(parseInt(String(random * 10), 10));
-    const a = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
-    return (
-        a[index] +
-    '_' +
-    a.reverse()[index] +
-    '_' +
-    String(random * 1000000000000000000000)
-    );
+    const num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const a = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+    ];
+
+    let str = a[parseInt(String(Math.random() * a.length), 10)];
+
+    for (let i = 0; i < count - 1; i++) {
+        if (Math.random() > 0.5) {
+            str += num[parseInt(String(Math.random() * num.length), 10)];
+        } else {
+            str += a[parseInt(String(Math.random() * a.length), 10)];
+        }
+    }
+    return str;
 };
 
 /**
@@ -204,6 +210,45 @@ const getBase64Image = (src: string, cb: any) => {
         cb && cb(dataURL);
     };
 };
+
+// 判断日期是否为工作日
+const isWeekday = (date: Date) => date.getDay() % 6 !== 0;
+
+// 判断当前选项卡是否在视图/焦点中    我们可以使用document.hidden属性检查当前标签页是否在视图/焦点中。
+const isBrowserTabInView = () => document.hidden;
+
+// 从日期获取时间
+const timeFromDate = (date: Date) => date.toTimeString().slice(0, 8);
+
+// 将数字四舍五入到固定的小数点
+const toFixed = (n: number, fixed: number) =>
+    ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);
+// toFixed(25.198726354, 1); // 25.1
+// toFixed(25.198726354, 2); // 25.19
+// toFixed(25.198726354, 3); // 25.198
+
+// 检查元素当前是否处于焦点
+const elementIsInFocus = (el: any) => el === document.activeElement;
+
+// 检查当前用户是否支持触摸事件
+const touchSupported = () => {
+    return (
+        'ontouchstart' in window ||
+    ((window as any).DocumentTouch &&
+      document instanceof (window as any).DocumentTouch)
+    );
+};
+
+// 检查当前用户是否在Apple设备上
+const isAppleDevice = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+
+// 滚动到页面顶部
+const goToTop = () => window.scrollTo(0, 0);
+
+// 获取参数的平均值
+const average = (...args: any) =>
+    args.reduce((a: any, b: any) => a + b) / args.length;
+
 export {
     getRandom,
     getParentEle,
@@ -218,5 +263,14 @@ export {
     downloadAsXLS,
     getBase64Image,
     urlIsImage,
-    preloadImg
+    preloadImg,
+    isWeekday,
+    isBrowserTabInView,
+    timeFromDate,
+    toFixed,
+    elementIsInFocus,
+    touchSupported,
+    isAppleDevice,
+    goToTop,
+    average
 };
