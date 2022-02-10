@@ -228,6 +228,12 @@ export default defineComponent({
                         url: '/elTabs',
                         icon: '',
                         index: '3-2'
+                    },
+                    {
+                        content: '测试导出docx插件-导出html为docx文件',
+                        url: '/exportDocx',
+                        icon: '',
+                        index: '3-3'
                     }
                 ]
             }

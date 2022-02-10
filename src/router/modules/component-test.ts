@@ -8,6 +8,11 @@ export const componentRouteOptions = [
         path: 'elTabs',
         name: 'ElTabs',
         component: () => import('../../views/component-test/el-tabs/el-tabs.vue')
+    },
+    {
+        path: 'exportDocx',
+        name: 'ExportDocx',
+        component: () => import('../../views/component-test/export-docx/index.vue')
     }
 
 ]

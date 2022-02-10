@@ -13,3 +13,5 @@ declare module "rxjs";
 declare module "uuid";
 declare module "xe-utils";
 declare module "element-plus";
+declare module "html-docx-js/dist/html-docx";
+declare module "file-saver";
