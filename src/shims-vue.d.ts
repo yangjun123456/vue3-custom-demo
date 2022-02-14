@@ -15,3 +15,4 @@ declare module "xe-utils";
 declare module "element-plus";
 declare module "html-docx-js/dist/html-docx";
 declare module "file-saver";
+declare module "vue-i18n";
