@@ -13,9 +13,13 @@
       </tr>
     </table>
 
-    <div class="wraper">
+    <div class="wraper" :export2wordOption="['export2word-transform2table']">
       <div class="left">asdfasdf</div>
       <div class="right">123123123</div>
+    </div>
+    <div class="wraper">
+      <div class="left" :export2wordOption="['export2word-transform2inline']">asdfasdf</div>
+      <div class="right" :export2wordOption="['export2word-transform2inline']">123123123</div>
     </div>
 
     <h1 class="asdfalala">aslkdfjasdfkljsldfkj</h1>
