@@ -7,8 +7,19 @@ import saveAs from 'file-saver';
  * 2. 在html中设置 export2wordOption="{export2wordTransform2table:true,export2wordTransform2inline:true}" 属性， 属性值根据需要进行增改
  * 3. export2wordTransform2inline 在需要转为inline内元素的标签上加export2wordTransform2inline类名， 因为好多样式导出word后不支持，需要转换为span标签才能使多个标签的文本显示在同一行中
  * 4. export2wordTransform2table 一行中的 两列或者多列布局需要转换成为table， 添加export2wordTransform2table类名， 可以转换成为table布局， 实现类似flex 和 float 的效果
+ * 4. export2wordTransform2Style 在转换成为word时需要添加什么样式
  * 5. word文档中不需要考虑同行文字水平居中对齐的问题
  * 6. 当前未处理图片，如果引入的是在线的图片可以显示，如果引入的不是在线的图片不能正常显示
+ */
+/**
+ * 设计思路
+ * 1. 生成样式表和html可正常导出word： 先拷贝一份html， 通过获取原始 html 的样式生成一份 styleSheet 样式表， 样式表通过 生成的随机id 进行元素和样式表匹配， 设置相对应的 随机id 并将id赋值到相对应的clone 的html的元素上
+ * 2. 通过步骤1可正常显示样式
+ * 3. 移除不显示的元素： 如果遇到display：none 的元素 从clone 的html中移除掉
+ * 4. table实现两侧布局： 如果是flex布局或者float布局的 两侧布局 转换成为table 表格进行分列展示， 可实现word中的两侧布局或者三列布局或者多列布局
+ * 5. 多个块级标签显示在同一行： 如果标签使用的div 导出word后想要多个div 在同一行通过样式无法实现， 遍历clone 的html 将块级标签替换成为span标签其余不变
+ * 6. 导出word的样式改变： 好多样式word无法正常显示， 但可以设计基本样式， 在导出word时读取标签设置的 export2wordTransform2Style 属性 可修改导出的word的相对应的文案样式
+ * 7.
  */
 
 class Export2Word {
@@ -54,15 +65,40 @@ class Export2Word {
     }
 
     /**
+   * _transform2Style 转换成为word时需要添加什么样式
+   * @param {any} el 元素
+   * @returns {any} void
+   */
+    private _transform2Style(el: any) {
+        const children = Array.from(el?.children);
+        const parentEl = el.parentElement;
+        const export2wordOption = this._getExport2wordOption(el);
+        if (export2wordOption && export2wordOption.export2wordTransform2Style) {
+            for (const i in export2wordOption.export2wordTransform2Style) {
+                el.style.cssText += `${i}:${export2wordOption.export2wordTransform2Style[i]};`;
+            }
+        }
+
+        if (children.length) {
+            children.map((x: any) => {
+                this._transform2Style(x);
+            });
+        }
+    }
+
+    /**
    * _transform2inline div 等块式 代码标签转换成为 span 等 inline代码标签， 两个标签不换行
    * @param {any} el 元素
    * @returns {any} void
    */
-    private _transform2inline(el:any) {
+    private _transform2inline(el: any) {
         const children = Array.from(el?.children);
         const parentEl = el.parentElement;
         const export2wordOption = this._getExport2wordOption(el);
-        if (export2wordOption && export2wordOption.export2wordTransform2inline === 'true') {
+        if (
+            export2wordOption &&
+      export2wordOption.export2wordTransform2inline === 'true'
+        ) {
             const span = document.createElement('span');
             span.innerHTML = el.innerHTML;
             this._setAttribute(span, el);
@@ -94,14 +130,17 @@ class Export2Word {
         const parentEl = el.parentElement;
         const children = Array.from(el?.children);
         const export2wordOption = this._getExport2wordOption(el);
-        if (export2wordOption && export2wordOption.export2wordTransform2table === 'true') {
+        if (
+            export2wordOption &&
+      export2wordOption.export2wordTransform2table === 'true'
+        ) {
             // 如果能识别到这个className， 那么把所有子元素按照表格布局排列， 实现左右布局排列
             const table = document.createElement('table');
             this._setAttribute(table, el);
             table.classList.add('export2-word-table');
             table.style.cssText += 'width: 100%';
             const tr = document.createElement('tr');
-            children.map((x:any, index:number, list:any) => {
+            children.map((x: any, index: number, list: any) => {
                 const td = document.createElement('td');
                 const textAlignObj = [
                     ['text-align:left;', 'text-align:right;'],
@@ -121,11 +160,11 @@ class Export2Word {
                         td.style.cssText += textAlignObj[1][2];
                     }
                     // 按照百分比设置宽度
-                    td.style.cssText += `width:${(100 / list.length)}%`;
+                    td.style.cssText += `width:${100 / list.length}%`;
                 }
                 td.appendChild(x);
                 tr.appendChild(td);
-            })
+            });
             table.appendChild(tr);
             // el.appendChild(table);
             parentEl.replaceChild(table, el);

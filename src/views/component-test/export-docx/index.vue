@@ -12,14 +12,14 @@
         </td>
       </tr>
     </table>
-
-    <div class="wraper" export2wordOption="{export2wordTransform2table:true}">
+    <h1 :export2wordOption="JSON.stringify({export2wordTransform2Style: {'margin-top': '1000px'}})">asdfasdf</h1>
+    <div class="wraper" :export2wordOption="JSON.stringify({export2wordTransform2table:true})">
       <div class="left">asdfasdf</div>
       <div class="right">123123123</div>
     </div>
     <div class="wraper">
-      <div class="left" export2wordOption="{export2wordTransform2inline:true}">asdfasdf</div>
-      <div class="right" export2wordOption="{export2wordTransform2inline:true}">123123123</div>
+      <div class="left" :export2wordOption="JSON.stringify({export2wordTransform2inline:true})">asdfasdf</div>
+      <div class="right" :export2wordOption="JSON.stringify({export2wordTransform2inline:true})">123123123</div>
     </div>
 
     <h1 class="asdfalala">aslkdfjasdfkljsldfkj</h1>
