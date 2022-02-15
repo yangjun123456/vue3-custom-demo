@@ -4,9 +4,9 @@ import saveAs from 'file-saver';
 /**
  * word导出说明
  * 1. 调用 export2Word 方法，传入相应参数
- * 2. 在html中设置 :export2wordOption="['export2word-transform2table','export2word-transform2inline']" 属性， 属性值根据需要进行增改
- * 3. export2word-transform2inline 在需要转为inline内元素的标签上加export2word-transform2inline类名， 因为好多样式导出word后不支持，需要转换为span标签才能使多个标签的文本显示在同一行中
- * 4. export2word-transform2table 一行中的 两列或者多列布局需要转换成为table， 添加export2word-transform2table类名， 可以转换成为table布局， 实现类似flex 和 float 的效果
+ * 2. 在html中设置 export2wordOption="{export2wordTransform2table:true,export2wordTransform2inline:true}" 属性， 属性值根据需要进行增改
+ * 3. export2wordTransform2inline 在需要转为inline内元素的标签上加export2wordTransform2inline类名， 因为好多样式导出word后不支持，需要转换为span标签才能使多个标签的文本显示在同一行中
+ * 4. export2wordTransform2table 一行中的 两列或者多列布局需要转换成为table， 添加export2wordTransform2table类名， 可以转换成为table布局， 实现类似flex 和 float 的效果
  * 5. word文档中不需要考虑同行文字水平居中对齐的问题
  * 6. 当前未处理图片，如果引入的是在线的图片可以显示，如果引入的不是在线的图片不能正常显示
  */
@@ -62,7 +62,10 @@ class Export2Word {
         const children = Array.from(el?.children);
         const parentEl = el.parentElement;
         const export2wordOption = this._getExport2wordOption(el);
-        if (export2wordOption && export2wordOption.indexOf('export2word-transform2inline') >= 0) {
+        if (
+            export2wordOption &&
+      export2wordOption.export2wordTransform2inline === 'true'
+        ) {
             const span = document.createElement('span');
             span.innerHTML = el.innerHTML;
             this._setAttribute(span, el);
@@ -84,7 +87,10 @@ class Export2Word {
         const parentEl = el.parentElement;
         const children = Array.from(el?.children);
         const export2wordOption = this._getExport2wordOption(el);
-        if (export2wordOption && export2wordOption.indexOf('export2word-transform2table') >= 0) {
+        if (
+            export2wordOption &&
+      export2wordOption.export2wordTransform2table === 'true'
+        ) {
             // 如果能识别到这个className， 那么把所有子元素按照表格布局排列， 实现左右布局排列
             const table = document.createElement('table');
             this._setAttribute(table, el);
@@ -269,8 +275,18 @@ class Export2Word {
    * @param {any} el 元素
    * @returns {any} void
    */
-  private _getExport2wordOption(el:any) {
-      return el.getAttribute('export2wordOption')
+  private _getExport2wordOption(el: any) {
+      const export2wordOption = el.getAttribute('export2wordOption');
+      const obj: any = {};
+      if (export2wordOption) {
+          const attr = export2wordOption.slice(1, export2wordOption.length - 1);
+          (attr.split(',') || []).map((x: any) => {
+              const t = x.split(':');
+              obj[t[0]] = t[1];
+          });
+          return obj;
+      }
+      return false;
   }
 }
 
