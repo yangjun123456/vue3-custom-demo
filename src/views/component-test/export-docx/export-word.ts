@@ -58,23 +58,30 @@ class Export2Word {
    * @param {any} el 元素
    * @returns {any} void
    */
-    private _transform2inline(el: any) {
+    private _transform2inline(el:any) {
         const children = Array.from(el?.children);
         const parentEl = el.parentElement;
         const export2wordOption = this._getExport2wordOption(el);
-        if (
-            export2wordOption &&
-      export2wordOption.export2wordTransform2inline === 'true'
-        ) {
+        if (export2wordOption && export2wordOption.export2wordTransform2inline === 'true') {
             const span = document.createElement('span');
             span.innerHTML = el.innerHTML;
             this._setAttribute(span, el);
             parentEl.replaceChild(span, el);
-        }
-        if (children.length) {
-            children.map((x: any) => {
-                this._transform2inline(x);
-            });
+            console.log(span.children);
+            const spanChildren = Array.from(span.children);
+            if (spanChildren.length) {
+                // 遍历刚刚生成的span下的元素，看看有没有需要替换成为span标签的
+                spanChildren.map((x: any) => {
+                    this._transform2inline(x);
+                });
+            }
+        } else {
+            // 如果元素替换成为了span标签了就不遍历子元素了，交给span去遍历
+            if (children.length) {
+                children.map((x: any) => {
+                    this._transform2inline(x);
+                });
+            }
         }
     }
 
@@ -87,17 +94,14 @@ class Export2Word {
         const parentEl = el.parentElement;
         const children = Array.from(el?.children);
         const export2wordOption = this._getExport2wordOption(el);
-        if (
-            export2wordOption &&
-      export2wordOption.export2wordTransform2table === 'true'
-        ) {
+        if (export2wordOption && export2wordOption.export2wordTransform2table === 'true') {
             // 如果能识别到这个className， 那么把所有子元素按照表格布局排列， 实现左右布局排列
             const table = document.createElement('table');
             this._setAttribute(table, el);
             table.classList.add('export2-word-table');
             table.style.cssText += 'width: 100%';
             const tr = document.createElement('tr');
-            children.map((x: any, index: number, list: any) => {
+            children.map((x:any, index:number, list:any) => {
                 const td = document.createElement('td');
                 const textAlignObj = [
                     ['text-align:left;', 'text-align:right;'],
@@ -117,20 +121,29 @@ class Export2Word {
                         td.style.cssText += textAlignObj[1][2];
                     }
                     // 按照百分比设置宽度
-                    td.style.cssText += `width:${100 / list.length}%`;
+                    td.style.cssText += `width:${(100 / list.length)}%`;
                 }
                 td.appendChild(x);
                 tr.appendChild(td);
-            });
+            })
             table.appendChild(tr);
             // el.appendChild(table);
             parentEl.replaceChild(table, el);
-        }
 
-        if (children.length) {
-            children.map((x: any) => {
-                this._transform2Table(x);
-            });
+            const tableChildren = Array.from(table.children);
+            if (tableChildren.length) {
+                // 遍历刚刚生成的span下的元素，看看有没有需要替换成为span标签的
+                tableChildren.map((x: any) => {
+                    this._transform2Table(x);
+                });
+            }
+        } else {
+            // 如果元素替换成为了table标签了就不遍历子元素了，交给table去遍历
+            if (children.length) {
+                children.map((x: any) => {
+                    this._transform2Table(x);
+                });
+            }
         }
     }
 
@@ -190,7 +203,7 @@ class Export2Word {
           style += '}';
           // 设置随机id，用于绑定样式
           const random = Math.random() * Math.pow(10, 20);
-          const id = 'a' + random;
+          const id = 'a' + random; // id 不能以数字开头
           styleSheet += `#${id}${style}`;
           el.id = id;
           if (children.length) {
