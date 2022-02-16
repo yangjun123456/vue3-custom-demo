@@ -11,30 +11,30 @@ import { defineComponent, onMounted, ref, shallowRef, triggerRef } from 'vue';
 import { interval, take } from 'rxjs';
 // import DefinedCustomVueElement from '@/views/vue3-api-test/components/define-custom-element';
 const GetSetUpJsStyle = defineComponent({
-    name: 'GetSetUpJsStyle',
-    setup(props, context) {
-        const colorStyle = shallowRef({
-            color: 'red',
-            fontSize: '20px'
-        });
+  name: 'GetSetUpJsStyle',
+  setup(props, context) {
+    const colorStyle = shallowRef({
+      color: 'red',
+      fontSize: '20px'
+    });
 
-        interval(1000)
-            .pipe(take(5))
-            .subscribe(() => {
-                colorStyle.value.color = colorStyle.value.color === 'red' ? 'orange' : 'red';
-                colorStyle.value.fontSize = colorStyle.value.fontSize === '20px' ? '30px' : '20px';
-                triggerRef(colorStyle);
-            });
-        onMounted(() => {
-            // 动态创建元素标签
-            //   (document.getElementById('defineCustomComponentId') as any).appendChild(
-            //     new DefinedCustomVueElement({
-            //       // 初始化的 prop (可选)
-            //     })
-            //   );
-        });
-        return { colorStyle };
-    }
+    interval(1000)
+      .pipe(take(5))
+      .subscribe(() => {
+        colorStyle.value.color = colorStyle.value.color === 'red' ? 'orange' : 'red';
+        colorStyle.value.fontSize = colorStyle.value.fontSize === '20px' ? '30px' : '20px';
+        triggerRef(colorStyle);
+      });
+    onMounted(() => {
+      // 动态创建元素标签
+      //   (document.getElementById('defineCustomComponentId') as any).appendChild(
+      //     new DefinedCustomVueElement({
+      //       // 初始化的 prop (可选)
+      //     })
+      //   );
+    });
+    return { colorStyle };
+  }
 });
 export default GetSetUpJsStyle;
 </script>

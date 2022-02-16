@@ -80,36 +80,36 @@ console.log(uuid);
 const activeName = ref('tab1');
 console.log(instance);
 const handleClick = (tab: string, event: Event) => {
-    console.log(tab, event);
+  console.log(tab, event);
 };
 
 const list = ref<{ name: string; label: string }[]>([
-    {
-        name: 'tab1',
-        label: 'tab1'
-    },
-    {
-        name: 'tab2',
-        label: 'tab2'
-    },
-    {
-        name: 'tab3',
-        label: 'tab3'
-    },
-    {
-        name: 'tab4',
-        label: 'tab4'
-    }
+  {
+    name: 'tab1',
+    label: 'tab1'
+  },
+  {
+    name: 'tab2',
+    label: 'tab2'
+  },
+  {
+    name: 'tab3',
+    label: 'tab3'
+  },
+  {
+    name: 'tab4',
+    label: 'tab4'
+  }
 ]);
 
 const export2WordInstance: any = ref(null);
 onMounted(() => {
-    export2WordInstance.value = new Export2Word();
+  export2WordInstance.value = new Export2Word();
 });
 
 const exportClick = () => {
-    var el = document.querySelector('.el-tabs-body');
-    export2WordInstance.value.export2Word(el);
+  var el = document.querySelector('.el-tabs-body');
+  export2WordInstance.value.export2Word(el);
 };
 </script>
 
