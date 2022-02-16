@@ -12,7 +12,59 @@ const getRandom = (count: number = 10) => {
   count = count < 10 ? 10 : count;
   const random = Math.random();
   const num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const a = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+  const a = [
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'G',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z'
   ];
 
   let str = a[parseInt(String(Math.random() * a.length), 10)];
@@ -25,6 +77,31 @@ const getRandom = (count: number = 10) => {
     }
   }
   return str;
+};
+
+/**
+ * 下载文件
+ * @param res 文件流
+ */
+const readerDownload = (res:any) => {
+  try {
+    const blob = new Blob([res.data], {
+      type: res.headers['content-type']
+    });
+    const filename = decodeURI(res.headers['content-disposition'])
+      .split(';')[1]
+      .split('=')[1];
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onload = (e:any) => {
+      const a:any = document.createElement('a');
+      a.download = filename;
+      a.href = e.target.result;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+  } catch (error) {}
 };
 
 /**
