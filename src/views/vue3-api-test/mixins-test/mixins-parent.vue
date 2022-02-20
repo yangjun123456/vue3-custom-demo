@@ -25,51 +25,51 @@ import { interval, take, timer } from 'rxjs';
 import mixinChildOne from '@/views/vue3-api-test/mixins-test/mixins/mixin-child-one';
 import mixinChildTwo from '@/views/vue3-api-test/mixins-test/mixins/mixin-child-two';
 const MiXinParent = defineComponent({
-    name: 'MiXinParent',
-    data() {
-        return {
-            describe: 'miaoshuwenjian'
-        };
+  name: 'MiXinParent',
+  data() {
+    return {
+      describe: 'miaoshuwenjian'
+    };
+  },
+  mixins: [mixinChildOne],
+  created() {
+    console.log('created');
+  },
+  mounted() {
+    console.log(this);
+    console.log('mounted');
+  },
+  methods: {
+    mixinChildOneClick() {
+      console.log('');
+      console.log('oneClick');
+      this.mixinChildOneData.name = '123123123123'; // 可以修改mixin-child-two中的值
+      this.funOne();
+      console.log(this);
     },
-    mixins: [mixinChildOne],
-    created() {
-        console.log('created');
-    },
-    mounted() {
-        console.log(this);
-        console.log('mounted');
-    },
-    methods: {
-        mixinChildOneClick() {
-            console.log('');
-            console.log('oneClick');
-            this.mixinChildOneData.name = '123123123123'; // 可以修改mixin-child-two中的值
-            this.funOne();
-            console.log(this);
-        },
-        mixinChildTwoClick() {
-            console.log('');
-            console.log('twoClick');
-            this.mixinChildTwoData.name = 'aslkdfjlalalalala'; // 可以修改mixin-child-two中的值
-            this.funTwo();
-            console.log(this);
-        }
-    },
-    setup(props, context) {
-        const describe = ref('asdf');
-        const { mixinChildTwoData, funTwo } = mixinChildTwo();
-        const obj = ref({ name: '18204739' });
-        onMounted(() => {
-            timer(1000)
-                .pipe(take(!!describe.value))
-                .subscribe(() => {
-                    mixinChildTwoData.value.name = '129873192873'; // 可以修改mixin-child-two中的值
-                });
-            console.log(mixinChildTwoData, funTwo());
-        });
-        return { props, context, obj, mixinChildTwoData, funTwo }; // 导出mixinChildTwo中的值后，可以在 methods 下使用this调用
-    // return { props, context };
+    mixinChildTwoClick() {
+      console.log('');
+      console.log('twoClick');
+      this.mixinChildTwoData.name = 'aslkdfjlalalalala'; // 可以修改mixin-child-two中的值
+      this.funTwo();
+      console.log(this);
     }
+  },
+  setup(props, context) {
+    const describe = ref('asdf');
+    const { mixinChildTwoData, funTwo } = mixinChildTwo();
+    const obj = ref({ name: '18204739' });
+    onMounted(() => {
+      timer(1000)
+        .pipe(take(!!describe.value))
+        .subscribe(() => {
+          mixinChildTwoData.value.name = '129873192873'; // 可以修改mixin-child-two中的值
+        });
+      console.log(mixinChildTwoData, funTwo());
+    });
+    return { props, context, obj, mixinChildTwoData, funTwo }; // 导出mixinChildTwo中的值后，可以在 methods 下使用this调用
+    // return { props, context };
+  }
 });
 export default MiXinParent;
 </script>

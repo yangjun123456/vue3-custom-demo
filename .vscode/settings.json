@@ -2,7 +2,7 @@
 {
     "workbench.startupEditor": "newUntitledFile",
     "files.autoSave": "off", // 关闭文件自动保存，避免开发时候页面变化
-    "editor.tabSize": 4, // tab距离
+    "editor.tabSize": 2, // tab距离
     "editor.formatOnSave": false, // 在保存时自动格式化
     "editor.minimap.enabled": true, // 关闭右侧快速预览
     "files.eol": "\n", // 设定文件的换行符,\n（linux模式）或\r\n(win模式)
@@ -44,7 +44,7 @@
       "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     // Vetur 的各类设定,仅当上面[vue]的editor.defaultFormatter的值为octref.vetur的时候，才起效
-    "vetur.format.options.tabSize": 4,
+    "vetur.format.options.tabSize": 2,
     "vetur.format.styleInitialIndent": false, // 关闭vue中script标签初始缩进，开启会和eslint的缩进校验冲突
     "vetur.format.scriptInitialIndent": false, // 关闭vue中style标签初始缩进，开启会和eslint的缩进校验冲突
     "vetur.format.defaultFormatter.html": "js-beautify-html", // 针对vue中的template部分的风格模版，也可以是：prettier
@@ -66,7 +66,7 @@
         // "max_preserve_newlines": 0,
         "end_with_newline": false,
   
-        "indent_size": 2,
+        "indent_size": 4,
       //   "indent_char": " ",
       //   "indent_with_tabs": false,
       //   "editorconfig": false,
@@ -100,7 +100,7 @@
         // Prettier option here
         "printWidth": 150,
         "trailingComma": "none", // 多行时，尽可能打印尾随的逗号
-        "tabWidth": 2, // 会忽略vetur的tabSize配置
+        "tabWidth": 4, // 会忽略vetur的tabSize配置
         "useTabs": true, // 是否利用tab替代空格
         "semi": true, // 句尾是否加;
         "singleQuote": true, // 使用单引号而不是双引号
@@ -121,9 +121,9 @@
     // "eslint.autoFixOnSave": true,  很多插件提示这么设定，但实际vscode中已经弃用这个设置，改用下面的方式。
     "editor.codeActionsOnSave": {
       // 保存时触发的事件
-      "source.fixAll.eslint": true // 自动fix eslint
+      "source.fixAll.eslint": false // 自动fix eslint
     },
-    "eslint.run": "onSave", // 保存就校验
+    // "eslint.run": "onSave", // 保存就校验
     // 函数名后增加空格
     "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
     "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,

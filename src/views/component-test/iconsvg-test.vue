@@ -69,10 +69,10 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, shallowRef, triggerRef } from 'vue';
 const IconSvgTest = defineComponent({
-    name: 'IconSvgTest',
-    setup(props, context) {
-        return { props };
-    }
+  name: 'IconSvgTest',
+  setup(props, context) {
+    return { props };
+  }
 });
 export default IconSvgTest;
 </script>

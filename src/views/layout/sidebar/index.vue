@@ -101,169 +101,169 @@ import { useRouter } from 'vue-router';
 import { Message, Menu, Setting, ArrowRightBold, ArrowLeftBold, PieChart } from '@element-plus/icons-vue';
 
 export default defineComponent({
-    components: {
-        Message,
-        ArrowRightBold,
-        ArrowLeftBold
+  components: {
+    Message,
+    ArrowRightBold,
+    ArrowLeftBold
     // PieChart
     // Setting
     // 'icon-menu': Menu
-    },
-    setup() {
-        const menus = [
-            {
-                title: 'home',
-                url: '/home',
-                index: '0',
-                icon: ''
-            },
-            {
-                title: 'echarts',
-                url: '',
-                index: '1',
-                icon: '',
-                children: [
-                    {
-                        content: 'line-echarts',
-                        url: '/lineEcharts',
-                        icon: '',
-                        index: '1-1'
-                    },
-                    {
-                        content: 'bar-echarts',
-                        url: '/barEcharts',
-                        icon: '',
-                        index: '1-2'
-                    }
-                ]
-            },
-            {
-                title: 'Vue Test',
-                url: '',
-                index: '2',
-                icon: '',
-                children: [
-                    {
-                        content: '测试父子通信',
-                        url: '/testCommunication',
-                        icon: '',
-                        index: '2-1'
-                    },
-                    {
-                        content: '测试ref 和 reactive',
-                        url: '/refAndReactive',
-                        icon: '',
-                        index: '2-2'
-                    },
-                    {
-                        content: '测试shallowRef 和 shallowReactive',
-                        url: '/shallowRefAndShallowReactive',
-                        icon: '',
-                        index: '2-3'
-                    },
-                    {
-                        content: '测试toRaw 和 makeRaw',
-                        url: '/toRawAndMakeRaw',
-                        icon: '',
-                        index: '2-4'
-                    },
-                    {
-                        content: '测试toRef 和 toRefs',
-                        url: '/toRefAndToRefs',
-                        icon: '',
-                        index: '2-5'
-                    },
-                    {
-                        content: '测试watch 和 watchEffect',
-                        url: '/watchAndWatchEffect',
-                        icon: '',
-                        index: '2-6'
-                    },
-                    {
-                        content: '通过v-bind获取js中的样式并且实现响应式更新',
-                        url: '/getSetupJsStyle',
-                        icon: '',
-                        index: '2-7'
-                    },
-                    {
-                        content: 'v-memo',
-                        url: '/vMemo',
-                        icon: '',
-                        index: '2-8'
-                    },
-                    {
-                        content: 'mixin-test',
-                        url: '/mixinTest',
-                        icon: '',
-                        index: '2-9'
-                    },
-                    {
-                        content: 'test-axios测试axios请求',
-                        url: '/testAxios',
-                        icon: '',
-                        index: '2-10'
-                    },
-                    {
-                        content: 'vueI18n-测试',
-                        url: '/vueI18n',
-                        icon: '',
-                        index: '2-11'
-                    }
-                ]
-            },
-            {
-                title: '组件测试',
-                url: '',
-                index: '3',
-                icon: '',
-                children: [
-                    {
-                        content: 'svg-icon',
-                        url: '/iconSvg',
-                        icon: '',
-                        index: '3-1'
-                    },
-                    {
-                        content: 'el-tabs 测试tabs中是否能获取到refs',
-                        url: '/elTabs',
-                        icon: '',
-                        index: '3-2'
-                    },
-                    {
-                        content: '测试导出docx插件-导出html为docx文件',
-                        url: '/exportDocx',
-                        icon: '',
-                        index: '3-3'
-                    }
-                ]
-            }
-            //   {
-            //     title: 'lodash',
-            //     url: '',
-            //     index: '3',
-            //     icon: ''
-            //   }
-        ];
-        const router = useRouter();
-        const isCollapse = ref(false);
-        const handleOpen = (key: any, keyPath: any) => {
-            console.log(key, keyPath);
-        };
-        const handleClose = (key: any, keyPath: any) => {
-            console.log(key, keyPath);
-        };
+  },
+  setup() {
+    const menus = [
+      {
+        title: 'home',
+        url: '/home',
+        index: '0',
+        icon: ''
+      },
+      {
+        title: 'echarts',
+        url: '',
+        index: '1',
+        icon: '',
+        children: [
+          {
+            content: 'line-echarts',
+            url: '/lineEcharts',
+            icon: '',
+            index: '1-1'
+          },
+          {
+            content: 'bar-echarts',
+            url: '/barEcharts',
+            icon: '',
+            index: '1-2'
+          }
+        ]
+      },
+      {
+        title: 'Vue Test',
+        url: '',
+        index: '2',
+        icon: '',
+        children: [
+          {
+            content: '测试父子通信',
+            url: '/testCommunication',
+            icon: '',
+            index: '2-1'
+          },
+          {
+            content: '测试ref 和 reactive',
+            url: '/refAndReactive',
+            icon: '',
+            index: '2-2'
+          },
+          {
+            content: '测试shallowRef 和 shallowReactive',
+            url: '/shallowRefAndShallowReactive',
+            icon: '',
+            index: '2-3'
+          },
+          {
+            content: '测试toRaw 和 makeRaw',
+            url: '/toRawAndMakeRaw',
+            icon: '',
+            index: '2-4'
+          },
+          {
+            content: '测试toRef 和 toRefs',
+            url: '/toRefAndToRefs',
+            icon: '',
+            index: '2-5'
+          },
+          {
+            content: '测试watch 和 watchEffect',
+            url: '/watchAndWatchEffect',
+            icon: '',
+            index: '2-6'
+          },
+          {
+            content: '通过v-bind获取js中的样式并且实现响应式更新',
+            url: '/getSetupJsStyle',
+            icon: '',
+            index: '2-7'
+          },
+          {
+            content: 'v-memo',
+            url: '/vMemo',
+            icon: '',
+            index: '2-8'
+          },
+          {
+            content: 'mixin-test',
+            url: '/mixinTest',
+            icon: '',
+            index: '2-9'
+          },
+          {
+            content: 'test-axios测试axios请求',
+            url: '/testAxios',
+            icon: '',
+            index: '2-10'
+          },
+          {
+            content: 'vueI18n-测试',
+            url: '/vueI18n',
+            icon: '',
+            index: '2-11'
+          }
+        ]
+      },
+      {
+        title: '组件测试',
+        url: '',
+        index: '3',
+        icon: '',
+        children: [
+          {
+            content: 'svg-icon',
+            url: '/iconSvg',
+            icon: '',
+            index: '3-1'
+          },
+          {
+            content: 'el-tabs 测试tabs中是否能获取到refs',
+            url: '/elTabs',
+            icon: '',
+            index: '3-2'
+          },
+          {
+            content: '测试导出docx插件-导出html为docx文件',
+            url: '/exportDocx',
+            icon: '',
+            index: '3-3'
+          }
+        ]
+      }
+      //   {
+      //     title: 'lodash',
+      //     url: '',
+      //     index: '3',
+      //     icon: ''
+      //   }
+    ];
+    const router = useRouter();
+    const isCollapse = ref(false);
+    const handleOpen = (key: any, keyPath: any) => {
+      console.log(key, keyPath);
+    };
+    const handleClose = (key: any, keyPath: any) => {
+      console.log(key, keyPath);
+    };
 
-        const routerTo = (name: string) => {
-            router.push({ path: name });
-        };
-        return {
-            isCollapse,
-            handleOpen,
-            handleClose,
-            routerTo,
-            menus
-        };
-    }
+    const routerTo = (name: string) => {
+      router.push({ path: name });
+    };
+    return {
+      isCollapse,
+      handleOpen,
+      handleClose,
+      routerTo,
+      menus
+    };
+  }
 });
 </script>
 

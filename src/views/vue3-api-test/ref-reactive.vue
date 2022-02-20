@@ -36,122 +36,122 @@
 // 本组件调试setup的两个参数
 import { interval, take } from 'rxjs';
 import {
-    defineComponent,
-    markRaw,
-    toRef,
-    toRefs,
-    toRaw,
-    reactive,
-    ref,
-    onMounted,
-    watchEffect,
-    watch,
-    computed,
-    getCurrentInstance,
-    shallowRef,
-    shallowReactive,
-    inject,
-    triggerRef
+  defineComponent,
+  markRaw,
+  toRef,
+  toRefs,
+  toRaw,
+  reactive,
+  ref,
+  onMounted,
+  watchEffect,
+  watch,
+  computed,
+  getCurrentInstance,
+  shallowRef,
+  shallowReactive,
+  inject,
+  triggerRef
 } from 'vue';
 
 // setup 中使用watch、computed、ref、reactive
 const RefAndReactive = defineComponent({
-    name: 'RefAndReactive',
-    components: {},
-    props: {
-        room: {
-            type: String,
-            default: ''
-        },
-        state: {
-            type: Object,
-            default: () => {
-                return {};
-            }
-        },
-        title: {
-            type: String,
-            default: ''
-        }
+  name: 'RefAndReactive',
+  components: {},
+  props: {
+    room: {
+      type: String,
+      default: ''
     },
-    setup(props, context) {
-    /* reactive-----------------------------------------------------start */
-        const reactiveObj1Raw = {
-            count: 0,
-            name: 'BBBB',
-            age: 28,
-            teacher: 'mr.BBBB',
-            room: '281',
-            aaa: {
-                name: {
-                    value: 'asdfasfd'
-                }
-            },
-            date: new Date('2021-01-01')
-        };
-        const reactiveObj1 = reactive(reactiveObj1Raw);
-
-        const reactiveList1Raw = ['a', 'c', 'b', 'd', 's', 'g', 'h'];
-        const reactiveList1 = reactive(reactiveList1Raw);
-
-        const reactiveClick = () => {
-            reactiveObj1.age++;
-            reactiveObj1.date = new Date('2029-01-01');
-            reactiveList1[0] = 'alsaaaaaakdfj';
-            console.log('reactiveObj1========', reactiveObj1, reactiveObj1Raw);
-            console.log('reactiveList1========', reactiveList1, reactiveList1Raw);
-        }
-        const reactiveClick1 = () => {
-            reactiveObj1Raw.age++;
-            console.log('reactiveObj1========', reactiveObj1, reactiveObj1Raw);
-            console.log('reactiveList1========', reactiveList1, reactiveList1Raw);
-        }
-        /* reactive-----------------------------------------------------end */
-
-        /* ref-----------------------------------------------------start */
-        const obj = { count: 5 };
-        const objm = { count: 3 };
-        const bolOright = false;
-        const count = ref(obj.count);
-        const objw = ref(objm);
-        const bol = ref(true);
-        const bol2 = ref(bolOright);
-        const date = ref(new Date('2020-09-09'));
-        const refClick1 = () => {
-            date.value = new Date('2025-12-12');
-            //   obj.count++;
-            //   objm.count++;
-            count.value++;
-            objw.value.count++;
-            console.log(count, obj, objm, objw); // 不会修改原始值，会更新dom，如果有其它的操作更新dom，也不会更新原始值
-        };
-        const refClick2 = () => {
-            bol.value = !bol.value;
-            bol2.value = !bol2.value;
-            //   bolOright = !bolOright
-            console.log(bol, bol2, bolOright);
-        };
-
-        /* ref-----------------------------------------------------end */
-
-        return {
-            props,
-            context,
-            reactiveObj1Raw,
-            reactiveObj1,
-            count,
-            bol,
-            objw,
-            date,
-            bol2,
-            bolOright,
-            refClick1,
-            refClick2,
-            reactiveList1,
-            reactiveClick,
-            reactiveClick1
-        };
+    state: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    },
+    title: {
+      type: String,
+      default: ''
     }
+  },
+  setup(props, context) {
+    /* reactive-----------------------------------------------------start */
+    const reactiveObj1Raw = {
+      count: 0,
+      name: 'BBBB',
+      age: 28,
+      teacher: 'mr.BBBB',
+      room: '281',
+      aaa: {
+        name: {
+          value: 'asdfasfd'
+        }
+      },
+      date: new Date('2021-01-01')
+    };
+    const reactiveObj1 = reactive(reactiveObj1Raw);
+
+    const reactiveList1Raw = ['a', 'c', 'b', 'd', 's', 'g', 'h'];
+    const reactiveList1 = reactive(reactiveList1Raw);
+
+    const reactiveClick = () => {
+      reactiveObj1.age++;
+      reactiveObj1.date = new Date('2029-01-01');
+      reactiveList1[0] = 'alsaaaaaakdfj';
+      console.log('reactiveObj1========', reactiveObj1, reactiveObj1Raw);
+      console.log('reactiveList1========', reactiveList1, reactiveList1Raw);
+    }
+    const reactiveClick1 = () => {
+      reactiveObj1Raw.age++;
+      console.log('reactiveObj1========', reactiveObj1, reactiveObj1Raw);
+      console.log('reactiveList1========', reactiveList1, reactiveList1Raw);
+    }
+    /* reactive-----------------------------------------------------end */
+
+    /* ref-----------------------------------------------------start */
+    const obj = { count: 5 };
+    const objm = { count: 3 };
+    const bolOright = false;
+    const count = ref(obj.count);
+    const objw = ref(objm);
+    const bol = ref(true);
+    const bol2 = ref(bolOright);
+    const date = ref(new Date('2020-09-09'));
+    const refClick1 = () => {
+      date.value = new Date('2025-12-12');
+      //   obj.count++;
+      //   objm.count++;
+      count.value++;
+      objw.value.count++;
+      console.log(count, obj, objm, objw); // 不会修改原始值，会更新dom，如果有其它的操作更新dom，也不会更新原始值
+    };
+    const refClick2 = () => {
+      bol.value = !bol.value;
+      bol2.value = !bol2.value;
+      //   bolOright = !bolOright
+      console.log(bol, bol2, bolOright);
+    };
+
+    /* ref-----------------------------------------------------end */
+
+    return {
+      props,
+      context,
+      reactiveObj1Raw,
+      reactiveObj1,
+      count,
+      bol,
+      objw,
+      date,
+      bol2,
+      bolOright,
+      refClick1,
+      refClick2,
+      reactiveList1,
+      reactiveClick,
+      reactiveClick1
+    };
+  }
 });
 
 export default RefAndReactive;

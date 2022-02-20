@@ -8,36 +8,36 @@
 <script lang="ts">
 import { take, interval } from 'rxjs';
 import {
-    defineComponent,
-    markRaw,
-    toRaw,
-    reactive,
-    ref,
-    onMounted,
-    watchEffect,
-    watch,
-    computed,
-    getCurrentInstance
+  defineComponent,
+  markRaw,
+  toRaw,
+  reactive,
+  ref,
+  onMounted,
+  watchEffect,
+  watch,
+  computed,
+  getCurrentInstance
 } from 'vue';
 import { useStore } from 'vuex';
 import { NavModule } from '@/store/modules/nav';
 
 // setup 中使用watch、computed、ref、reactive
 const HellowWordTwo = defineComponent({
-    name: 'HellowWordTwo',
-    inject: ['$getUuidv4'],
-    props: {
-        msg: {
-            type: String,
-            default: ''
-        }
-    },
-    setup(props, context) {
-        return {
-            props,
-            context
-        }
+  name: 'HellowWordTwo',
+  inject: ['$getUuidv4'],
+  props: {
+    msg: {
+      type: String,
+      default: ''
     }
+  },
+  setup(props, context) {
+    return {
+      props,
+      context
+    }
+  }
 });
 
 export default HellowWordTwo;

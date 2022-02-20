@@ -12,10 +12,14 @@
         </td>
       </tr>
     </table>
-
-    <div class="wraper">
+    <h1 :export2wordOption="JSON.stringify({export2wordTransform2Style: {'margin-top': '1000px'}})">asdfasdf</h1>
+    <div class="wraper" :export2wordOption="JSON.stringify({export2wordTransform2table:true})">
       <div class="left">asdfasdf</div>
       <div class="right">123123123</div>
+    </div>
+    <div class="wraper">
+      <div class="left" :export2wordOption="JSON.stringify({export2wordTransform2inline:true})">asdfasdf</div>
+      <div class="right" :export2wordOption="JSON.stringify({export2wordTransform2inline:true})">123123123</div>
     </div>
 
     <h1 class="asdfalala">aslkdfjasdfkljsldfkj</h1>
@@ -76,36 +80,36 @@ console.log(uuid);
 const activeName = ref('tab1');
 console.log(instance);
 const handleClick = (tab: string, event: Event) => {
-    console.log(tab, event);
+  console.log(tab, event);
 };
 
 const list = ref<{ name: string; label: string }[]>([
-    {
-        name: 'tab1',
-        label: 'tab1'
-    },
-    {
-        name: 'tab2',
-        label: 'tab2'
-    },
-    {
-        name: 'tab3',
-        label: 'tab3'
-    },
-    {
-        name: 'tab4',
-        label: 'tab4'
-    }
+  {
+    name: 'tab1',
+    label: 'tab1'
+  },
+  {
+    name: 'tab2',
+    label: 'tab2'
+  },
+  {
+    name: 'tab3',
+    label: 'tab3'
+  },
+  {
+    name: 'tab4',
+    label: 'tab4'
+  }
 ]);
 
 const export2WordInstance: any = ref(null);
 onMounted(() => {
-    export2WordInstance.value = new Export2Word();
+  export2WordInstance.value = new Export2Word();
 });
 
 const exportClick = () => {
-    var el = document.querySelector('.el-tabs-body');
-    export2WordInstance.value.export2Word(el);
+  var el = document.querySelector('.el-tabs-body');
+  export2WordInstance.value.export2Word(el);
 };
 </script>
 

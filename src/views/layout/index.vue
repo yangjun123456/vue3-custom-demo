@@ -19,13 +19,13 @@ import { Options, Vue } from 'vue-class-component';
 import SideBar from '@/views/layout/sidebar/index.vue';
 
 @Options({
-    name: 'Layout',
-    components: {
-        SideBar
-    },
-    props: {
-        msg: String
-    }
+  name: 'Layout',
+  components: {
+    SideBar
+  },
+  props: {
+    msg: String
+  }
 })
 export default class Layout extends Vue {
 	msg!: string;
