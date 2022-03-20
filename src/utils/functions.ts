@@ -83,7 +83,7 @@ const getRandom = (count: number = 10) => {
  * 下载文件
  * @param res 文件流
  */
-const readerDownload = (res:any) => {
+const readerDownload = (res: any) => {
   try {
     const blob = new Blob([res.data], {
       type: res.headers['content-type']
@@ -93,8 +93,8 @@ const readerDownload = (res:any) => {
       .split('=')[1];
     const reader = new FileReader();
     reader.readAsDataURL(blob);
-    reader.onload = (e:any) => {
-      const a:any = document.createElement('a');
+    reader.onload = (e: any) => {
+      const a: any = document.createElement('a');
       a.download = filename;
       a.href = e.target.result;
       document.body.appendChild(a);

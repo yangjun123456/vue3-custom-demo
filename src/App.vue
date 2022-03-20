@@ -1,7 +1,7 @@
 <template>
-    <section class="app-main">
-        <router-view />
-    </section>
+	<section class="app-main">
+		<router-view />
+	</section>
 </template>
 
 <script setup lang="ts">

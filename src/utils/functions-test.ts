@@ -1,5 +1,6 @@
 
 import { getRandom } from './functions';
+import { validatorPhoneNum } from './validator';
 import { ref, getCurrentInstance, inject } from 'vue';
 
 export class FunctionTest {
@@ -40,5 +41,12 @@ export class FunctionTest {
     console.log('$uuidv3.DNS======', $uuidv3.DNS);
     console.log('%c 如果uuidv3给第二个参数传uuidv3.URL,那么如果前边参数相同，那么生成的uuid相同', 'font-size: 20px;color: red');
     console.log('%c uuidv3的参数只能传字符串，不能传object对象', 'font-size: 20px;color: red');
+  }
+
+  /**
+   * 验证正则匹配
+   */
+  validatorPhoneFun() {
+    validatorPhoneNum('15931501775');
   }
 }
