@@ -65,7 +65,7 @@ module.exports = {
     'consistent-return': 2, // return 后面是否允许省略
     'accessor-pairs': 2, // 在对象中使用getter/setter
     'dot-location': [2, 'property'], // 对象访问符的位置，换行的时候在行首还是行尾
-    'no-lone-blocks': 2, // 禁止不必要的嵌套块
+    'no-lone-blocks': 0, // 禁止不必要的嵌套块
     'no-labels': 2, // 禁止标签声明
     'no-extend-native': 2, // 禁止扩展native对象
     'no-floating-decimal': 2, // 禁止省略浮点数中的0 .5 3.

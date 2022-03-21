@@ -10,6 +10,8 @@ import saveAs from 'file-saver';
  * 4. export2wordTransform2Style 在转换成为word时需要添加什么样式
  * 5. word文档中不需要考虑同行文字水平居中对齐的问题
  * 6. 当前未处理图片，如果引入的是在线的图片可以显示，如果引入的不是在线的图片不能正常显示
+ * 7. 添加页眉页脚处理需要添加word-footer-content、word-header-content 类名， 根据需要添加是否转换为表格和转为word后的样式
+ * 8. 本次导出添加了页眉页脚， 如果有其他更好的页眉页脚设置可修改整个html模板进行替换
  */
 /**
  * 设计思路
@@ -41,24 +43,98 @@ class Export2Word {
     // 保存样式表
     const styleSheet = this._setStyleSheet(node, _node);
 
-    console.log(styleSheet);
-    console.log(node);
-    console.log(node?.innerHTML);
+    // console.log(styleSheet);
+    // console.log(node);
+    // console.log(node?.innerHTML);
 
     // 在获取innerHTML之前移除不显示的元素
     this._removeNoneChild(node);
     // 转换两侧布局的html为表格类型
     this._transform2Table(node);
 
-    const el = node?.innerHTML;
     // el = `<div id="abcdefg">
     //     <span style="display:block;width: 1000px;">asdfasfd</span>
     //     <span style="display:block;float:right;">456782934</span>
     // </div>`
-    console.log(111, el);
-    const page = `<!DOCTYPE html><html><head><meta charset="UTF-8">
-        <style>${styleSheet}</style>
-        </head><body>${el}</body></html>`;
+    // console.log(111, el);
+
+    // const page = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+    // <style>${styleSheet}</style>
+    // </head><body>${el}</body></html>`;
+    const footer = this._getFooter(node);
+    const header = this._getHeader(node);
+    this._hideWordContentFooterHeader(node);
+    const el = node?.innerHTML;
+    // 设置页眉页脚
+    const page = `<!DOCTYPE html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:w="urn:schemas-microsoft-com:office:word"
+        xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+        xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+            <meta charset="UTF-8">
+            <style>
+            @page {
+                mso-footer: f1;
+                mso-header: h1;
+            }
+            
+            @page Section1 {}
+            
+            div.Section1 {
+                page: Section1;
+            }
+            
+            p.MsoHeader,
+            p.MsoFooter {
+                border: 0px;
+                text-align: center
+            }
+            
+            table#tableHdFt {
+                margin: 0in 0in 0in 900in;
+                width: 1px;
+                height: 1px;
+            }
+            </style>
+            <style>${styleSheet}</style>
+            <xml>
+                <w:WordDocument>
+                    <w:View>Print</w:View>
+                    <w:Zoom>100</w:Zoom>
+                    <w:DoNotOptimizeForBrowser />
+                </w:WordDocument>
+            </xml>
+        </head>
+        
+        <body>
+        <div class="Section1">
+                ${el}
+                <table id="tableHdFt" border="0" cellspacing="0" cellpadding="0">
+                    <tr style="">
+                        <td style="height:1pt;width:1px;overflow:hidden;mso-height-rule:exactly;mso-width-rule:exactly;">
+                            <div style="mso-element:footer; text-align:center;position:relative;z-index:-1" id="f1">
+                                <!--[if supportFields]>
+                                    <span class="MsoPageNumber" style="display:none;">
+                                        <span style="mso-element:field-begin"></span>PAGE<span style="mso-element:field-end"></span>/<span style="mso-element:field-begin"></span>NUMPAGES</span><span style="mso-element:field-end"></span>
+                                    </span>
+                                    ${footer}
+                                <![endif]-->
+                            </div>
+        
+                            <div style="mso-element:header; text-align:center;position:relative;z-index:-1" id="h1">
+                              <span style= text-align:center; font-size:24px; font-weight:bold; display:none;font-family:宋体">
+                                  123123年-123123月份微信汇款<br>合计：'123123元</span>
+                                ${header}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </body>
+        
+        
+        </html>`;
+
     console.log(page);
     // var converted = htmlDocx.asBlob(page,{orientation: 'landscape', margins: {top: 720}});
     const converted = htmlDocx.asBlob(page, { margins: { top: 1000 } });
@@ -99,7 +175,7 @@ class Export2Word {
       span.innerHTML = el.innerHTML;
       this._setAttribute(span, el);
       parentEl.replaceChild(span, el);
-      console.log(span.children);
+      // console.log(span.children);
       const spanChildren = Array.from(span.children);
       if (spanChildren.length) {
         // 遍历刚刚生成的span下的元素，看看有没有需要替换成为span标签的
@@ -311,7 +387,7 @@ class Export2Word {
    */
   private _setAttribute(node: any, _node: any) {
     const attributes = _node.attributes;
-    console.log(attributes);
+    // console.log(attributes);
     let [key, value]: any = [];
     for ([key, value] of Object.entries(attributes)) {
       if (!isNaN(parseInt(key))) {
@@ -375,7 +451,7 @@ class Export2Word {
       // 转换rgba为rgb
       // 设置颜色， 如果是rgba形式， 转换为rgb形式并且忽略透明度， 如果透明度是0， 那么设置为transparent
       // transparent 只针对background有效， 对color设置无效， 针对color需要设置为transparent后再针对color特殊处理
-      console.log(key, '++++', style[0][key]);
+      // console.log(key,'++++',style[0][key]);
       const bgcolor: string = style[0][key].replace(/\s/g, '');
       let _bgcolor: string = bgcolor;
       let opacity: string = '10086';
@@ -417,8 +493,52 @@ class Export2Word {
           // 隐藏掉透明文字的元素
           style[0].display = 'none';
         }
-        console.log('-------', color);
+        // console.log('-------',color);
       }
+    }
+  }
+
+  /**
+   * 获取页脚
+   */
+  private _getFooter(node: any) {
+    const footer = node.querySelector('.word-footer-content').innerHTML;
+    return footer;
+  }
+
+  /**
+   * 获取页眉
+   */
+  private _getHeader(node: any) {
+    const header = node.querySelector('.word-header-content').innerHTML;
+    return header;
+  }
+
+  /**
+   * 隐藏word中的页眉和页脚
+   * @param node clone 后的dom元素
+   * @returns
+   */
+  private _hideWordContentFooterHeader(node: any) {
+    // 设置页眉
+    console.log(node.querySelector('.word-header-content'));
+    if (node.querySelector('.word-header-content')) {
+      node.querySelector('.word-header-content').innerHTML = '';
+      node.querySelector('.word-header-content').style.display = 'none';
+      node.querySelector('.word-header-content').style.opacity = 0;
+      // node.querySelector('.word-header-content').style.visibility='hidden';
+      // node.querySelector('.word-header-content').style.width='0px';
+      // node.querySelector('.word-header-content').style.height='0px';
+    }
+    // 设置页脚
+    if (node.querySelector('.word-footer-content')) {
+      console.log(node.querySelector('.word-footer-content'));
+      node.querySelector('.word-footer-content').innerHTML = '';
+      node.querySelector('.word-footer-content').style.display = 'none';
+      node.querySelector('.word-footer-content').style.opacity = 0;
+      // node.querySelector('.word-footer-content').style.visibility='hidden';
+      // node.querySelector('.word-footer-content').style.width='0px';
+      // node.querySelector('.word-footer-content').style.height='0px';
     }
   }
 }
