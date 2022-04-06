@@ -6,6 +6,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const setPlugins = () => {
+  const plugins = [];
+  return plugins;
+};
+
 module.exports = {
   productionSourceMap: false,
   runtimeCompiler: true, // 更换编译模式
@@ -32,8 +37,10 @@ module.exports = {
   // 指定子路径。比如，如果你的应用部署在
   // https://www.foobar.com/my-app/
   // 那么将这个值改为 `/my-app/`
-  publicPath: process.env.NODE_ENV === 'development' ? './' : '/dist/',　　/* 这个是我存放在github在线预览的Reader项目*/
-
+  publicPath:
+    process.env.NODE_ENV === 'development'
+      ? './'
+      : '/dist/' /* 这个是我存放在github在线预览的Reader项目*/,
   // 将构建好的文件输出到哪里（或者说将编译的文件）
   outputDir: 'dist',
 
@@ -72,7 +79,10 @@ module.exports = {
       })
       .end();
 
-    config.output.filename('assets/js/[name].[hash].js').chunkFilename('assets/js/[name].[hash].js').end(); // 开发环境打包hash
+    config.output
+      .filename('assets/js/[name].[hash].js')
+      .chunkFilename('assets/js/[name].[hash].js')
+      .end(); // 开发环境打包hash
 
     config.module
       .rule('thread-loader')
@@ -97,62 +107,69 @@ module.exports = {
       return options;
     });
 
-    // config.output.filename('js/[name].[hash]-1.js').chunkFilename('js/[name].[hash]-1.js').end(); // 开发环境打包hash
+    // config.output
+    //   .filename('js/[name].[hash]-1.js')
+    //   .chunkFilename('js/[name].[hash]-1.js')
+    //   .end(); // 开发环境打包hash
 
-    // config
-    //   .plugin('webpack-bundle-analyzer')
-    //   .use(BundleAnalyzerPlugin)
+    // config.plugin('webpack-bundle-analyzer').use(BundleAnalyzerPlugin);
   },
 
   configureWebpack: (config) => {
     // console.log(config);
-    config.optimization = {
-      splitChunks: {
-        chunks: 'all'
-      }
-    };
+    // config.optimization = {
+    //   splitChunks: {
+    //     chunks: 'all'
+    //   }
+    // };
     config.optimization = {
       runtimeChunk: 'single',
       splitChunks: {
+        chunks: 'all',
         cacheGroups: {
           // 公用模块抽离
-          common: {
-            chunks: 'all',
-            minSize: 0, // 大于0个字节
-            minChunks: 1 // 抽离公共代码时，这个代码块最小被引用的次数
+          vendors: {
+            name: 'chunk-vendors',
+            test: /[\\/]node_modules[\\/]/,
+            priority: 10,
+            chunks: 'initial'
           },
-          // 第三方库抽离
+          iview: {
+            name: 'chunk-iview',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?iview(.*)/
+          },
           echarts: {
-            priority: 10, // 权重
-            test: /echarts/,
-            chunks: 'all',
-            minSize: 0, // 大于0个字节
-            minChunks: 1 // 在分割之前，这个代码块最小应该被引用的次数
-          },
-          lodash: {
-            priority: 10, // 权重
-            test: /lodash/,
-            chunks: 'all',
-            minSize: 0, // 大于0个字节
-            minChunks: 1 // 在分割之前，这个代码块最小应该被引用的次数
+            name: 'chunk-echarts',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?echarts(.*)/
           },
           rxjs: {
-            priority: 10, // 权重
-            test: /rxjs/,
-            chunks: 'all',
-            minSize: 0, // 大于0个字节
-            minChunks: 1 // 在分割之前，这个代码块最小应该被引用的次数
+            name: 'chunk-rxjs',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?rxjs(.*)/
           },
-          vendor: {
-            priority: 10, // 权重
-            test: /node_modules/,
-            chunks: 'all',
-            minSize: 0, // 大于0个字节
-            minChunks: 1 // 在分割之前，这个代码块最小应该被引用的次数
+          lodash: {
+            name: 'chunk-lodash',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?lodash(.*)/
+          },
+          elementPlus: {
+            name: 'chunk-element-plus',
+            priority: 20,
+            test: /[\\/]node_modules[\\/]_?element-plus(.*)/
+          },
+          commons: {
+            name: 'chunk-commons',
+            minChunks: 2,
+            priority: 5,
+            chunks: 'initial',
+            reuseExistingChunk: true
           }
         }
       }
     };
+    config.plugins = [...config.plugins, ...setPlugins()];
   },
 
   lintOnSave: false
