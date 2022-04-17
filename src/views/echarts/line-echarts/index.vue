@@ -97,6 +97,8 @@ export default class LineEcharts extends Vue {
       },
       series: [
         {
+
+          symbolSize: 12,
           name: 'Email',
           type: 'line',
           stack: 'Total',

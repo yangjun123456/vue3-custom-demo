@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 // element-plus
 import { setupElementPlus } from '@/plugins/element-plus';
+// ant-design-vue
+import { setupAntd } from '@/plugins/ant-design-vue';
 
 // vue-i18n
 // 多语言
@@ -49,6 +51,7 @@ app.provide('$getUuidv3', uuidv3); // 组件内需使用inject 引入
 app.config.globalProperties.$uuidv3 = uuidv3;
 // app.use 应用
 setupElementPlus(app);
+setupAntd(app);
 setupI18n(app);
 app.use(store).use(router).mount('#app');
 
