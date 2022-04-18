@@ -16,7 +16,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        redirect: 'iconSvg'
+        redirect: 'testFlexible'
       },
       ...echartsRouteOptions,
       ...vue3DemoOptions,

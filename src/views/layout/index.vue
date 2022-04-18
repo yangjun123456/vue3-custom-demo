@@ -2,8 +2,7 @@
   <el-container class="layout-body"
     height="100%">
     <el-header class="header">Header</el-header>
-    <el-container class="content"
-      style="height: calc(100% - 56px);">
+    <el-container class="content">
       <section class="aside">
         <SideBar></SideBar>
       </section>
@@ -37,10 +36,14 @@ export default class Layout extends Vue {
 .layout-body {
 	.header {
 		background-color: #42b983;
+    height: 60px !important;
+    line-height: 60px !important;
+    font-size: 20px;
 	}
 	.content {
 		display: flex;
 		justify-content: space-between;
+    height: calc(100% - 56px);
 		.main {
 			box-shadow: 0px 0px 10px 0px #888888;
 			flex: 1;

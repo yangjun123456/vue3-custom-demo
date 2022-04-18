@@ -79,6 +79,19 @@ module.exports = {
       })
       .end();
 
+    // px2rem-loader ------- loader设置
+    config.module
+      .rule('scss')
+      .oneOf('vue')
+      .use('px2rem-loader')
+      .loader('px2rem-loader')
+      .before('postcss-loader') // this makes it work.
+      .options({
+        remUnit: 80, // 根据视觉稿，rem为px的 20分之一，1920px  80rem
+        remPrecision: 8 // 换算的rem保留几位小数点
+      })
+      .end();
+
     config.output
       .filename('assets/js/[name].[hash].js')
       .chunkFilename('assets/js/[name].[hash].js')

@@ -1,12 +1,10 @@
 <template>
-  <div class="bar-echarts-body">
-    <div
-      ref="barEcharts"
-      class="bar-echarts"
-      :id="echartsId"
-      :key="echartsId"
-    ></div>
-  </div>
+	<div class="bar-echarts-body">
+		<div ref="barEcharts"
+			class="bar-echarts"
+			:id="echartsId"
+			:key="echartsId"></div>
+	</div>
 </template>
 
 <script lang="ts">
@@ -17,10 +15,10 @@ import * as echarts from 'echarts';
 import { interval, take, takeWhile } from 'rxjs';
 
 interface Data {
-  uuid: string;
-  echartsId: string;
-  echartOptions: any;
-  echartsInstance: any;
+	uuid: string;
+	echartsId: string;
+	echartOptions: any;
+	echartsInstance: any;
 }
 
 @Options({
@@ -62,9 +60,7 @@ interface Data {
   methods: {
     // 实例
     initChart() {
-      this.echartsInstance = markRaw(
-        echarts.init(this.$refs.barEcharts as any)
-      );
+      this.echartsInstance = markRaw(echarts.init(this.$refs.barEcharts as any));
     },
     // 设置options
     setChartOptions() {
@@ -201,10 +197,7 @@ interface Data {
       // 初始化uuid，data中不能直接获取到this.$uuid,需要created后获取 created 中赋值操作
       this.uuid = this.$getUuidv4(); // provide 引入方式调用 类型会报错 inject 方法不能直接调用
       this.echartsId = this.$uuid(); // globalProperties 引入方式调用
-      console.log(
-        '%c bar-echarts/index.vue  uuid的两种使用方法==' + this.$getUuidv4() + '+++' + this.$uuid(),
-        'font-size: 20px;color: red;'
-      );
+      console.log('%c bar-echarts/index.vue  uuid的两种使用方法==' + this.$getUuidv4() + '+++' + this.$uuid(), 'font-size: 20px;color: red;');
     }
   }
 })
@@ -214,10 +207,10 @@ export default class BarEcharts extends Vue {}
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .bar-echarts-body {
-  font-size: 14px;
+	font-size: 14px;
 }
 .bar-echarts {
-  width: 100%;
-  height: 80vh;
+	width: 100%;
+	height: 80vh;
 }
 </style>

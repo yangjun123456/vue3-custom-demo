@@ -234,6 +234,12 @@ export default defineComponent({
             url: '/exportDocx',
             icon: '',
             index: '3-3'
+          },
+          {
+            content: '测试flexible转换px-rem实现响应式',
+            url: '/testFlexible',
+            icon: '',
+            index: '3-4'
           }
         ]
       }

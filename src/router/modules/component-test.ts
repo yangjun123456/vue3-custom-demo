@@ -13,6 +13,11 @@ export const componentRouteOptions = [
     path: 'exportDocx',
     name: 'ExportDocx',
     component: () => import('../../views/component-test/export-docx/index.vue')
+  },
+  {
+    path: 'testFlexible',
+    name: 'TestFlexible',
+    component: () => import('../../views/component-test/test-flexible/test-flexible.vue')
   }
 
 ]
