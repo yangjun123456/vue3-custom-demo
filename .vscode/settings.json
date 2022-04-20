@@ -1,5 +1,9 @@
 // settings.json
 {
+	"merge-conflict.autoNavigateNextConflict.enabled": true,
+	"eslint.alwaysShowStatus": true,
+	"javascript.autoClosingTags": true,
+	"vetur.format.options.useTabs": true,
 	"workbench.startupEditor": "newUntitledFile",
 	"files.autoSave": "off", // 关闭文件自动保存，避免开发时候页面变化
 	"editor.tabSize": 4, // tab距离
@@ -136,5 +140,8 @@
 	},
 	"path-intellisense.mappings": {
 		"@": "${workspaceRoot}/src"
-	}
+    },
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": true,
+    "javascript.inlayHints.parameterTypes.enabled": true
 }
