@@ -41,41 +41,41 @@ import { interval, take, timer } from 'rxjs';
 import { ArrowDown } from '@element-plus/icons-vue';
 import { useI18n } from 'vue-i18n';
 const VueI18n = defineComponent({
-  name: 'VueI18n',
-  components: {
-    ArrowDown
-  },
-  setup(props, context) {
-    const language = ref<string>('zh');
-    const i18n = useI18n();
-    const $t = i18n.t;
-    const changeLanguage = (languageStr: any) => {
-      i18n.locale.value = languageStr;
-      const str = ref('btnText');
-      console.log($t(`changeLanguage.${str.value}`));
-    };
-    const languageList = ref(['zh', 'en']);
-    const list = ref([
-      {
-        content: '第一',
-        en: 'first'
-      },
-      {
-        content: '第二',
-        en: 'second'
-      },
-      {
-        content: '第三',
-        en: 'third'
-      },
-      {
-        content: '第四',
-        en: 'fourth'
-      }
-    ]);
+    name: 'VueI18n',
+    components: {
+        ArrowDown
+    },
+    setup(props, context) {
+        const language = ref<string>('zh');
+        const i18n = useI18n();
+        const $t = i18n.t;
+        const changeLanguage = (languageStr: any) => {
+            i18n.locale.value = languageStr;
+            const str = ref('btnText');
+            console.log($t(`changeLanguage.${str.value}`));
+        };
+        const languageList = ref(['zh', 'en']);
+        const list = ref([
+            {
+                content: '第一',
+                en: 'first'
+            },
+            {
+                content: '第二',
+                en: 'second'
+            },
+            {
+                content: '第三',
+                en: 'third'
+            },
+            {
+                content: '第四',
+                en: 'fourth'
+            }
+        ]);
 
-    return { props, changeLanguage, list, language, languageList };
-  }
+        return { props, changeLanguage, list, language, languageList };
+    }
 });
 export default VueI18n;
 </script>

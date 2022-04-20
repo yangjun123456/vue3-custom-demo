@@ -16,7 +16,7 @@
 			<br>
 			<h1>svg img标签引用 assets下的svg图标=====可以正常使用</h1>
 			<img style="width: 50px;height: 50px;"
-				src="../../assets/svgs/cancel.svg"
+				src="../../../assets/svgs/cancel.svg"
 				alt="" />
 		</div>
 		<div>
@@ -27,7 +27,7 @@
 			<h1 style="color: red">svg img标签引用icons下的svg图标=======不能正常展示</h1>
 			<h1>因为使用了svg-sprite-loader 处理了这些icon，只能用于svg-icon使用，F12可以看到实际上引用的是svg代码</h1>
 			<img style="width: 50px;height: 50px;"
-				src="../../icons/svg/add.svg"
+				src="../../../icons/svg/add.svg"
 				alt="" />
 		</div>
 		<div>
@@ -37,7 +37,7 @@
 			<br>
 			<h1>svg img标签引用png图标========可以正常引用</h1>
 			<img style="width: 50px;height: 50px;"
-				src="../../assets/logo.png"
+				src="../../../assets/logo.png"
 				alt="" />
 
 		</div>
@@ -69,10 +69,10 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, shallowRef, triggerRef } from 'vue';
 const IconSvgTest = defineComponent({
-  name: 'IconSvgTest',
-  setup(props, context) {
-    return { props };
-  }
+    name: 'IconSvgTest',
+    setup(props, context) {
+        return { props };
+    }
 });
 export default IconSvgTest;
 </script>
@@ -87,13 +87,13 @@ export default IconSvgTest;
 	margin: 0 auto;
 }
 // .icon-svg {
-// 	background-image: url('../../icons/svg/add.svg');
+// 	background-image: url('../../../icons/svg/add.svg');
 // }
 .assets-svg {
-	background-image: url('../../assets/svgs/cancel.svg');
+	background-image: url('../../../assets/svgs/cancel.svg');
 }
 .assets-png {
-	background-image: url('../../assets/logo.png');
+	background-image: url('../../../assets/logo.png');
 }
 
 .icon-test {

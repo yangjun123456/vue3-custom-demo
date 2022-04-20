@@ -51,47 +51,47 @@ console.log(uuid);
 const activeName = ref('tab1');
 console.log(instance);
 const handleClick = (tab: string, event: Event) => {
-  console.log(tab, event);
+    console.log(tab, event);
 };
 
 const list = ref<{ name: string; label: string }[]>([
-  {
-    name: 'tab1',
-    label: 'tab1'
-  },
-  {
-    name: 'tab2',
-    label: 'tab2'
-  },
-  {
-    name: 'tab3',
-    label: 'tab3'
-  },
-  {
-    name: 'tab4',
-    label: 'tab4'
-  }
+    {
+        name: 'tab1',
+        label: 'tab1'
+    },
+    {
+        name: 'tab2',
+        label: 'tab2'
+    },
+    {
+        name: 'tab3',
+        label: 'tab3'
+    },
+    {
+        name: 'tab4',
+        label: 'tab4'
+    }
 ]);
 const count = ref(5);
 interval(2000)
-  .pipe(
-    take(3),
-    takeWhile(() => uuid)
-  )
-  .subscribe(() => {
-    count.value++;
-    list.value.push({ name: 'tab' + count.value, label: 'tab' + count.value });
-    console.log((instance as any).refs);
-    console.log(userRef1.value);
-  });
+    .pipe(
+        take(3),
+        takeWhile(() => uuid)
+    )
+    .subscribe(() => {
+        count.value++;
+        list.value.push({ name: 'tab' + count.value, label: 'tab' + count.value });
+        console.log((instance as any).refs);
+        console.log(userRef1.value);
+    });
 
 const userRef1 = ref();
 const userRef2 = ref();
 const userRef3 = ref();
 
 timer(5000).subscribe(() => {
-  console.log(userRef1.value);
-  console.log(userRef2.value);
+    console.log(userRef1.value);
+    console.log(userRef2.value);
 });
 
 </script>

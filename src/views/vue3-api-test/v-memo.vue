@@ -18,38 +18,38 @@
 import { defineComponent, onMounted, ref, reactive, shallowRef, triggerRef } from 'vue';
 import { interval, take, timer } from 'rxjs';
 const VMemo = defineComponent({
-  name: 'VMemo',
-  setup(props, context) {
-    const list = ref([
-      { name: 'a', id: '01', key: '01' },
-      { name: 'b', id: '02', key: '02' },
-      { name: 'c', id: '01', key: '03' },
-      { name: 'd', id: '04', key: '04' },
-      { name: 'e', id: '01', key: '05' },
-      { name: 'f', id: '06', key: '06' },
-      { name: 'g', id: '01', key: '07' },
-      { name: 'h', id: '08', key: '08' },
-      { name: 'i', id: '01', key: '09' },
-      { name: 'j', id: '10', key: '10' },
-      { name: 'k', id: '11', key: '11' },
-      { name: 'l', id: '12', key: '12' },
-      { name: 'm', id: '11', key: '13' },
-      { name: 'n', id: '14', key: '14' },
-      { name: 'o', id: '11', key: '15' },
-      { name: 'p', id: '16', key: '16' },
-      { name: 'q', id: '11', key: '17' },
-      { name: 'q', id: '20', key: '18' }
-    ]);
+    name: 'VMemo',
+    setup(props, context) {
+        const list = ref([
+            { name: 'a', id: '01', key: '01' },
+            { name: 'b', id: '02', key: '02' },
+            { name: 'c', id: '01', key: '03' },
+            { name: 'd', id: '04', key: '04' },
+            { name: 'e', id: '01', key: '05' },
+            { name: 'f', id: '06', key: '06' },
+            { name: 'g', id: '01', key: '07' },
+            { name: 'h', id: '08', key: '08' },
+            { name: 'i', id: '01', key: '09' },
+            { name: 'j', id: '10', key: '10' },
+            { name: 'k', id: '11', key: '11' },
+            { name: 'l', id: '12', key: '12' },
+            { name: 'm', id: '11', key: '13' },
+            { name: 'n', id: '14', key: '14' },
+            { name: 'o', id: '11', key: '15' },
+            { name: 'p', id: '16', key: '16' },
+            { name: 'q', id: '11', key: '17' },
+            { name: 'q', id: '20', key: '18' }
+        ]);
 
-    timer(2000).pipe(take(!!list.value)).subscribe(() => {
-      list.value[1].name = '111111';
-    })
-    timer(5000).pipe(take(!!list.value)).subscribe(() => {
-      console.log('timer调用了');
-      list.value[10].name = 'new name';
-    });
-    return { list };
-  }
+        timer(2000).pipe(take(!!list.value)).subscribe(() => {
+            list.value[1].name = '111111';
+        })
+        timer(5000).pipe(take(!!list.value)).subscribe(() => {
+            console.log('timer调用了');
+            list.value[10].name = 'new name';
+        });
+        return { list };
+    }
 });
 export default VMemo;
 </script>

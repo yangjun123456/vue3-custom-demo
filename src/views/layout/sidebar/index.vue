@@ -1,6 +1,6 @@
 <template>
-    <section class="menu">
-        <!-- <el-menu :default-openeds="['1', '3']"
+	<section class="menu">
+		<!-- <el-menu :default-openeds="['1', '3']"
             class="el-menu-vertical-demo"
             :collapse="isCollapse"
             @open="handleOpen"
@@ -43,56 +43,81 @@
             </el-sub-menu>
         </el-menu> -->
 
-        <el-menu :default-openeds="['1']"
-            class="el-menu-vertical-demo"
-            :collapse="isCollapse"
-            @open="handleOpen"
-            :default-active="$route.path"
-            @close="handleClose">
-            <template v-for="(item) in menus">
-                <el-sub-menu v-if="item.children"
-                    :key="item.title||item.content"
-                    :index="item.title||item.content">
-                    <template #title>
-                        <el-icon>
-                            <message />
-                        </el-icon>
-                        <span>{{item.title}}</span>
-                    </template>
-                    <el-menu-item v-for="childMenu in item.children"
-                        :key="childMenu.content"
-                        :index="childMenu.url "
-                        @click="routerTo(childMenu.url)">
-                        {{ childMenu.content }}
-                    </el-menu-item>
-                </el-sub-menu>
-                <el-menu-item v-else
-                    :key="item.title"
-                    :index="item.title||item.content"
-                    @click="routerTo(item.url)">
-                    <template #title>
-                        <el-icon>
-                            <message />
-                        </el-icon>
-                        <span>{{item.title}}</span>
-                    </template>
-                </el-menu-item>
-            </template>
-        </el-menu>
+		<el-menu :default-openeds="['1']"
+			class="el-menu-vertical-demo"
+			:collapse="isCollapse"
+			@open="handleOpen"
+			:default-active="defaultActive"
+			@select="handleSelect"
+			@close="handleClose">
+			<template v-for="(item) in menus">
+				<el-sub-menu v-if="item.children"
+					:key="item.index"
+					:index="item.index">
+					<template #title>
+						<el-icon>
+							<message />
+						</el-icon>
+						<span>{{item.title}}</span>
+					</template>
 
-        <section class="collapse-icon">
-            <el-icon v-if="!isCollapse"
-                @click="isCollapse=!isCollapse">
-                <arrow-left-bold />
-            </el-icon>
-            <el-icon v-if="isCollapse"
-                @click="isCollapse=!isCollapse">
-                <arrow-right-bold />
-            </el-icon>
+					<template v-for="(cont) in item.children">
+						<el-sub-menu v-if="cont.children"
+							:key="cont.index"
+							:index="cont.index">
+							<template #title>
+								<el-icon>
+									<message />
+								</el-icon>
+								<span>{{cont.title}}</span>
+							</template>
+							<el-menu-item v-for="childMenu in cont.children"
+								:key="childMenu.title"
+								:index="childMenu.index "
+								@click="routerTo(childMenu)">
+								{{ childMenu.title }}
+							</el-menu-item>
+						</el-sub-menu>
+						<el-menu-item v-else
+							:key="cont.index"
+							:index="cont.index"
+							@click="routerTo(cont)">
+							<template #title>
+								<el-icon>
+									<message />
+								</el-icon>
+								<span>{{cont.title}}</span>
+							</template>
+						</el-menu-item>
+					</template>
+				</el-sub-menu>
+				<el-menu-item v-else
+					:key="item.index"
+					:index="item.index"
+					@click="routerTo(item)">
+					<template #title>
+						<el-icon>
+							<message />
+						</el-icon>
+						<span>{{item.title}}</span>
+					</template>
+				</el-menu-item>
+			</template>
+		</el-menu>
 
-        </section>
+		<section class="collapse-icon">
+			<el-icon v-if="!isCollapse"
+				@click="isCollapse=!isCollapse">
+				<arrow-left-bold />
+			</el-icon>
+			<el-icon v-if="isCollapse"
+				@click="isCollapse=!isCollapse">
+				<arrow-right-bold />
+			</el-icon>
 
-    </section>
+		</section>
+
+	</section>
 </template>
 
 <script lang="ts">
@@ -101,175 +126,197 @@ import { useRouter } from 'vue-router';
 import { Message, Menu, Setting, ArrowRightBold, ArrowLeftBold, PieChart } from '@element-plus/icons-vue';
 
 export default defineComponent({
-  components: {
-    Message,
-    ArrowRightBold,
-    ArrowLeftBold
-    // PieChart
-    // Setting
-    // 'icon-menu': Menu
-  },
-  setup() {
-    const menus = [
-      {
-        title: 'home',
-        url: '/home',
-        index: '0',
-        icon: ''
-      },
-      {
-        title: 'echarts',
-        url: '',
-        index: '1',
-        icon: '',
-        children: [
-          {
-            content: 'line-echarts',
-            url: '/lineEcharts',
-            icon: '',
-            index: '1-1'
-          },
-          {
-            content: 'bar-echarts',
-            url: '/barEcharts',
-            icon: '',
-            index: '1-2'
-          }
-        ]
-      },
-      {
-        title: 'Vue Test',
-        url: '',
-        index: '2',
-        icon: '',
-        children: [
-          {
-            content: '测试父子通信',
-            url: '/testCommunication',
-            icon: '',
-            index: '2-1'
-          },
-          {
-            content: '测试ref 和 reactive',
-            url: '/refAndReactive',
-            icon: '',
-            index: '2-2'
-          },
-          {
-            content: '测试shallowRef 和 shallowReactive',
-            url: '/shallowRefAndShallowReactive',
-            icon: '',
-            index: '2-3'
-          },
-          {
-            content: '测试toRaw 和 makeRaw',
-            url: '/toRawAndMakeRaw',
-            icon: '',
-            index: '2-4'
-          },
-          {
-            content: '测试toRef 和 toRefs',
-            url: '/toRefAndToRefs',
-            icon: '',
-            index: '2-5'
-          },
-          {
-            content: '测试watch 和 watchEffect',
-            url: '/watchAndWatchEffect',
-            icon: '',
-            index: '2-6'
-          },
-          {
-            content: '通过v-bind获取js中的样式并且实现响应式更新',
-            url: '/getSetupJsStyle',
-            icon: '',
-            index: '2-7'
-          },
-          {
-            content: 'v-memo',
-            url: '/vMemo',
-            icon: '',
-            index: '2-8'
-          },
-          {
-            content: 'mixin-test',
-            url: '/mixinTest',
-            icon: '',
-            index: '2-9'
-          },
-          {
-            content: 'test-axios测试axios请求',
-            url: '/testAxios',
-            icon: '',
-            index: '2-10'
-          },
-          {
-            content: 'vueI18n-测试',
-            url: '/vueI18n',
-            icon: '',
-            index: '2-11'
-          }
-        ]
-      },
-      {
-        title: '组件测试',
-        url: '',
-        index: '3',
-        icon: '',
-        children: [
-          {
-            content: 'svg-icon',
-            url: '/iconSvg',
-            icon: '',
-            index: '3-1'
-          },
-          {
-            content: 'el-tabs 测试tabs中是否能获取到refs',
-            url: '/elTabs',
-            icon: '',
-            index: '3-2'
-          },
-          {
-            content: '测试导出docx插件-导出html为docx文件',
-            url: '/exportDocx',
-            icon: '',
-            index: '3-3'
-          },
-          {
-            content: '测试flexible转换px-rem实现响应式',
-            url: '/testFlexible',
-            icon: '',
-            index: '3-4'
-          }
-        ]
-      }
-      //   {
-      //     title: 'lodash',
-      //     url: '',
-      //     index: '3',
-      //     icon: ''
-      //   }
-    ];
-    const router = useRouter();
-    const isCollapse = ref(false);
-    const handleOpen = (key: any, keyPath: any) => {
-      console.log(key, keyPath);
-    };
-    const handleClose = (key: any, keyPath: any) => {
-      console.log(key, keyPath);
-    };
+    components: {
+        Message,
+        ArrowRightBold,
+        ArrowLeftBold
+        // PieChart
+        // Setting
+        // 'icon-menu': Menu
+    },
+    setup() {
+        const menus = [
+            {
+                title: 'home',
+                url: '/home',
+                index: '0',
+                icon: ''
+            },
+            {
+                title: 'echarts',
+                url: '',
+                index: '1',
+                icon: '',
+                children: [
+                    {
+                        title: 'line-echarts',
+                        url: '/lineEcharts',
+                        icon: '',
+                        index: '1-1'
+                    },
+                    {
+                        title: 'bar-echarts',
+                        url: '/barEcharts',
+                        icon: '',
+                        index: '1-2'
+                    }
+                ]
+            },
+            {
+                title: 'Vue Test',
+                url: '',
+                index: '2',
+                icon: '',
+                children: [
+                    {
+                        title: '测试父子通信',
+                        url: '/testCommunication',
+                        icon: '',
+                        index: '2-1'
+                    },
+                    {
+                        title: '测试ref 和 reactive',
+                        url: '/refAndReactive',
+                        icon: '',
+                        index: '2-2'
+                    },
+                    {
+                        title: '测试shallowRef 和 shallowReactive',
+                        url: '/shallowRefAndShallowReactive',
+                        icon: '',
+                        index: '2-3'
+                    },
+                    {
+                        title: '测试toRaw 和 makeRaw',
+                        url: '/toRawAndMakeRaw',
+                        icon: '',
+                        index: '2-4'
+                    },
+                    {
+                        title: '测试toRef 和 toRefs',
+                        url: '/toRefAndToRefs',
+                        icon: '',
+                        index: '2-5'
+                    },
+                    {
+                        title: '测试watch 和 watchEffect',
+                        url: '/watchAndWatchEffect',
+                        icon: '',
+                        index: '2-6'
+                    },
+                    {
+                        title: '通过v-bind获取js中的样式并且实现响应式更新',
+                        url: '/getSetupJsStyle',
+                        icon: '',
+                        index: '2-7'
+                    },
+                    {
+                        title: 'v-memo',
+                        url: '/vMemo',
+                        icon: '',
+                        index: '2-8'
+                    },
+                    {
+                        title: 'mixin-test',
+                        url: '/mixinTest',
+                        icon: '',
+                        index: '2-9'
+                    },
+                    {
+                        title: 'test-axios测试axios请求',
+                        url: '/testAxios',
+                        icon: '',
+                        index: '2-10'
+                    },
+                    {
+                        title: 'vueI18n-测试',
+                        url: '/vueI18n',
+                        icon: '',
+                        index: '2-11'
+                    }
+                ]
+            },
+            {
+                title: '组件测试',
+                url: '',
+                index: '3',
+                icon: '',
+                children: [
+                    {
+                        title: 'svg-icon',
+                        url: '/iconSvg',
+                        icon: '',
+                        index: '3-1'
+                    },
+                    {
+                        title: 'el-tabs 测试tabs中是否能获取到refs',
+                        url: '/elTabs',
+                        icon: '',
+                        index: '3-2'
+                    },
+                    {
+                        title: '测试导出docx插件-导出html为docx文件',
+                        url: '/exportDocx',
+                        icon: '',
+                        index: '3-3'
+                    },
+                    {
+                        title: '测试flexible转换px-rem实现响应式',
+                        url: '/testFlexible',
+                        icon: '',
+                        index: '3-4'
+                    },
+                    {
+                        title: 'jquery-ui',
+                        url: '',
+                        icon: '',
+                        index: '3-5',
+                        children: [
+                            {
+                                title: 'draggable',
+                                url: '/draggable',
+                                icon: '',
+                                index: '3-5-1'
+                            }
+                        ]
+                    }
+                ]
+            }
+            //   {
+            //     title: 'lodash',
+            //     url: '',
+            //     index: '3',
+            //     icon: ''
+            //   }
+        ];
+        const router = useRouter();
+        const isCollapse = ref(false);
+        const handleOpen = (key: any, keyPath: any) => {
+            console.log(key, keyPath);
+        };
+        const handleClose = (key: any, keyPath: any) => {
+            console.log(key, keyPath);
+        };
+        const handleSelect = (key: string, keyPath: string[]) => {
+            console.log(key, keyPath);
+            defaultActive.value = key;
+        };
 
-    const routerTo = (name: string) => {
-      router.push({ path: name });
-    };
-    return {
-      isCollapse,
-      handleOpen,
-      handleClose,
-      routerTo,
-      menus
-    };
-  }
+        const routerTo = (item: any) => {
+            // defaultActive.value = item.index;
+            router.push({ path: item.url });
+        };
+        const defaultActive = ref<string>('3-2');
+        return {
+            defaultActive,
+            isCollapse,
+            handleOpen,
+            handleClose,
+            handleSelect,
+            routerTo,
+            menus
+        };
+    }
 });
 </script>
 
@@ -283,9 +330,8 @@ export default defineComponent({
 		flex: 1;
 		overflow-y: auto;
 		overflow-x: hidden;
-		width: 250px;
-        border: none;
-
+		width: 300px;
+		border: none;
 	}
 	.el-menu.el-menu--collapse {
 		width: inherit;
@@ -297,16 +343,41 @@ export default defineComponent({
 		align-items: center;
 		justify-content: center;
 		i {
-            cursor: pointer;
+			cursor: pointer;
 			color: #000;
 		}
 	}
 }
 .el-menu {
-	.el-sub-menu.is-active {
-		.el-sub-menu__title {
+	// 一级菜单选中样式
+	& > .el-sub-menu.is-active {
+		& > .el-sub-menu__title {
 			span {
 				color: #409eff;
+			}
+		}
+		// 二级菜单选中样式
+		& > .el-sub-menu.is-active {
+			& > .el-sub-menu__title {
+				span {
+					color: #409eff;
+				}
+			}
+			// 三级菜单选中样式
+			& > .el-sub-menu.is-active {
+				& > .el-sub-menu__title {
+					span {
+						color: #409eff;
+					}
+				}
+				// 四级菜单选中样式
+				& > .el-sub-menu.is-active {
+					& > .el-sub-menu__title {
+						span {
+							color: #409eff;
+						}
+					}
+				}
 			}
 		}
 	}

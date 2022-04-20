@@ -13,11 +13,11 @@ import router from '../router';
 
 const store:any = useStore();
 const loadFun = () => {
-  console.log('load成功');
-  console.log(store);
+    console.log('load成功');
+    console.log(store);
 }
 onMounted(() => {
-  window.addEventListener('unload', loadFun);
+    window.addEventListener('unload', loadFun);
 })
 
 </script>

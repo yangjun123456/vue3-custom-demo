@@ -15,31 +15,31 @@ import { useStore } from 'vuex';
 const store: any = useStore();
 const msg = ref('');
 onMounted(() => {
-  console.log(store);
-  messagePageData();
+    console.log(store);
+    messagePageData();
 });
 
 // 测试接口
 const messagePageData = async () => {
-  try {
-    const res = await messagePage({
-      pageNum: 1,
-      pageSize: 10,
-      keyWord: '',
-      type: '1',
-      startTime: '',
-      endTime: ''
-    });
-    console.log(res);
-    if (res.status == 1 || res.status == 200) {
-      msg.value = '请求成功';
-    } else {
-      msg.value = '请求失败';
+    try {
+        const res = await messagePage({
+            pageNum: 1,
+            pageSize: 10,
+            keyWord: '',
+            type: '1',
+            startTime: '',
+            endTime: ''
+        });
+        console.log(res);
+        if (res.status == 1 || res.status == 200) {
+            msg.value = '请求成功';
+        } else {
+            msg.value = '请求失败';
+        }
+    } catch (error) {
+        msg.value = '接口不通';
+        console.log(error);
     }
-  } catch (error) {
-    msg.value = '接口不通';
-    console.log(error);
-  }
 };
 </script>
 
