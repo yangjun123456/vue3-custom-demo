@@ -53,7 +53,7 @@
 		"js-beautify-html": {
 			// 配置不能和prettier的配置冲突，eslint校验的时候采用的prettier的风格
 			// 给js-beautify-html设置属性隔断
-			"wrap_line_length": 220, //换行长度
+			"wrap_line_length": 150, //换行长度
 			// 属性换行
 			// 对属性进行换行。
 			// - auto: 仅在超出行长度时才对属性进行换行。
@@ -91,7 +91,7 @@
 			//   "templating": ["auto"]
 		},
 		"prettyhtml": {
-			"printWidth": 220,
+			"printWidth": 150,
 			"singleQuote": true,
 			"wrapAttributes": false,
 			"sortAttributes": false
