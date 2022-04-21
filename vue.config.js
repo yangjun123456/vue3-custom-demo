@@ -61,7 +61,8 @@ module.exports = {
                 })
                 .end();
         });
-        config.resolve.alias.set('assets', resolve('src/assets'));
+        // 设置别名
+        config.resolve.alias.set('assets', resolve('src/assets')).set('@', resolve('src'));
 
         // src/icons 下的svg图片不使用原有的loader
         config.module.rule('svg').exclude.add(resolve('src/icons')).end();
@@ -92,11 +93,6 @@ module.exports = {
             })
             .end();
 
-        config.output
-            .filename('assets/js/[name].[hash].js')
-            .chunkFilename('assets/js/[name].[hash].js')
-            .end(); // 开发环境打包hash
-
         config.module
             .rule('thread-loader')
             .test(/\.js$/)
@@ -121,9 +117,14 @@ module.exports = {
         });
 
         // config.output
-        //   .filename('js/[name].[hash]-1.js')
-        //   .chunkFilename('js/[name].[hash]-1.js')
-        //   .end(); // 开发环境打包hash
+        //     .filename('assets/js/[name].[hash].js')
+        //     .chunkFilename('assets/js/[name].[hash].js')
+        //     .end(); // 开发环境打包hash
+
+        config.output
+            .filename('js/[name].[hash]-1.js')
+            .chunkFilename('js/[name].[hash]-1.js')
+            .end(); // 开发环境打包hash
 
     // config.plugin('webpack-bundle-analyzer').use(BundleAnalyzerPlugin);
     },
