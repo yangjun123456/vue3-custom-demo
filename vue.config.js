@@ -3,11 +3,18 @@ function resolve(dir) {
     return path.join(__dirname, dir);
 }
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const setPlugins = () => {
     const plugins = [];
+    // 拷贝插件
+    // plugins.push(
+    //     new CopyWebpackPlugin([{ from: resolve('src/assets/font'), to: 'assets/font' }])
+    // );
+    // 压缩插件
+    plugins.push();
     return plugins;
 };
 
@@ -50,6 +57,27 @@ module.exports = {
 
     chainWebpack: (config) => {
         console.log(config.values());
+        // 修改js输出目录
+        config.output
+            .filename('assets/js/[name].[hash].js')
+            .chunkFilename('assets/js/[name].[hash].js')
+            .end(); // 开发环境打包hash
+
+        // 修改js输出目录
+        // config.output
+        //     .filename('js/[name].[hash]-1.js')
+        //     .chunkFilename('js/[name].[hash]-1.js')
+        //     .end(); // 开发环境打包hash
+
+        // 修改css输出目录
+        config.plugin('extract-css').tap(() => [
+            {
+                filename: 'assets/css/[name].[contenthash:8].css',
+                chunkFilename: 'assets/css/[name].[contenthash:8].chunk.css',
+                ignoreOrder: true
+            }
+        ]);
+
         const oneOfsMap = config.module.rule('scss').oneOfs.store;
         oneOfsMap.forEach((item) => {
             item
@@ -62,7 +90,42 @@ module.exports = {
                 .end();
         });
         // 设置别名
-        config.resolve.alias.set('assets', resolve('src/assets')).set('@', resolve('src'));
+        config.resolve.alias
+            .set('assets', resolve('src/assets'))
+            .set('@', resolve('src'));
+
+        // 修改图片输出目录
+        config.module
+            .rule('images')
+            .test(/\.(png|jpe?g|gif|webp|ico)(\?.*)?$/)
+            .exclude.add(resolve('src/icons'))
+            .end()
+            .use('url-loader')
+            .loader(require.resolve('url-loader'))
+            .tap((options) => {
+                const newOptions = {
+                    name: 'assets/img/[name].[hash:8].[ext]',
+                    fallback: {
+                        options: {
+                            name: 'assets/img/[name].[hash:8].[ext]',
+                            esModule: false
+                        }
+                    }
+                };
+                return newOptions;
+            });
+
+        // 修改svg输出目录
+        config.module
+            .rule('svg')
+            .test(/\.(svg)(\?.*)?$/)
+            .exclude.add(resolve('src/icons'))
+            .end()
+            .use('file-loader')
+            .loader(require.resolve('file-loader'))
+            .tap((options) => ({
+                name: 'assets/img/[name].[hash:8].[ext]'
+            }));
 
         // src/icons 下的svg图片不使用原有的loader
         config.module.rule('svg').exclude.add(resolve('src/icons')).end();
@@ -77,6 +140,20 @@ module.exports = {
             .loader('svg-sprite-loader')
             .options({
                 symbolId: 'icon-[name]'
+            })
+            .end();
+
+        // 修改fonts输出目录
+        config.module
+            .rule('fonts')
+            .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/i)
+            .use('url-loader')
+            .loader('url-loader')
+            .tap((options) => {
+                console.log(options);
+                options.limit = 1; // 字体包小于limit会打包成为base64引入到项目， 字体包大于limit会打包到assets/font目录下
+                options.fallback.options.name = 'assets/font/[name].[hash:8].[ext]';
+                return options;
             })
             .end();
 
@@ -115,17 +192,6 @@ module.exports = {
             options[0].title = 'modify html title';
             return options;
         });
-
-        // config.output
-        //     .filename('assets/js/[name].[hash].js')
-        //     .chunkFilename('assets/js/[name].[hash].js')
-        //     .end(); // 开发环境打包hash
-
-        config.output
-            .filename('js/[name].[hash]-1.js')
-            .chunkFilename('js/[name].[hash]-1.js')
-            .end(); // 开发环境打包hash
-
     // config.plugin('webpack-bundle-analyzer').use(BundleAnalyzerPlugin);
     },
 

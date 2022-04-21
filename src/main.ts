@@ -11,15 +11,15 @@ import { setupI18n } from '@/plugins/vue-i18n';
 // uuid
 import { v4 as uuidv4, v3 as uuidv3 } from 'uuid';
 
-// app根组件
-import App from './App.vue';
-
 // flexible自适应设置文件--------------------------------------------------------------------------------start
 // 引入自适应js文件
 import 'lib-flexible/flexible.js';
 import '@/utils/viewport.js';
 
 // flexible自适应设置文件--------------------------------------------------------------------------------end
+
+// app根组件
+import App from './App.vue';
 
 // 路由
 import router from '@/router/index';

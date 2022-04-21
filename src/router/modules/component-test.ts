@@ -23,6 +23,11 @@ export const componentRouteOptions = [
         path: 'draggable',
         name: 'Draggable',
         component: () => import('../../views/component-test/jquery-ui/draggable.vue')
+    },
+    {
+        path: 'fontFamilyTestCom',
+        name: 'FontFamilyTestCom',
+        component: () => import('../../views/component-test/font-family-test/font-family-test.vue')
     }
 
 ]

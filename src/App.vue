@@ -10,6 +10,7 @@ new FunctionTest();
 </script>
 
 <style lang="scss">
+@import url('./assets/font/font.scss');
 .app-main {
 	width: 100%;
 	height: 100%;

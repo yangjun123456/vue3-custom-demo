@@ -279,6 +279,12 @@ export default defineComponent({
                                 index: '3-5-1'
                             }
                         ]
+                    },
+                    {
+                        title: '字体包测试',
+                        url: '/fontFamilyTestCom',
+                        icon: '',
+                        index: '3-6'
                     }
                 ]
             }
