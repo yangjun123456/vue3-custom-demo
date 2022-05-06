@@ -1,16 +1,21 @@
-
 import { getRandom } from './functions';
-import { validatorPhoneNum } from './validator';
+import { validatorPhoneNum, strInsert } from './validator';
 import { ref, getCurrentInstance, inject } from 'vue';
 
 export class FunctionTest {
     constructor() {
-        console.log('%c 测试function.ts 测试方法', 'font-size: 40px;color: #abcdef;')
+        console.log(
+            '%c 测试function.ts 测试方法',
+            'font-size: 40px;color: #abcdef;'
+        );
         this.testGetRandom();
         this.splitConsole();
         this.testUuid();
         this.splitConsole();
-        console.log('%c 测试function.ts 测试方法', 'font-size: 40px;color: #abcdef;')
+        console.log(
+            '%c 测试function.ts 测试方法',
+            'font-size: 40px;color: #abcdef;'
+        );
     }
 
     // 隔断console.log
@@ -39,8 +44,14 @@ export class FunctionTest {
         console.log('uuid 相同');
         console.log('$uuidv3.URL======', $uuidv3.URL);
         console.log('$uuidv3.DNS======', $uuidv3.DNS);
-        console.log('%c 如果uuidv3给第二个参数传uuidv3.URL,那么如果前边参数相同，那么生成的uuid相同', 'font-size: 20px;color: red');
-        console.log('%c uuidv3的参数只能传字符串，不能传object对象', 'font-size: 20px;color: red');
+        console.log(
+            '%c 如果uuidv3给第二个参数传uuidv3.URL,那么如果前边参数相同，那么生成的uuid相同',
+            'font-size: 20px;color: red'
+        );
+        console.log(
+            '%c uuidv3的参数只能传字符串，不能传object对象',
+            'font-size: 20px;color: red'
+        );
     }
 
     /**
@@ -48,5 +59,12 @@ export class FunctionTest {
    */
     validatorPhoneFun() {
         validatorPhoneNum('15931501775');
+    }
+
+    /**
+   * 正则分割
+   */
+    validatorStrInsert() {
+        strInsert('121233123', 4);
     }
 }

@@ -10,3 +10,14 @@ export const validatorPhoneNum = (phoneNum: string) => {
     ); // 11位手机号码正则
     return regTel.test(phoneNum);
 };
+
+/**
+* @param {string} str   需要插入的字符（串）
+* @param {int} length   间隔几个字符
+*/
+export const strInsert = (str:string, length:number) => {
+    // const reg = new RegExp('\\d{1,' + length + '}', 'g');
+    const reg = new RegExp('.{1,' + length + '}', 'g');
+    const ma:any = str.match(reg);
+    return ma.join('^_^') + '^_^'; // 最后面不要"^_^" 就去掉( + "^_^")
+}

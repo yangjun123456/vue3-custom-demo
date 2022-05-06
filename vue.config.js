@@ -7,6 +7,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const setPlugins = () => {
     const plugins = [];
     // 拷贝插件
@@ -68,15 +70,18 @@ module.exports = {
         //     .filename('js/[name].[hash]-1.js')
         //     .chunkFilename('js/[name].[hash]-1.js')
         //     .end(); // 开发环境打包hash
-
-        // 修改css输出目录
-        config.plugin('extract-css').tap(() => [
-            {
-                filename: 'assets/css/[name].[contenthash:8].css',
-                chunkFilename: 'assets/css/[name].[contenthash:8].chunk.css',
-                ignoreOrder: true
-            }
-        ]);
+        console.log(isProd);
+        if (isProd) {
+            // 仅在打包的时候开启， 开发环境下开启无法运行项目
+            // 修改css输出目录
+            config.plugin('extract-css').tap(() => [
+                {
+                    filename: 'assets/css/[name].[contenthash:15].css',
+                    chunkFilename: 'assets/css/[name].[contenthash:15].chunk.css',
+                    ignoreOrder: true
+                }
+            ]);
+        }
 
         const oneOfsMap = config.module.rule('scss').oneOfs.store;
         oneOfsMap.forEach((item) => {
@@ -250,6 +255,9 @@ module.exports = {
             }
         };
         config.plugins = [...config.plugins, ...setPlugins()];
+    },
+    css: {
+        extract: true // true: 打包成为单独的css文件夹和css文件  false： 打包到js里边
     },
 
     lintOnSave: false
