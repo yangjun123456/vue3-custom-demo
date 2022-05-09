@@ -44,6 +44,8 @@ console.info(app.version);
 // config 配置--------------------------------------------------------------------------------start
 app.config.performance = true;
 
+// 保留注释， 需要在html 的template 中添加comments
+app.config.compilerOptions.comments = true;
 app.config.compilerOptions.isCustomElement = (tag) =>
     tag.startsWith('defined-custom-');
 

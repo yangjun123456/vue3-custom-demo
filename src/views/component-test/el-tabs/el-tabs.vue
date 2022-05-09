@@ -1,4 +1,8 @@
-<template>
+<template comments>
+<!-- asdlfkjasdlkfjsaldkfj -->
+<!-- asdlfkjasdlkfjsaldkfj -->
+<!-- asdlfkjasdlkfjsaldkfj -->
+<!-- asdlfkjasdlkfjsaldkfj -->
 	<section>
 		<h1 style="color:red;font-weight:bolder;">v-if 可以控制tabs 中 el-tab-pane是否渲染 </h1>
 		<h1 style="color:red;font-weight:bolder;">一般情况下每个组件渲染的内容都不一样 需要单独添加 直接写死 然后v-if条件判断</h1>
