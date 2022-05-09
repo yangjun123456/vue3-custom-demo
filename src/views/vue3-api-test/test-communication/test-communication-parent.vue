@@ -1,55 +1,56 @@
 <template>
-  <div style="overflow:auto;color:#fff;">
-    <div class="test-communication-body"
-      style="background-color:purple;">
-      <h1 class="title"
-        ref="testCommunicationTitleEl"></h1>
-      <h1 style="font-size: 20px">
-        我是父组件 <br> 测试父子组件通信 <br> 测试setup中的props和context 用法
-      </h1>
-      <h1>通过修改子组件的copyTitle 然后发送给父组件进行更新title ==== {{title}}</h1>
-      <div style="margin: 30px 0">
-        <div style="
+	<div style="overflow:auto;color:#fff;">
+		<div class="test-communication-body"
+			style="background-color:purple;">
+			<h1 class="title"
+				ref="testCommunicationTitleEl"></h1>
+			<h1 style="font-size: 20px">
+				我是父组件 <br> 测试父子组件通信 <br> 测试setup中的props和context 用法
+			</h1>
+			<h1>通过修改子组件的copyTitle 然后发送给父组件进行更新title ==== {{title}}</h1>
+			<div style="margin: 30px 0">
+				<div style="
             width: 60vw;
             height: 100px;
             background-color: red;
             font-size: 30px;
             overflow: hidden;
           "
-          @click="parentClick">
-          我是父组件 通过refs 调用子组件方法
-        </div>
-      </div>
-    </div>
-    <TestCommunicationChild ref="testCommunicationChildEl"
-      :room="'room'"
-      :teacher="'MR.yang'"
-      :title="title"
-      :state="state"
-      :age="28"
-      @childClick="childClick"
-      @getChildTitle="getChildTitle"></TestCommunicationChild>
-    <!-- 异步组件的展示方式html，需用Suspense包装，#default 默认模板，#fallback 等待时渲染的内容-------------start -->
-    <Suspense>
-      <template #default>
-        <TestCommunicationChildAsync ref="testCommunicationChildAsyncEl"
-          :room="'room'"
-          :teacher="'MR.yang'"
-          :title="title"
-          :state="state"
-          :age="28"
-          @childClick="childClick"
-          @getChildTitle="getChildTitle"></TestCommunicationChildAsync>
-      </template>
-      <template #fallback>
-        <div>
-          <ToRawAndMakeRaw></ToRawAndMakeRaw>
-          <p style="position:absolute;left:0;top:0;font-size: 100px;"> Loading... </p>
-        </div>
-      </template>
-    </Suspense>
-    <!-- 异步组件的展示方式html，需用Suspense包装，#default 默认模板，#fallback 等待时渲染的内容-------------end -->
-  </div>
+					@click="parentClick">
+					我是父组件 通过refs 调用子组件方法
+				</div>
+			</div>
+		</div>
+		<TestCommunicationChild ref="testCommunicationChildEl"
+			class="abcdefg"
+			:room="'room'"
+			:teacher="'MR.yang'"
+			:title="title"
+			:state="state"
+			:age="28"
+			@childClick="childClick"
+			@getChildTitle="getChildTitle"></TestCommunicationChild>
+		<!-- 异步组件的展示方式html，需用Suspense包装，#default 默认模板，#fallback 等待时渲染的内容-------------start -->
+		<Suspense>
+			<template #default>
+				<TestCommunicationChildAsync ref="testCommunicationChildAsyncEl"
+					:room="'room'"
+					:teacher="'MR.yang'"
+					:title="title"
+					:state="state"
+					:age="28"
+					@childClick="childClick"
+					@getChildTitle="getChildTitle"></TestCommunicationChildAsync>
+			</template>
+			<template #fallback>
+				<div>
+					<ToRawAndMakeRaw></ToRawAndMakeRaw>
+					<p style="position:absolute;left:0;top:0;font-size: 100px;"> Loading... </p>
+				</div>
+			</template>
+		</Suspense>
+		<!-- 异步组件的展示方式html，需用Suspense包装，#default 默认模板，#fallback 等待时渲染的内容-------------end -->
+	</div>
 </template>
 
 <script lang="ts">
@@ -106,7 +107,7 @@ const TestCommunication = defineComponent({
                 }
             }
         })
-    // 组件异步加载的配置------------------------------------------------------------------------------------------------------------------------end
+        // 组件异步加载的配置------------------------------------------------------------------------------------------------------------------------end
     },
     setup(props, context) {
         const state = reactive({ val: 0, name: 'aaaaaa' });
@@ -118,8 +119,8 @@ const TestCommunication = defineComponent({
         const title = ref('title test');
 
         onMounted(() => {
-            testCommunicationTitleEl.value.innerHTML = '说明： 测试父子组件通信'
-        })
+            testCommunicationTitleEl.value.innerHTML = '说明： 测试父子组件通信';
+        });
 
         const childClick = (params: any) => {
             console.log('通过emit 触发了父组件方法', params);
@@ -158,5 +159,4 @@ const TestCommunication = defineComponent({
 export default TestCommunication;
 </script>
 <style lang="scss" scoped>
-
 </style>
