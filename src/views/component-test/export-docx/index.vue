@@ -1,6 +1,8 @@
 <template>
 	<section class="el-tabs-body">
 		<el-button type="primary"
+			@click="exportClickJquery">exportClickJquery--导出为docx文件</el-button>
+		<el-button type="primary"
 			@click="exportClick">导出为docx文件</el-button>
 		<table>
 			<tr>
@@ -78,6 +80,7 @@ import { ref, getCurrentInstance, inject, onMounted } from 'vue';
 import htmlDocx from 'html-docx-js/dist/html-docx';
 import saveAs from 'file-saver';
 import { export2WordInstance } from './export-word';
+declare const $: any;
 
 // 全局
 const instance = getCurrentInstance();
@@ -118,6 +121,12 @@ onMounted(() => {
 const exportClick = () => {
     var el = document.querySelector('.el-tabs-body');
     export2WordInstance.export2Word(el);
+};
+const exportClickJquery = () => {
+    console.log($);
+    // var el = document.querySelector('.el-tabs-body');
+    // export2WordInstance.export2Word(el);
+    $('.el-tabs-body').wordExport('aaaaa.docx');
 };
 </script>
 
