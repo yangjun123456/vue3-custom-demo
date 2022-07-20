@@ -182,76 +182,6 @@ const decAdd = (a: number, b: number): number => {
     return parseFloat(res);
 };
 
-const changeWhatIfAnalysis = (num: number) => {
-    // 转换为M
-    if (isNaN(num)) {
-        const val = num / 1000000;
-        return String(val).includes('.')
-            ? XEUtils.commafy(val.toFixed(2)) + 'M'
-            : XEUtils.commafy(val) + 'M';
-    } else {
-        const val = num / 1000000;
-        return String(val.toFixed(2)) + 'M';
-    }
-};
-const changeWhatIfAnalysisInteger = (num: number) => {
-    // 柱状图下方表格转换单位为M处理
-    if (num > 0) {
-        const val = num / 1000000;
-        if (val < 10) {
-            return Math.round(val * 100) / 100;
-        } else {
-            return Math.round(val);
-        }
-    } else {
-        const val = num / 1000000;
-        if (-val < 10) {
-            return Math.round(val * 100) / 100;
-        } else {
-            return Math.round(val);
-        }
-    }
-};
-// 转化数据的单位为K
-const changeUnits = (num: number) => {
-    const val = num / 1000;
-    return String(val).includes('.')
-        ? XEUtils.commafy(val.toFixed(2)) + 'k'
-        : XEUtils.commafy(val) + 'k';
-};
-// 向上取整转化数据的单位为K
-const PieTitlechangeUnits = (num: number) => {
-    // 不够1k，返回具体数值
-    if (num < 1000) {
-        return num;
-    } else {
-        const val = num / 1000;
-        return String(XEUtils.commafy(Math.round(val))) + 'k';
-    }
-};
-const downloadAsXLS = (res: any) => {
-    let fileName = 'data.xlsx';
-
-    // 后端设置的文件名称在res.headers的 "content-disposition": "form-data; name=\"attachment\"; filename=\"20181211191944.zip\"",
-    if (res.headers['content-disposition']) {
-        fileName = res.headers['content-disposition'].split(';')[1].split('=')[1];
-    }
-
-    const blob = res.data;
-    // console.log('下载文件=>：', fileName, res);
-    const reader = new FileReader();
-    reader.readAsDataURL(blob);
-    reader.onload = (e: any) => {
-        const a = document.createElement('a');
-        a.download = fileName;
-
-        a.href = e.target.result;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    };
-};
-
 // 预加载图片, 加载完成回调, 避免切换图片存在闪烁
 const preloadImg = (src = '', cb: any) => {
     if (!src) {
@@ -270,8 +200,8 @@ const preloadImg = (src = '', cb: any) => {
 };
 // 是否是图片格式 http|https + 任意字符 + .png|.jpg|.gif|.jpeg|.webp
 const urlIsImage = (str: string) => {
-    // const reg = /^http[s]?:\/\/[^]+\.(png|jpg|gif|jpeg|webp)$/i;
-    const reg = /[^]+\.(png|jpg|gif|jpeg|webp)$/i;
+    const reg = /^http[s]?:\/\/[^]+\.(png|jpg|gif|jpeg|webp)$/i;
+    // const reg = /[^]+\.(png|jpg|gif|jpeg|webp)$/i;
     return reg.test(str);
 };
 const getBase64Image = (src: string, cb: any) => {
@@ -335,11 +265,6 @@ export {
     decMul,
     decDiv,
     decAdd,
-    changeUnits,
-    PieTitlechangeUnits,
-    changeWhatIfAnalysis,
-    changeWhatIfAnalysisInteger,
-    downloadAsXLS,
     getBase64Image,
     urlIsImage,
     preloadImg,

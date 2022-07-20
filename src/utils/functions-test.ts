@@ -1,9 +1,17 @@
 import { getRandom } from './functions';
+import { sm4Encrypt, aesEncrypt } from '../libs/utils';
 import { validatorPhoneNum, strInsert } from './validator';
 import { ref, getCurrentInstance, inject } from 'vue';
-
+import { Base64, encode, decode } from 'js-base64';
 export class FunctionTest {
     constructor() {
+        this.splitConsole();
+        this.splitConsole();
+        this.splitConsole();
+        this.splitConsole();
+        this.splitConsole();
+        this.splitConsole();
+        this.splitConsole();
         console.log(
             '%c 测试function.ts 测试方法',
             'font-size: 40px;color: #abcdef;'
@@ -12,10 +20,17 @@ export class FunctionTest {
         this.splitConsole();
         this.testUuid();
         this.splitConsole();
+        this.encrypt();
+        this.splitConsole();
         console.log(
             '%c 测试function.ts 测试方法',
             'font-size: 40px;color: #abcdef;'
         );
+        this.splitConsole();
+        this.splitConsole();
+        this.splitConsole();
+        this.splitConsole();
+        this.splitConsole();
     }
 
     // 隔断console.log
@@ -66,5 +81,29 @@ export class FunctionTest {
    */
     validatorStrInsert() {
         strInsert('121233123', 4);
+    }
+
+    /**
+   * 验证密码加密
+   */
+    encrypt() {
+        {
+            // sm4 加密解密方法， 需要依赖js-base64
+            const aEncodeEncrypt = sm4Encrypt('888888', 'encrypt');
+            const aDecodeEncrypt = sm4Encrypt(aEncodeEncrypt, 'decrypt');
+            console.log('sm4加密解密方式', aEncodeEncrypt, aDecodeEncrypt);
+        }
+        {
+            // base64加密解密方式 需要依赖js-base64
+            const aEncodeEncrypt = encode('888888');
+            const aDecodeEncrypt = decode(aEncodeEncrypt);
+            console.log('base64加密解密方式', aEncodeEncrypt, aDecodeEncrypt);
+        }
+        {
+            // aes加密解密方式
+            const aEncodeEncrypt = aesEncrypt('888888', 'encrypt');
+            const aDecodeEncrypt = aesEncrypt(aEncodeEncrypt, 'decrypt');
+            console.log('aes加密解密方式', aEncodeEncrypt, aDecodeEncrypt);
+        }
     }
 }
