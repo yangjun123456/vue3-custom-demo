@@ -285,6 +285,12 @@ export default defineComponent({
                         url: '/fontFamilyTestCom',
                         icon: '',
                         index: '3-6'
+                    },
+                    {
+                        title: 'pdf文件转为png',
+                        url: '/transPdfToImg',
+                        icon: '',
+                        index: '3-7'
                     }
                 ]
             }

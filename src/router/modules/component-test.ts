@@ -28,6 +28,11 @@ export const componentRouteOptions = [
         path: 'fontFamilyTestCom',
         name: 'FontFamilyTestCom',
         component: () => import('../../views/component-test/font-family-test/font-family-test.vue')
-    }
+    },
+    {
+        path: 'transPdfToImg',
+        name: 'TransPdfToImg',
+        component: () => import('../../views/component-test/trans-pdf-to-img/trans-pdf-to-img.vue')
+    },
 
 ]
