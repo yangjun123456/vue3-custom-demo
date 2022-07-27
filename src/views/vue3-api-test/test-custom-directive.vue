@@ -4,6 +4,7 @@
 			type="text">
 		<div v-twinkle="{value: val}"
 			class="twinkle-div"></div>
+
 	</div>
 </template>
 
@@ -32,7 +33,7 @@ input {
 }
 .twinkle-div {
 	width: 10vw;
-	height: 10vw;
+	aspect-ratio: 1/1; // 实现宽高比为1：1 的正方形
 	background-color: red;
 }
 </style>
