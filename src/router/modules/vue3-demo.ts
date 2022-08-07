@@ -53,5 +53,10 @@ export const vue3DemoOptions = [
         path: 'vueI18n',
         name: 'VueI18n',
         component: () => import('@/views/vue3-api-test/vue-i18n.vue')
+    },
+    {
+        path: 'testCustomDirective',
+        name: 'TestCustomDirective',
+        component: () => import('@/views/vue3-api-test/test-custom-directive.vue')
     }
 ]

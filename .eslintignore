@@ -1,0 +1,4 @@
+# eslint 忽略文件
+sm4-encrypt.js
+build
+node_modules

@@ -106,10 +106,11 @@
 
         if (width / dpr < 400) {
             width = 400 * dpr;
-        } else if (width / dpr > 2560) {
-            width = 2560 * dpr;
+        } else if (width / dpr > 1920) {
+            width = 1920 * dpr;
         }
-        const rem = width / 24;
+        // const rem = width / 24;
+        const rem = width / 19.2;
 
         docEl.style.fontSize = rem + 'px';
         flexible.rem = win.rem = rem;

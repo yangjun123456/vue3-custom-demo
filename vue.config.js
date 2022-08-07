@@ -170,7 +170,7 @@ module.exports = {
             .loader('px2rem-loader')
             .before('postcss-loader') // this makes it work.
             .options({
-                remUnit: 80, // 根据视觉稿，rem为px的 20分之一，1920px  80rem
+                remUnit: 100, // 根据视觉稿， 1920px  100rem --------需要搭配viewport.js 中 refreshRem 方法中的19.2进行修改  1920/100=19.2 || 1920/80=24
                 remPrecision: 8 // 换算的rem保留几位小数点
             })
             .end();

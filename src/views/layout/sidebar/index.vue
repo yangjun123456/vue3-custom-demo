@@ -233,6 +233,12 @@ export default defineComponent({
                         url: '/vueI18n',
                         icon: '',
                         index: '2-11'
+                    },
+                    {
+                        title: '自定义指令测试',
+                        url: '/testCustomDirective',
+                        icon: '',
+                        index: '2-12'
                     }
                 ]
             },

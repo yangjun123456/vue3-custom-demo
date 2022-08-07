@@ -14,7 +14,7 @@ import { v4 as uuidv4, v3 as uuidv3 } from 'uuid';
 // flexible自适应设置文件--------------------------------------------------------------------------------start
 // 引入自适应js文件
 import 'lib-flexible/flexible.js';
-import '@/utils/viewport.js';
+import '@/libs/viewport.js';
 
 // flexible自适应设置文件--------------------------------------------------------------------------------end
 
