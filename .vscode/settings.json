@@ -132,11 +132,11 @@
 	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
 	"javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
 	"prettier.vueIndentScriptAndStyle": true,
-	"window.zoomLevel": -3,
+	"window.zoomLevel": -1,
 	"editor.suggestSelection": "first",
 	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 	"[typescript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "vscode.typescript-language-features"
 	},
 	"path-intellisense.mappings": {
 		"@": "${workspaceRoot}/src"

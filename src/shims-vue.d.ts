@@ -17,3 +17,4 @@ declare module "html-docx-js/dist/html-docx";
 declare module "file-saver";
 declare module "vue-i18n";
 declare module "crypto-js";
+declare module "moment";
