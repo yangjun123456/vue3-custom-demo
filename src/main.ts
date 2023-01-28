@@ -29,7 +29,7 @@ import store from '@/store/index';
 
 // 全局组件
 // svg icon图标公共组件
-import IconSvg from '@/icons/IconSvg.vue';
+import IconSvg from '@/components/svg-icon/svg-icon.vue';
 
 // 引入icons/svg 图片
 import '@/icons/index'; // 组件内需声明，不然this上找不到

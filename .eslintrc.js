@@ -194,6 +194,7 @@ module.exports = {
         '@typescript-eslint/camelcase': 'off',
         '@typescript-eslint/no-inferrable-types': 'off', // 关闭类型推断
         '@typescript-eslint/ban-ts-ignore': 'off', // 允许ts-ignore
+        '@typescript-eslint/ban-types': 'off',
         'import/no-duplicates': 'off'
     }
 };
