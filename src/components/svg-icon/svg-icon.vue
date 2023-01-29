@@ -1,15 +1,15 @@
 <template>
-  <svg :class="svgClass"
-    @mouseenter="mouseenter"
-    @mouseleave="mouseleave"
-    aria-hidden="true"
-    title
-    mode="open"
-    :style="{ width: size, height: size }">
-    <use title
-      :xlink:href="iconName" />
-    <title></title>
-  </svg>
+	<svg :class="svgClass"
+		@mouseenter="mouseenter"
+		@mouseleave="mouseleave"
+		aria-hidden="true"
+		title
+		mode="open"
+		:style="{ width: size, height: size }">
+		<use title
+			:xlink:href="iconName" />
+		<title></title>
+	</svg>
 </template>
 
 <script lang="ts">
@@ -18,7 +18,7 @@ import { interval, take } from 'rxjs';
 const IconSvg = defineComponent({
     name: 'IconSvg',
     props: {
-    // 当前 svg 的文件名，如 arrow-left.svg，该值就应该是 arrow-left
+        // 当前 svg 的文件名，如 arrow-left.svg，该值就应该是 arrow-left
         filename: {
             type: String,
             required: true
@@ -40,9 +40,9 @@ const IconSvg = defineComponent({
         }
     },
     setup(props, context) {
-        const _iconName = ref(''); // 私有变量使用下划线标注， 用于和iconName区分， 必须得是响应式的， computed 或者 watch 才能监听到变化更新dom
+        const _iconName = ref<string>(''); // 私有变量使用下划线标注， 用于和iconName区分， 必须得是响应式的， computed 或者 watch 才能监听到变化更新dom
         // eslint-disable-next-line vue/no-setup-props-destructure
-        const { filename, className, size, hover } = props;
+        const { filename, className, size, hover }: any = props;
 
         // computed-------------------------------------------------------------------------------------------start
         const svgClass = computed(() => {

@@ -4,7 +4,7 @@ import axios, {
     AxiosRequestConfig,
     AxiosResponse
 } from 'axios';
-import { Message } from 'element-ui';
+import { Message } from 'element-plus';
 import store from '@/store';
 import { requestTimeout, successCode } from '@/config';
 import { getToken } from '@/utils/auth';
