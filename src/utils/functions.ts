@@ -140,9 +140,9 @@ const cached = (fn: any) => {
 /**
  * Ensure a function is called only once.
  */
-function once(fn: any) {
+const once = (fn: any) => {
     let called = false;
-    return function () {
+    return function onceFnBody() {
         if (!called) {
             called = true;
             // eslint-disable-next-line prefer-rest-params
@@ -300,7 +300,7 @@ const formatDate = (date: Date | string | number, format: string = 'y-M-d') => {
  * @param {*} _ 如果arr不存在需要默认空数组解决 undefined 的 map|filter 等方法报错
  * @returns
  */
-const defArr = (_:any[]) => {
+const defArr = (_: any[]) => {
     return _ || [];
 }
 
