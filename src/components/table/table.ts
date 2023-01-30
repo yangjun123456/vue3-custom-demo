@@ -1,5 +1,5 @@
 // 表格的组件封装代码量略多， 使用mixin按块把功能抽离， 减少table.vue 代码量,  table中注重业务逻辑
-import { defArr, getRandom, typeOf } from "@/utils/function";
+import { defArr, getRandom, typeOf } from '@/utils/function';
 
 // 分页相关
 export const PaginationMixin = {
@@ -8,8 +8,8 @@ export const PaginationMixin = {
             type: Object,
             default: () => {
                 return {};
-            },
-        },
+            }
+        }
     },
 
     data() {
@@ -19,7 +19,7 @@ export const PaginationMixin = {
                 pageSize: 20,
                 total: 100,
                 pageSizes: [20, 30, 50, 100, 200],
-                layout: "total, sizes, prev, pager, next, jumper",
+                layout: 'total, sizes, prev, pager, next, jumper'
             },
             paginationId: getRandom(15, 'pagination_id_')
         };
@@ -30,21 +30,21 @@ export const PaginationMixin = {
          */
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);
-            this.$emit("handleSizeChange", val);
+            this.$emit('handleSizeChange', val);
         },
         /**
          * 分页页数变化
          */
         handleCurrentChange(val) {
             console.log(`当前页: ${val}`);
-            this.$emit("handleCurrentChange", val);
+            this.$emit('handleCurrentChange', val);
         },
         /**
          * 同步pagination配置参数
          */
         _changePagination(pagination, tablePagination) {
             // 循环配置项,如果传进来有数据,那么就替换掉,如果没有就保持原始数据
-            for (let key in pagination) {
+            for (const key in pagination) {
                 if (Object.keys(tablePagination).includes(key)) {
                     // 仅针对对象采用递归修改， 数组格式直接覆盖
                     if (typeOf(tablePagination[key]) === 'object') {
@@ -54,7 +54,7 @@ export const PaginationMixin = {
                     }
                 }
             }
-        },
+        }
     },
     watch: {
         pagination: {
@@ -62,9 +62,9 @@ export const PaginationMixin = {
                 this._changePagination(this.pagination, this.tablePagination);
             },
             immediate: true,
-            deep: true,
-        },
-    },
+            deep: true
+        }
+    }
 }
 
 // 表格配置相关
@@ -74,15 +74,15 @@ export const TableConfigMixin = {
             type: Object,
             default: () => {
                 return {};
-            },
-        },
+            }
+        }
     },
 
     data() {
         return {
             tableConfig: {
                 /* 表格相关--------------------------------------------------------------------------------start */
-                tableRef: "tableRef", // 表格的ref
+                tableRef: 'tableRef', // 表格的ref
                 isShowPagination: true, // 是否显示分页
                 checkboxColumn: {
                     isShowCheckbox: false, // 是否显示多选框
@@ -113,13 +113,13 @@ export const TableConfigMixin = {
                     align: 'center',
                     resizable: false,
                     headerAlign: 'center',
-                    defaultExpandAll: false, // 是否展开所有项
+                    defaultExpandAll: false // 是否展开所有项
                 },
                 isShowHeader: true, // 是否显示表格header
                 isShowTableBorderColumn: true, // 是否显示表格纵向边框
                 tableHeight: 'auto', // 表格就设置为auto就可以
-                key: "id", // 每一行数据的唯一标识字段， 行数据的 Key，用来优化 Table 的渲染
-                loadingText: "加载中......", // 表格loading的text文本
+                key: 'id', // 每一行数据的唯一标识字段， 行数据的 Key，用来优化 Table 的渲染
+                loadingText: '加载中......', // 表格loading的text文本
                 tableLoading: false, // 是否显示表格loading
                 hideOnSinglePage: false, // 分页是否在只有一页时隐藏
                 tableSize: '', // 表格的size属性，控制表格的整体大小, 可取值： mini、small、medium
@@ -130,9 +130,9 @@ export const TableConfigMixin = {
                 tableWraperClassName: 'table-wraper-class-name', // table表格组件的父层className,通过父组件传值使用， 需要在外部通过class获取表格组件内部元素时如果一个页面存在多个表格， 那么需要通过class区分， 本组件内可以通过id获取元素
                 tableType: 'common', // 取值 common | multiHeader, 或者别的 需要后续添加，默认使用多级表头
                 children: 'children', // child 字段， 子列保存所在数据的字段名称， 是children、list或者是别的， 是什么这里就传什么, 在多级表头时tableType==='multiHeader'需要使用
-                isTableFullArea: false, // 表格是否撑满区域 ? 表格撑满除分页外的区域-flex:1 : 表格自适应，分页紧紧跟在表格下方，分页下方展示空白
+                isTableFullArea: false // 表格是否撑满区域 ? 表格撑满除分页外的区域-flex:1 : 表格自适应，分页紧紧跟在表格下方，分页下方展示空白
                 /* 自定义参数--------------------------------------------------------------------------------end */
-            },
+            }
         };
     },
     methods: {
@@ -141,7 +141,7 @@ export const TableConfigMixin = {
          */
         _changeConfig(config, tableConfig) {
             // 循环配置项,如果传进来有数据,那么就替换掉,如果没有就保持原始数据
-            for (let key in config) {
+            for (const key in config) {
                 if (Object.keys(tableConfig).includes(key)) {
                     // 仅针对对象采用递归修改， 数组格式直接覆盖
                     if (typeOf(tableConfig[key]) === 'object') {
@@ -151,7 +151,7 @@ export const TableConfigMixin = {
                     }
                 }
             }
-        },
+        }
     },
     watch: {
         config: {
@@ -159,9 +159,9 @@ export const TableConfigMixin = {
                 this._changeConfig(this.config, this.tableConfig);
             },
             immediate: true,
-            deep: true,
-        },
-    },
+            deep: true
+        }
+    }
 }
 
 // 表格row和column的赋值抽离
@@ -188,7 +188,7 @@ export const TableDataMixin = {
                     //     checked: false // 是否选中
                     // }
                 ];
-            },
+            }
         },
         columns: {
             type: Array,
@@ -213,27 +213,29 @@ export const TableDataMixin = {
                     //   }, // 使用v-html进行插入渲染， 可插入html模板, 用于简单的渲染， 如字典取值映射, 简单的条件渲染等， 复杂逻辑还是使用slot形式
                     // },
                 ];
-            },
-        },
+            }
+        }
     },
 
     data() {
         return {
             tableRowData: [], // copy 的表格行数据
-            tableColumns: [], // copy 的表格header数据
+            tableColumns: [] // copy 的表格header数据
         };
     },
     watch: {
         rowData: {
             handler() {
-                this.rowData.map(x => x.customId = x.customId ? x.customId : getRandom(15, 'custom_row_id_'))
+                this.rowData.map(x => {
+                    x.customId = x.customId ? x.customId : getRandom(15, 'custom_row_id_')
+                })
                 this.tableRowData = this.rowData;
                 this.$nextTick(() => {
                     this.doLayout();
                 })
             },
             immediate: true,
-            deep: true,
+            deep: true
         },
         columns: {
             handler() {
@@ -243,9 +245,9 @@ export const TableDataMixin = {
                 })
             },
             immediate: true,
-            deep: true,
-        },
-    },
+            deep: true
+        }
+    }
 }
 
 // checkbox 多选框相关
@@ -259,7 +261,7 @@ export const CheckboxMixin = {
     data() {
         return {
             /**
-             * 1. echoFlag 数据回显的flag， 
+             * 1. echoFlag 数据回显的flag，
              * 2. echoFlag 执行handleCheckboxChange方法时不需要触发 getCheckedList 的watch监听
              * 3. echoFlag 只有手动修改了数据项中的checked参数， 才会触发监听， 点击多选框会直接改变多选框状态，不需要触发watch监听修改
              */
@@ -356,7 +358,7 @@ export const TableCommonMixin = {
             type: Function,
             default: () => {
                 return () => {
-                    return "";
+                    return '';
                 };
             }
         },
@@ -365,16 +367,16 @@ export const TableCommonMixin = {
             type: Function,
             default: () => {
                 return () => {
-                    return "";
+                    return '';
                 };
             }
-        },
+        }
 
     },
     data() {
         return {
             tableWraperKey: getRandom(15, 'table_wraper_key_'),
-            doLayoutDebounce: this.$lodash.debounce(this.doLayout, 250),
+            doLayoutDebounce: this.$lodash.debounce(this.doLayout, 250)
         }
     },
     mounted() {
@@ -418,17 +420,16 @@ export const TableCommonMixin = {
                     await this.$nextTick();
                     // 计算表格布局时， 如果表格区域部分不是撑满， 那么动态计算tableBodyWraper的高度和最大高度， 用来实现表格随内容自动撑满并且出现滚动条
                     const _table = document.querySelector(`#${this.tableWraperId}`);
-                    const tableBodyWraper = _table.querySelector(`.el-table__body-wrapper`);
-                    const tableHeaderWraper = _table.querySelector(`.el-table__header`)
-                    const tableBody = _table.querySelector(`.el-table__body`)
+                    const tableBodyWraper: HTMLElement = _table.querySelector('.el-table__body-wrapper');
+                    const tableHeaderWraper: HTMLElement = _table.querySelector('.el-table__header')
+                    const tableBody: HTMLElement = _table.querySelector('.el-table__body')
                     if (tableBodyWraper && tableHeaderWraper && tableBody) {
-                        tableBodyWraper.style['height'] = tableBody.offsetHeight + 'px';
+                        tableBodyWraper.style.height = tableBody.offsetHeight + 'px';
                         tableBodyWraper.style['max-height'] = `calc(100% - ${tableHeaderWraper.offsetHeight}px)`;
                     }
                 }
                 this.$refs[this.tableConfig.tableRef].doLayout();
             } catch (error) {
-
                 console.log(error);
             }
         },
@@ -459,7 +460,7 @@ export const TableCommonMixin = {
         expandChange(row, expandedRows) {
             console.log(row, expandedRows);
             this.$emit('expandChangeEvent', { row, expandedRows });
-        },
+        }
     }
 }
 
@@ -499,5 +500,5 @@ export const TableIndexColumnMixin = {
                 return len * (fontSize || 14) + (len) + 5 + 5;
             }
         }
-    },
+    }
 }

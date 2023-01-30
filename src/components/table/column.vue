@@ -7,8 +7,8 @@
         :resizable="col.resizable || false"
         :show-overflow-tooltip="col.isShowOverflowTooltip || false"
         :align="col.align || 'left'">
-        <template slot="header"
-            slot-scope="scope">
+        <template v-slot:header="scope"
+            >
             <slot :name="col.slot_header"
                 :data="scope"
                 :col="col">
@@ -18,7 +18,7 @@
                 </div>
             </slot>
         </template>
-        <template slot-scope="scope">
+        <template v-slot="scope">
             <slot :data="scope"
                 :col="col">
                 请配置正确的插槽 8</slot>
@@ -27,15 +27,15 @@
             <Column v-for="(item,k) in col[children]"
                 :key="k"
                 :col="item">
-                <template slot-scope="scope"
-                    slot="slot_custom_header">
+                <template
+                    v-slot:slot_custom_header="scope">
                     <slot :name="scope.col.slot_header"
                         :data="scope.data"
                         :col="scope.col">
                         <div>请配置正确的插槽 4</div>
                     </slot>
                 </template>
-                <template slot-scope="scope">
+                <template v-slot="scope">
                     <slot :data="scope.data"
                         :col="scope.col">请配置正确的插槽 5</slot>
                 </template>
@@ -46,20 +46,20 @@
 <script>
 import { TableIndexColumnMixin } from './table';
 export default {
-	// eslint-disable-next-line vue/multi-word-component-names
-	name: 'Column',
-	mixins: [TableIndexColumnMixin],
-	props: {
-		col: {
-			type: Object,
-			required: true
-		},
-		children: {
-			// child 字段， 子列保存所在数据的字段名称， 是children、list或者是别的， 是什么这里就传什么
-			type: String,
-			required: false,
-			default: 'children'
-		}
-	}
+    // eslint-disable-next-line vue/multi-word-component-names
+    name: 'Column',
+    mixins: [TableIndexColumnMixin],
+    props: {
+        col: {
+            type: Object,
+            required: true
+        },
+        children: {
+            // child 字段， 子列保存所在数据的字段名称， 是children、list或者是别的， 是什么这里就传什么
+            type: String,
+            required: false,
+            default: 'children'
+        }
+    }
 };
 </script>

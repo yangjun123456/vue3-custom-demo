@@ -24,19 +24,19 @@ const mixinChildOne = {
         };
     },
     created() {
-    // console.log('mixin-child-one-created');
+        // console.log('mixin-child-one-created');
     },
     mounted() {
-        const vm:any = this;
+        const vm: any = this;
         vm.funOne();
-    // console.log('mixin-child-one-mounted');
+        // console.log('mixin-child-one-mounted');
     },
     methods: {
-    // 父组件中调用会失去
+        // 父组件中调用会失去
         funOne() {
             console.log((this as any).mixinChildOneData);
             console.log('调用了mixin-child-one 中 funOne 方法');
         }
     }
 };
-export default mixinChildOne;
+export { mixinChildOne };
