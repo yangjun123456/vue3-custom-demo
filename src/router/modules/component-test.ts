@@ -33,6 +33,6 @@ export const componentRouteOptions = [
         path: 'transPdfToImg',
         name: 'TransPdfToImg',
         component: () => import('../../views/component-test/trans-pdf-to-img/trans-pdf-to-img.vue')
-    },
+    }
 
 ]

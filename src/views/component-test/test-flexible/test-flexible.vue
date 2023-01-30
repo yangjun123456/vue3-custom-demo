@@ -44,67 +44,67 @@ const formValues = ref<{
 	formData: FormDataType[];
 	formState: FormStateType;
 }>({
-	formData: [
-		{
-			id: '',
-			prop: 'name',
-			label: '姓名',
-			type: '',
-			rules: [
-				{ required: true, message: 'input something' },
-				{ required: false, message: 'max length 10', max: 10 }
-			]
-		},
-		{
-			id: '',
-			prop: 'status',
-			label: '状态',
-			type: '',
-			rules: [
-				{ required: true, message: 'input something' },
-				{ required: false, message: 'max length 10', max: 10 }
-			]
-		},
-		{
-			id: '',
-			prop: 'address',
-			label: '地点',
-			type: '',
-			rules: [
-				{ required: true, message: 'input something' },
-				{ required: false, message: 'max length 10', max: 10 }
-			]
-		},
-		{
-			id: '',
-			prop: 'type',
-			label: '类型',
-			type: '',
-			rules: [
-				{ required: true, message: 'input something' },
-				{ required: false, message: 'max length 10', max: 10 }
-			]
-		}
-	],
-	formState: {
-		name: '',
-		status: '',
-		address: '',
-		type: ''
-	}
+    formData: [
+        {
+            id: '',
+            prop: 'name',
+            label: '姓名',
+            type: '',
+            rules: [
+                { required: true, message: 'input something' },
+                { required: false, message: 'max length 10', max: 10 }
+            ]
+        },
+        {
+            id: '',
+            prop: 'status',
+            label: '状态',
+            type: '',
+            rules: [
+                { required: true, message: 'input something' },
+                { required: false, message: 'max length 10', max: 10 }
+            ]
+        },
+        {
+            id: '',
+            prop: 'address',
+            label: '地点',
+            type: '',
+            rules: [
+                { required: true, message: 'input something' },
+                { required: false, message: 'max length 10', max: 10 }
+            ]
+        },
+        {
+            id: '',
+            prop: 'type',
+            label: '类型',
+            type: '',
+            rules: [
+                { required: true, message: 'input something' },
+                { required: false, message: 'max length 10', max: 10 }
+            ]
+        }
+    ],
+    formState: {
+        name: '',
+        status: '',
+        address: '',
+        type: ''
+    }
 });
 const antDesignFormRef = ref();
 const handleReset = (item: any) => {
-	console.log(item);
-	antDesignFormRef.value.formRef.resetFields();
+    console.log(item);
+    antDesignFormRef.value.formRef.resetFields();
 };
 const handleQuery = async (item: any) => {
-	try {
-		await antDesignFormRef.value.formRef.validateFields();
-		// 获取到数据进行调用接口查询
-	} catch (error) {
-		console.log(error);
-	}
+    try {
+        await antDesignFormRef.value.formRef.validateFields();
+        // 获取到数据进行调用接口查询
+    } catch (error) {
+        console.log(error);
+    }
 };
 </script>
 

@@ -35,38 +35,38 @@
 </template>
 <script lang="ts" setup>
 import {
-	defineProps,
-	defineEmits,
-	defineExpose,
-	defineComponent,
-	onMounted,
-	ref,
-	reactive,
-	shallowRef,
-	triggerRef,
-	watch,
-	markRaw,
-	readonly,
-	toRefs
+    defineProps,
+    defineEmits,
+    defineExpose,
+    defineComponent,
+    onMounted,
+    ref,
+    reactive,
+    shallowRef,
+    triggerRef,
+    watch,
+    markRaw,
+    readonly,
+    toRefs
 } from 'vue';
 import { interval, take, timer } from 'rxjs';
 import { DownOutlined, UpOutlined } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 const props = defineProps({
-	value: {
-		type: Object,
-		default: () => {
-			return {
-				formData: [],
-				formState: {}
-			};
-		}
-	}
+    value: {
+        type: Object,
+        default: () => {
+            return {
+                formData: [],
+                formState: {}
+            };
+        }
+    }
 });
-const emits = defineEmits(['handleReset', 'handleQuery','update:value']);
+const emits = defineEmits(['handleReset', 'handleQuery', 'update:value']);
 
 const formRef = ref<FormInstance>();
-const changeEvent=()=>{
+const changeEvent = () => {
     console.log('changeEvent');
     // 更新value 的值 ，本次使用了对象自动更新父组件值， 不进行update更新， 如有需求， 可单独配置
     // emits('update:value', {
@@ -75,10 +75,10 @@ const changeEvent=()=>{
     // });
 }
 const handleReset = () => {
-	emits('handleReset', 'reset');
+    emits('handleReset', 'reset');
 };
 const handleQuery = () => {
-	emits('handleQuery', { data: props.value });
+    emits('handleQuery', { data: props.value });
 };
 
 defineExpose({ formRef });

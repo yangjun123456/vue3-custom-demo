@@ -204,7 +204,8 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import Column from './column.vue';
 import {
     TableCustomMixin, // 表格的自定义部分 相关
     TableConfigMixin, // 表格配置相关
@@ -213,31 +214,19 @@ import {
     CheckboxMixin, // checkbox 多选框相关
     TableCommonMixin, // 表格公共部分相关
     TableIndexColumnMixin
-} from './table.js';
-import Column from './column.vue';
-export default {
-    // eslint-disable-next-line vue/multi-word-component-names
-    name: 'Table',
+} from './table';
+import { Options, Vue } from 'vue-class-component';
+@Options({
+    props: {},
     mixins: [TableCommonMixin, TableDataMixin, TableConfigMixin, PaginationMixin, CheckboxMixin, TableCustomMixin, TableIndexColumnMixin],
     components: {
         Column
     },
-    props: {},
-
     data() {
         return {};
-    },
-    mounted() {
-        console.log('mounted');
-    },
-    methods: {
-        log(data) {
-            // 打印html无法直接显示的对象或者其他数据
-            console.log(data);
-        }
-    },
-    watch: {}
-};
+    }
+})
+export default class Table extends Vue {}
 </script>
 
 <style lang="scss" scoped>
