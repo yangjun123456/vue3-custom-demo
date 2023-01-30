@@ -315,19 +315,13 @@ const distinguishFileTypes = (fileUrl: string) => {
             // base64 格式获取文件类型
             laseOne = fileUrl.split(';base64,')[0].split('/')[1];
         }
-        const imageSuifx = ['jpg', 'png', 'gif', 'jpeg', 'bmp']
-        const wordSuifx = ['doc', 'docx']
-        const excelSuifx = ['xls', 'xlsx']
-        const pdfSuifx = ['pdf']
-        const videoSuifx = ['mp4', 'avi', 'wmv', 'mpg', 'mpeg', 'mov', 'rm', 'ram', 'swf', 'flv', 'rmvb', 'asf', 'divx', 'mpe', 'mkv', 'vob']
-        const audioSuifx = ['cda', 'wav', 'mp3', 'wma', 'ra', 'midi', 'ogg', 'ape', 'flac', 'aac']
         const typeMap = [
-            [imageSuifx, 'image'],
-            [wordSuifx, 'word'],
-            [excelSuifx, 'excel'],
-            [pdfSuifx, 'pdf'],
-            [videoSuifx, 'video'],
-            [audioSuifx, 'audio']
+            [['jpg', 'png', 'gif', 'jpeg', 'bmp'], 'image'],
+            [['doc', 'docx'], 'word'],
+            [['xls', 'xlsx'], 'excel'],
+            [['pdf'], 'pdf'],
+            [['mp4', 'avi', 'wmv', 'mpg', 'mpeg', 'mov', 'rm', 'ram', 'swf', 'flv', 'rmvb', 'asf', 'divx', 'mpe', 'mkv', 'vob'], 'video'],
+            [['cda', 'wav', 'mp3', 'wma', 'ra', 'midi', 'ogg', 'ape', 'flac', 'aac'], 'audio']
         ];
         return (typeMap.filter((x) => x[0].indexOf(laseOne) > -1)[0] || [])[1] || 'none';
     } else {
