@@ -4,7 +4,7 @@ import axios, {
     AxiosRequestConfig,
     AxiosResponse
 } from 'axios';
-import { Message } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import store from '@/store';
 import { requestTimeout, successCode } from '@/config';
 import { getToken } from '@/utils/auth';
@@ -53,7 +53,10 @@ class HttpRequest {
                 return config;
             },
             (error: AxiosError) => {
-                Message.error(error);
+                ElMessage({
+                    message: error,
+                    type: 'error'
+                })
                 return Promise.reject(error);
             }
         );
@@ -67,7 +70,10 @@ class HttpRequest {
                     return Promise.resolve(response.data);
                 } else {
                     // 接口调用失败
-                    Message.error(message || msg || APIWORK_ERRORMSG);
+                    ElMessage({
+                        message: message || msg || APIWORK_ERRORMSG,
+                        type: 'error'
+                    })
                     return Promise.reject(APIWORK_ERRORMSG);
                 }
             },
@@ -75,7 +81,10 @@ class HttpRequest {
                 console.log(error);
                 if (error.stack.indexOf('timeout') > -1) {
                     // 请求超时
-                    Message.error(APIWORK_ERRORMSG);
+                    ElMessage({
+                        message: APIWORK_ERRORMSG,
+                        type: 'error'
+                    })
                     setTimeout(() => {
                         // 1.5秒后跳转到登陆页或者首页? 目前跳转到错误页面
                         // window.location = layui.Hussar.ctxPath + "/global/sessionError";
@@ -83,7 +92,11 @@ class HttpRequest {
                     return Promise.reject(TIMEOUT_ERRORMSG);
                 } else if (error.stack.indexOf('Network Error') > -1) {
                     // 网络异常
-                    Message.error(NETWORK_ERRORMSG);
+                    ElMessage({
+                        message: NETWORK_ERRORMSG,
+                        type: 'error'
+                    })
+
                     setTimeout(() => {
                         // 1.5秒后跳转到登陆页或者首页? 目前跳转到错误页面
                         // window.location = layui.Hussar.ctxPath + "/global/sessionError";

@@ -1,0 +1,1 @@
+## vue3 不能在使用vue-property-decorator装饰器开发， 控制台会报错找不到Components、Vue等

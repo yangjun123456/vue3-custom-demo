@@ -1,3 +1,4 @@
+/* eslint-disable */
 // import moment from "moment";
 import { supplementCode } from '@/config'
 import constant from './constant';
@@ -145,7 +146,7 @@ const once = (fn: any) => {
     return function onceFnBody() {
         if (!called) {
             called = true;
-            // eslint-disable-next-line prefer-rest-params
+            // @ts-ignore
             fn.apply(this, arguments);
         }
     };
