@@ -1,4 +1,4 @@
-import { getRandom } from './functions';
+import { getRandom } from './function';
 import { sm4Encrypt, aesEncrypt } from '../libs/utils';
 import { validatorPhoneNum, strInsert } from './validator';
 import { ref, getCurrentInstance, inject } from 'vue';

@@ -297,6 +297,12 @@ export default defineComponent({
                         url: '/transPdfToImg',
                         icon: '',
                         index: '3-7'
+                    },
+                    {
+                        title: 'Table表格组件',
+                        url: '/table',
+                        icon: '',
+                        index: '3-8'
                     }
                 ]
             }
