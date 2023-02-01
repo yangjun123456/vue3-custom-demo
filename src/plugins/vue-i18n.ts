@@ -3,7 +3,7 @@ import { createI18n } from 'vue-i18n';
 
 // 注册i8n实例并引入语言文件
 const localeData = {
-    legacy: true, // composition API
+    legacy: false, // composition API,   使用setup语法糖需要设置成为false， 固定设置为false
     locale: 'zh',
     messages: {
         zh: require('../assets/language/zh.json'), // 语言包所在的文件位置

@@ -3,7 +3,7 @@
 		<el-dropdown trigger="click"
 			class="vue-asdfasdf">
 			<el-button type="primary">
-				<span>{{$t('changeLanguage.btnText')}}</span>
+				<span>{{t('changeLanguage.btnText')}}</span>
 				<el-icon class="el-icon--right">
 					<arrow-down />
 				</el-icon>
@@ -11,9 +11,9 @@
 			<template #dropdown>
 				<el-dropdown-menu>
 					<el-dropdown-item class="drop-menu"
-						@click="changeLanguage('zh')">{{$t('changeLanguage.zh')}}</el-dropdown-item>
+						@click="changeLanguage('zh')">{{t('changeLanguage.zh')}}</el-dropdown-item>
 					<el-dropdown-item class="drop-menu"
-						@click="changeLanguage('en')">{{$t('changeLanguage.en')}}</el-dropdown-item>
+						@click="changeLanguage('en')">{{t('changeLanguage.en')}}</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -21,7 +21,7 @@
 		<br>
 		<br>
 		<h1>name测试</h1>
-		name: {{$t('test.name')}}
+		name: {{t('test.name')}}
 		<br>
 		<br>
 		<br>
@@ -29,7 +29,7 @@
 		<ul>
 			<template v-for="(item,index) of list"
 				:key="index">
-				<li>{{$t(`list.${item.en}`)}}</li>
+				<li>{{t(`list.${item.en}`)}}</li>
 			</template>
 		</ul>
 	</div>
@@ -48,11 +48,11 @@ const VueI18n = defineComponent({
     setup(props, context) {
         const language = ref<string>('zh');
         const i18n = useI18n();
-        const $t = i18n.t;
+        const t = i18n.t;
         const changeLanguage = (languageStr: any) => {
             i18n.locale.value = languageStr;
             const str = ref('btnText');
-            console.log($t(`changeLanguage.${str.value}`));
+            console.log(t(`changeLanguage.${str.value}`));
         };
         const languageList = ref(['zh', 'en']);
         const list = ref([
@@ -74,7 +74,7 @@ const VueI18n = defineComponent({
             }
         ]);
 
-        return { props, changeLanguage, list, language, languageList };
+        return { props, changeLanguage, list, language, languageList, t };
     }
 });
 export default VueI18n;
