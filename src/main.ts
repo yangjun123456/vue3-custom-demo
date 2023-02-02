@@ -1,12 +1,13 @@
 import { createApp } from 'vue';
-// element-plus
-import { setupElementPlus } from '@/plugins/element-plus';
 // ant-design-vue
 import { setupAntd } from '@/plugins/ant-design-vue';
-
+import { setGlobal } from '@/plugins/v-global';
 // vue-i18n
 // 多语言
 import { setupI18n } from '@/plugins/vue-i18n';
+
+// element-plus
+import { setupElementPlus } from '@/plugins/element-plus';
 
 // uuid
 import { v4 as uuidv4, v3 as uuidv3 } from 'uuid';
@@ -32,7 +33,10 @@ import store from '@/store/index';
 import IconSvg from '@/components/svg-icon/svg-icon.vue';
 
 // 引入icons/svg 图片
-import '@/icons/index'; // 组件内需声明，不然this上找不到
+import '@/icons/index';
+
+require('@/assets/style/common.scss');
+require('@/assets/style/reset.scss'); // 组件内需声明，不然this上找不到
 
 // 初始化app
 const app = createApp(App);
@@ -62,6 +66,7 @@ app.config.globalProperties.$uuidv3 = uuidv3;
 setupElementPlus(app);
 setupAntd(app);
 setupI18n(app);
+setGlobal(app);
 app.use(store).use(router).mount('#app');
 
 // setTimeout(() => app.unmount(), 5000) // 卸载根组件，从html中移除app

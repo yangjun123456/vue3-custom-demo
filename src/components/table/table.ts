@@ -1,5 +1,7 @@
+// @ts-nocheck
 // 表格的组件封装代码量略多， 使用mixin按块把功能抽离， 减少table.vue 代码量,  table中注重业务逻辑
 import { defArr, getRandom, typeOf } from '@/utils/function';
+import $lodash from 'lodash'
 
 // 分页相关
 export const PaginationMixin = {
@@ -23,6 +25,9 @@ export const PaginationMixin = {
             },
             paginationId: getRandom(15, 'pagination_id_')
         };
+    },
+    mounted() {
+        console.log(this);
     },
     methods: {
         /**
@@ -376,7 +381,7 @@ export const TableCommonMixin = {
     data() {
         return {
             tableWraperKey: getRandom(15, 'table_wraper_key_'),
-            doLayoutDebounce: this.$lodash.debounce(this.doLayout, 250)
+            doLayoutDebounce: $lodash.debounce(this.doLayout, 250)
         }
     },
     mounted() {

@@ -2,8 +2,8 @@
 	<div class="common-table-wraper"
 		:class="tableConfig.tableWraperClassName"
 		:id="tableWraperId">
-		<el-table :class="['custom-common-table',{ 'is-show-pagination': tableConfig.isShowPagination||(tableConfig.hideOnSinglePage&&!tableRowData.length), 'table-full-area': tableConfig.isTableFullArea }]"
-			:data="tableRowData"
+		<el-table :data="tableRowData"
+			:class="['custom-common-table',{ 'is-show-pagination': tableConfig.isShowPagination||(tableConfig.hideOnSinglePage&&!tableRowData.length), 'table-full-area': tableConfig.isTableFullArea }]"
 			stripe
 			:size="tableConfig.tableSize"
 			:border="tableConfig.isShowTableBorderColumn"
@@ -24,7 +24,8 @@
 			:default-expand-all="tableConfig.expandColumn.defaultExpandAll"
 			:expand-row-keys="expandRowKeys"
 			@expand-change="expandChange"
-			:ref="tableConfig.tableRef">
+			:ref="tableConfig.tableRef"
+			style="width: 100%">
 			<el-table-column v-if="tableConfig.expandColumn.isShowExpand"
 				type="expand"
 				:fixed="tableConfig.expandColumn.fixed"
@@ -115,12 +116,12 @@
 								<!-- 配置整列的slot -->
 								<div>请配置正确的插槽 7</div>
 							</slot>
+							<!-- v-else-if="item.htmlRender" === 注释不能写在里边， 会报错， 使用html渲染， 如果有事件 在点击事件内部进行阻止事件传播 不允许同时触发rowClick事件 -->
 							<div v-else-if="item.htmlRender"
 								class="class_column_default"
 								:class="['class_column_' + scope.column.property, scope.row['class_column_' + scope.column.property]]"
 								@click="customCellClickEvent($event, item, scope)"
 								v-html="item.htmlRender(scope)">
-								<!-- 使用html渲染， 如果有事件 在点击事件内部进行阻止事件传播 不允许同时触发rowClick事件 -->
 							</div>
 							<div v-else
 								class="class_column_default"
@@ -135,7 +136,7 @@
 			</template>
 			<template v-if="tableConfig.tableType === 'multiHeader'">
 				<!-- 多级表头表格类型---可只使用多级表头类型表格， header的slot存在缺陷， header的slot名称只能写死，然后在外部代码中做条件判断渲染 -->
-				<column v-for="(cItem,k) in tableColumns"
+				<Column v-for="(cItem,k) in tableColumns"
 					:key="k"
 					:col="cItem"
 					:children="tableConfig.children||'children'">
@@ -159,12 +160,12 @@
 							<!-- 配置整列的slot -->
 							<div>请配置正确的插槽 3</div>
 						</slot>
+						<!-- v-else-if="item.htmlRender" === 注释不能写在里边， 会报错， 使用html渲染， 如果有事件 在点击事件内部进行阻止事件传播 不允许同时触发rowClick事件 -->
 						<div v-else-if="scope.col.htmlRender"
 							class="class_column_default"
 							:class="['class_column_' + scope.col.prop, scope.data.row['class_column_' + scope.col.prop]]"
 							@click="customCellClickEvent($event, scope.col, scope.data)"
 							v-html="scope.col.htmlRender(scope.data)">
-							<!-- 使用html渲染， 如果有事件 在点击事件内部进行阻止事件传播 不允许同时触发rowClick事件 -->
 						</div>
 						<div v-else
 							class="class_column_default"
@@ -174,38 +175,30 @@
 							{{ $utils.supplement(scope.data.row[scope.col.prop]) }}
 						</div>
 					</template>
-				</column>
+				</Column>
 			</template>
 		</el-table>
 		<!--分页-->
-		<el-pagination v-if="tableConfig.isShowPagination"
-			class="table-pagination"
-			:id="paginationId"
-			background
-			:hide-on-single-page="tableConfig.hideOnSinglePage"
-			@size-change="handleSizeChange"
-			@current-change="handleCurrentChange"
-			v-model:current-page="tablePagination.pageNum"
-			:page-sizes="tablePagination.pageSizes"
-			:page-size="tablePagination.pageSize"
-			:layout="tablePagination.layout"
-			:total="tablePagination.total">
-		</el-pagination>
-		<template v-if="false">
-			<div>
-				<h3>测试多选框的切换功能和选中功能</h3>
-				checkedItemList==={{ checkedItemList }}
-				<div style="margin-top: 20px">
-					<el-button @click="toggleSelection([rowData[0], rowData[2]])">切换第二、第三行的选中状态</el-button>
-					<el-button @click="toggleSelection()">取消选择</el-button>
-				</div>
-			</div>
-		</template>
+		<el-config-provider v-if="tableConfig.isShowPagination"
+			:locale="$ELEMENT.locale">
+			<el-pagination class="table-pagination"
+				:id="paginationId"
+				background
+				:hide-on-single-page="tableConfig.hideOnSinglePage"
+				@size-change="handleSizeChange"
+				@current-change="handleCurrentChange"
+				v-model:current-page="tablePagination.pageNum"
+				:page-sizes="tablePagination.pageSizes"
+				:page-size="tablePagination.pageSize"
+				:layout="tablePagination.layout"
+				:total="tablePagination.total">
+			</el-pagination>
+		</el-config-provider>
 	</div>
 </template>
 
 <script lang="ts">
-import Column from './column.vue';
+import { defineComponent, onMounted, ref, reactive, shallowRef, triggerRef } from 'vue';
 import {
     TableCustomMixin, // 表格的自定义部分 相关
     TableConfigMixin, // 表格配置相关
@@ -215,20 +208,19 @@ import {
     TableCommonMixin, // 表格公共部分相关
     TableIndexColumnMixin
 } from './table';
-import { Options, Vue } from 'vue-class-component';
-@Options({
-    props: {},
+import Column from './column.vue';
+const Table = defineComponent({
+    name: 'Table',
     mixins: [TableCommonMixin, TableDataMixin, TableConfigMixin, PaginationMixin, CheckboxMixin, TableCustomMixin, TableIndexColumnMixin],
     components: {
         Column
     },
-    data() {
-        return {};
+    setup(props, context) {
+        return { props, context };
     }
-})
-export default class Table extends Vue {}
+});
+export default Table;
 </script>
-
 <style lang="scss" scoped>
 .common-table-wraper {
 	width: 100%;
