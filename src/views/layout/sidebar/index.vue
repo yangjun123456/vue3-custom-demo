@@ -272,20 +272,20 @@ export default defineComponent({
                         icon: '',
                         index: '3-4'
                     },
-                    {
-                        title: 'jquery-ui',
-                        url: '',
-                        icon: '',
-                        index: '3-5',
-                        children: [
-                            {
-                                title: 'draggable',
-                                url: '/draggable',
-                                icon: '',
-                                index: '3-5-1'
-                            }
-                        ]
-                    },
+                    // {
+                    //     title: 'jquery-ui',
+                    //     url: '',
+                    //     icon: '',
+                    //     index: '3-5',
+                    //     children: [
+                    //         {
+                    //             title: 'draggable',
+                    //             url: '/draggable',
+                    //             icon: '',
+                    //             index: '3-5-1'
+                    //         }
+                    //     ]
+                    // },
                     {
                         title: '字体包测试',
                         url: '/fontFamilyTestCom',
