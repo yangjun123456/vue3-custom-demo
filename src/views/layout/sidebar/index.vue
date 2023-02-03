@@ -346,7 +346,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .menu {
-	height: 100%;
+	height: calc(100vh - 60px);
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -358,7 +358,7 @@ export default defineComponent({
 		border: none;
 	}
 	.el-menu.el-menu--collapse {
-		width: inherit;
+		width: 70px;
 	}
 	.collapse-icon {
 		height: 60px;
