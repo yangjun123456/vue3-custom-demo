@@ -122,7 +122,7 @@ export const TableConfigMixin = {
                 },
                 isShowHeader: true, // 是否显示表格header
                 isShowTableBorderColumn: true, // 是否显示表格纵向边框
-                tableHeight: 'auto', // 表格就设置为auto就可以
+                tableHeight: '100%',
                 key: 'id', // 每一行数据的唯一标识字段， 行数据的 Key，用来优化 Table 的渲染
                 loadingText: '加载中......', // 表格loading的text文本
                 tableLoading: false, // 是否显示表格loading
@@ -135,7 +135,6 @@ export const TableConfigMixin = {
                 tableWraperClassName: 'table-wraper-class-name', // table表格组件的父层className,通过父组件传值使用， 需要在外部通过class获取表格组件内部元素时如果一个页面存在多个表格， 那么需要通过class区分， 本组件内可以通过id获取元素
                 tableType: 'common', // 取值 common | multiHeader, 或者别的 需要后续添加，默认使用多级表头
                 children: 'children', // child 字段， 子列保存所在数据的字段名称， 是children、list或者是别的， 是什么这里就传什么, 在多级表头时tableType==='multiHeader'需要使用
-                isTableFullArea: false // 表格是否撑满区域 ? 表格撑满除分页外的区域-flex:1 : 表格自适应，分页紧紧跟在表格下方，分页下方展示空白
                 /* 自定义参数--------------------------------------------------------------------------------end */
             }
         };
@@ -418,21 +417,9 @@ export const TableCommonMixin = {
          */
         async doLayout() {
             try {
-                /* this.tableWraperKey = getRandom(15, 'table_wraper_key_');
-                await this.setCheckboxEcho();  */
+                // this.tableWraperKey = getRandom(15, 'table_wraper_key_');
+                // await this.setCheckboxEcho();
                 await this.$nextTick();
-                if (!this.tableConfig.isTableFullArea) {
-                    await this.$nextTick();
-                    // 计算表格布局时， 如果表格区域部分不是撑满， 那么动态计算tableBodyWraper的高度和最大高度， 用来实现表格随内容自动撑满并且出现滚动条
-                    const _table = document.querySelector(`#${this.tableWraperId}`);
-                    const tableBodyWraper: HTMLElement = _table.querySelector('.el-table__body-wrapper');
-                    const tableHeaderWraper: HTMLElement = _table.querySelector('.el-table__header')
-                    const tableBody: HTMLElement = _table.querySelector('.el-table__body')
-                    if (tableBodyWraper && tableHeaderWraper && tableBody) {
-                        tableBodyWraper.style.height = tableBody.offsetHeight + 'px';
-                        tableBodyWraper.style['max-height'] = `calc(100% - ${tableHeaderWraper.offsetHeight}px)`;
-                    }
-                }
                 this.$refs[this.tableConfig.tableRef].doLayout();
             } catch (error) {
                 console.log(error);

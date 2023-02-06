@@ -1,9 +1,10 @@
 <template>
 	<div class="common-table-wraper"
 		:class="tableConfig.tableWraperClassName"
-		:id="tableWraperId">
+		:id="tableWraperId"
+		:key="tableWraperKey">
 		<el-table :data="tableRowData"
-			:class="['custom-common-table',{ 'is-show-pagination': tableConfig.isShowPagination||(tableConfig.hideOnSinglePage&&!tableRowData.length), 'table-full-area': tableConfig.isTableFullArea }]"
+			:class="['custom-common-table',{ 'is-show-pagination': tableConfig.isShowPagination||(tableConfig.hideOnSinglePage&&!tableRowData.length)}]"
 			stripe
 			:size="tableConfig.tableSize"
 			:border="tableConfig.isShowTableBorderColumn"
@@ -198,28 +199,32 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, reactive, shallowRef, triggerRef } from 'vue';
+import { defineComponent, onMounted, ref, reactive, shallowRef, triggerRef, inject } from 'vue';
 import {
-    TableCustomMixin, // 表格的自定义部分 相关
-    TableConfigMixin, // 表格配置相关
-    PaginationMixin, // 分页相关
-    TableDataMixin, // 表格row和column的赋值抽离
-    CheckboxMixin, // checkbox 多选框相关
-    TableCommonMixin, // 表格公共部分相关
-    TableIndexColumnMixin
+	TableCustomMixin, // 表格的自定义部分 相关
+	TableConfigMixin, // 表格配置相关
+	PaginationMixin, // 分页相关
+	TableDataMixin, // 表格row和column的赋值抽离
+	CheckboxMixin, // checkbox 多选框相关
+	TableCommonMixin, // 表格公共部分相关
+	TableIndexColumnMixin
 } from './table';
 import Column from './column.vue';
-const Table = defineComponent({
-    name: 'Table',
-    mixins: [TableCommonMixin, TableDataMixin, TableConfigMixin, PaginationMixin, CheckboxMixin, TableCustomMixin, TableIndexColumnMixin],
-    components: {
-        Column
-    },
-    setup(props, context) {
-        return { props, context };
-    }
+export default defineComponent({
+	name: 'Table',
+	mixins: [TableCommonMixin, TableDataMixin, TableConfigMixin, PaginationMixin, CheckboxMixin, TableCustomMixin, TableIndexColumnMixin],
+	components: {
+		Column
+	},
+	data() {
+		return {
+			$utils: inject('$utils') as any
+		};
+	},
+	setup(props, context) {
+		return { props, context };
+	}
 });
-export default Table;
 </script>
 <style lang="scss" scoped>
 .common-table-wraper {
@@ -233,18 +238,12 @@ export default Table;
 	width: 100%;
 	flex: none;
 	max-height: 100%; // 默认最大高度100%
+	.el-table__inner-wrapper {
+		height: 100% !important;
+	}
 	&.is-show-pagination {
 		// 如果存在分页需要减去分页高度
 		max-height: calc(100% - $table-pagination-height); // 表格随着数据增加可增加高度至撑满内容区域, 数据不够在分页下边显示空白
-	}
-	&.table-full-area {
-		max-height: none; // 如果是撑满设置 不需要最大高度
-		flex: 1; // 表格无论数据多少,分页始终显示在内容区域最底部
-		.el-table__body-wrapper {
-			// 设置一下默认高度， 动态设置表格后会被style样式覆盖
-			height: 1000px; // 解决每次切换页面时横向滚动条闪动bug， 如果不加会先出现在表格下边然后跳到最下边
-			max-height: 100%;
-		}
 	}
 }
 

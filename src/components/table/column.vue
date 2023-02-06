@@ -44,23 +44,22 @@
 <script lang="ts">
 import { TableIndexColumnMixin } from './table';
 import { defineComponent } from 'vue';
-const Column = defineComponent({
-	props: {
-		col: {
-			type: Object,
-			required: true
-		},
-		children: {
-			// child 字段， 子列保存所在数据的字段名称， 是children、list或者是别的， 是什么这里就传什么
-			type: String,
-			required: false,
-			default: 'children'
-		}
-	},
-	mixins: [TableIndexColumnMixin],
-	data() {
-		return {};
-	}
+export default defineComponent({
+    props: {
+        col: {
+            type: Object,
+            required: true
+        },
+        children: {
+            // child 字段， 子列保存所在数据的字段名称， 是children、list或者是别的， 是什么这里就传什么
+            type: String,
+            required: false,
+            default: 'children'
+        }
+    },
+    mixins: [TableIndexColumnMixin],
+    data() {
+        return {};
+    }
 });
-export default Column;
 </script>
