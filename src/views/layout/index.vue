@@ -1,16 +1,16 @@
 <template>
-  <el-container class="layout-body"
-    height="100%">
-    <el-header class="header">Header</el-header>
-    <el-container class="content">
-      <section class="aside">
-        <SideBar></SideBar>
-      </section>
-      <el-main class="main">
-        <router-view />
-      </el-main>
-    </el-container>
-  </el-container>
+	<el-container class="layout-body"
+		height="100%">
+		<el-header class="header">Header</el-header>
+		<el-container class="content">
+			<section class="aside">
+				<SideBar></SideBar>
+			</section>
+			<el-main class="main">
+				<router-view />
+			</el-main>
+		</el-container>
+	</el-container>
 </template>
 
 <script lang="ts">
@@ -34,16 +34,17 @@ export default class Layout extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .layout-body {
+	height: 100vh;
 	.header {
 		background-color: #42b983;
-    height: 60px !important;
-    line-height: 60px !important;
-    font-size: 20px;
+		height: 60px !important;
+		line-height: 60px !important;
+		font-size: 20px;
 	}
 	.content {
 		display: flex;
 		justify-content: space-between;
-    height: calc(100% - 56px);
+		height: calc(100% - 60px);
 		.main {
 			box-shadow: 0px 0px 10px 0px #888888;
 			flex: 1;

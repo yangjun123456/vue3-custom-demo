@@ -229,7 +229,7 @@ export default Table;
 		flex-direction: column;
 	}
 }
-::v-deep.el-table {
+:deep(.el-table) {
 	width: 100%;
 	flex: none;
 	max-height: 100%; // 默认最大高度100%
