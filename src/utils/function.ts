@@ -471,13 +471,16 @@ const getEnumValue = (type: string, key: string) => {
 /**
  * 对object添加customId字段
  */
-const addCustomId = (data: any) => {
+ const addCustomId = (data: any) => {
     if (isArray(data)) {
-        data.map((x: any) => {
-            addCustomId(x);
-        })
+        for (let i = 0, len = data.length; i < len; i++) {
+            addCustomId(data[i]);
+        }
     } else if (isObject(data)) {
         data.customId = getRandom(10);
+        for (let value of Object.values(data)) {
+            addCustomId(value);
+        }
     }
 }
 

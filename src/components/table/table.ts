@@ -53,7 +53,7 @@ export const PaginationMixin = {
                 if (Object.keys(tablePagination).includes(key)) {
                     // 仅针对对象采用递归修改， 数组格式直接覆盖
                     if (typeOf(tablePagination[key]) === 'object') {
-                        this._changeConfig(pagination[key], tablePagination[key]);
+                        this._changePagination(pagination[key], tablePagination[key]);
                     } else {
                         tablePagination[key] = pagination[key];
                     }
@@ -134,7 +134,7 @@ export const TableConfigMixin = {
                 /* 自定义参数--------------------------------------------------------------------------------start */
                 tableWraperClassName: 'table-wraper-class-name', // table表格组件的父层className,通过父组件传值使用， 需要在外部通过class获取表格组件内部元素时如果一个页面存在多个表格， 那么需要通过class区分， 本组件内可以通过id获取元素
                 tableType: 'common', // 取值 common | multiHeader, 或者别的 需要后续添加，默认使用多级表头
-                children: 'children', // child 字段， 子列保存所在数据的字段名称， 是children、list或者是别的， 是什么这里就传什么, 在多级表头时tableType==='multiHeader'需要使用
+                children: 'children' // child 字段， 子列保存所在数据的字段名称， 是children、list或者是别的， 是什么这里就传什么, 在多级表头时tableType==='multiHeader'需要使用
                 /* 自定义参数--------------------------------------------------------------------------------end */
             }
         };
