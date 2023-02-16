@@ -230,7 +230,7 @@ export const TableDataMixin = {
     watch: {
         rowData: {
             handler() {
-                this.rowData.map(x => {
+                this.rowData.forEach(x => {
                     x.customId = x.customId ? x.customId : getRandom(15, 'custom_row_id_')
                 })
                 this.tableRowData = this.rowData;
@@ -299,7 +299,7 @@ export const CheckboxMixin = {
             if (this.checkboxChangeFlag) {
                 // 如果是 false 说明 getCheckedList 还没有执行完成
                 // getCheckedList 的 watch 监听执行过程中不执行以下方法
-                defArr(this.tableRowData).map(x => {
+                defArr(this.tableRowData).forEach(x => {
                     x.checked = val.some(m => m.customId === x.customId);
                 });
             }
