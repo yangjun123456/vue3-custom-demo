@@ -1,6 +1,6 @@
 // @ts-nocheck
 // 表格的组件封装代码量略多， 使用mixin按块把功能抽离， 减少table.vue 代码量,  table中注重业务逻辑
-import { defArr, getRandom, typeOf } from '@/utils/function';
+import { defArr, getRandom, typeOf } from '@/utils/utils';
 import $lodash from 'lodash'
 
 // 分页相关

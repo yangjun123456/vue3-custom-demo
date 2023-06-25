@@ -1,23 +1,40 @@
-import { messageDuration } from '@/config'
+// ant-design-vue
+import { setupAntd } from '@/plugins/ant-design-vue';
+// vue-i18n 多语言
+import { setupI18n } from '@/plugins/vue-i18n';
+// element-plus
+import { setupElementPlus } from '@/plugins/element-plus';
 import * as lodash from 'lodash'
-// import { Loading, Message, MessageBox, Notification } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
-import * as functions from '@/utils/function'
 import moment from 'moment';
+// uuid
+import { v4 as uuidv4, v3 as uuidv3 } from 'uuid';
+
+import store from '@/store'
+
+import { getToken } from '@/utils/auth'
+
+import { messageDuration } from '@/config'
+import { Message } from 'element-plus'
+import * as utils from '@/utils/utils';
+import * as functions from '@/utils/function';
 
 const install = (app: any, opts = {}) => {
-    // /* 全局Message */
-    // app.config.globalProperties.$message = (message: string, type: string) => {
-    //     Message({
-    //         offset: 60,
-    //         showClose: true,
-    //         message: message,
-    //         type: type,
-    //         dangerouslyUseHTMLString: true,
-    //         duration: messageDuration,
-    //     })
-    // }
+    /* 全局Message */
+    app.config.globalProperties.$message = (options: any, type: string) => {
+        if (utils.isString(options)) {
+            options = {
+                message: options
+            }
+        }
+        options.type = type;
+        options = Object.assign({
+            offset: 60,
+            showClose: true,
+            dangerouslyUseHTMLString: true,
+            duration: messageDuration
+        }, options);
+        Message(options);
+    }
 
     // /* 全局Confirm */
     // app.config.globalProperties.$confirm = (content: string, title: string, callback1: Function, callback2: Function) => {
@@ -55,11 +72,21 @@ const install = (app: any, opts = {}) => {
     /* moment 时间格式化 */
     app.config.globalProperties.$moment = moment;
     /* 全局添加utils/function 方法 */
-    app.config.globalProperties.$utils = functions;
+    app.config.globalProperties.$utils = utils;
+    app.config.globalProperties.$functions = functions;
+
+    app.config.globalProperties.$uuid = uuidv4;
+    app.config.globalProperties.$uuidv3 = uuidv3;
     console.log(app);
 }
 
-export function setGlobal(app: any) {
+export function setPlugins(app: any) {
+    setupElementPlus(app);
+    setupAntd(app);
+    setupI18n(app);
+
     install(app);
     app.provide('$utils', app.config.globalProperties.$utils);
+    app.provide('$getUuidv4', uuidv4); // 组件内需使用inject 引入
+    app.provide('$getUuidv3', uuidv3); // 组件内需使用inject 引入
 }
