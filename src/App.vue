@@ -1,11 +1,11 @@
 <template>
 	<section class="app-main">
-		<!-- <router-view /> -->
-        <vxe-table height="500" :data="tableData.value">
-            <vxe-column field="a"></vxe-column>
-            <vxe-column field="b"></vxe-column>
-            <vxe-column field="c"></vxe-column>
-            <vxe-column field="d"></vxe-column>
+		<router-view />
+        <vxe-table height="500" :data="tableData">
+            <vxe-column title="a" field="a"></vxe-column>
+            <vxe-column title="b" field="b"></vxe-column>
+            <vxe-column title="c" field="c"></vxe-column>
+            <vxe-column title="d" field="d"></vxe-column>
         </vxe-table>
 	</section>
 </template>

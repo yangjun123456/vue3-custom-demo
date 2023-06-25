@@ -4,6 +4,7 @@ import { setupAntd } from '@/plugins/ant-design-vue';
 import { setupI18n } from '@/plugins/vue-i18n';
 // element-plus
 import { setupElementPlus } from '@/plugins/element-plus';
+import { setupVXETable } from '@/plugins/vxe-table';
 import * as lodash from 'lodash'
 import moment from 'moment';
 // uuid
@@ -14,7 +15,7 @@ import store from '@/store'
 import { getToken } from '@/utils/auth'
 
 import { messageDuration } from '@/config'
-import { Message } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import * as utils from '@/utils/utils';
 import * as functions from '@/utils/function';
 
@@ -33,7 +34,7 @@ const install = (app: any, opts = {}) => {
             dangerouslyUseHTMLString: true,
             duration: messageDuration
         }, options);
-        Message(options);
+        ElMessage(options);
     }
 
     // /* 全局Confirm */
@@ -84,6 +85,7 @@ export function setPlugins(app: any) {
     setupElementPlus(app);
     setupAntd(app);
     setupI18n(app);
+    setupVXETable(app);
 
     install(app);
     app.provide('$utils', app.config.globalProperties.$utils);
