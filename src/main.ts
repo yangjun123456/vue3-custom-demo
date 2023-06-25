@@ -4,7 +4,6 @@ import { setPlugins } from '@/plugins';
 // 路由
 import router from '@/router/index';
 
-// vuex
 import store from '@/store/index';
 
 // flexible自适应设置文件--------------------------------------------------------------------------------start
