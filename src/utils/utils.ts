@@ -138,12 +138,16 @@ const getCookie = (name = 'shiro.session.id') => {
 };
 
 /**
- *
+ * toFixed.round 保留小数时进行四舍五入处理； 
+ * toFixed.floor 进行向下取整处理， 相当于直接舍弃小数后边的数值； 
+ * toFixed.ceil 保留小数时进行向上取整 
+ * toFixed 直接保留小数位数， 其他舍弃， 类似于向下取整
  * @param {*} n 需要保留小数位数的数字
  * @param {*} fixed 保留几位小数
- * @returns
+ * @returns 
  */
 const toFixed = (n: number, fixed: number) => ~~(pow(10, fixed) * n) / pow(10, fixed);
+['round', 'ceil', 'floor'].forEach(x => (toFixed as any)[x] = (n: number, fixed: number) => (Math as any)[x](~~(pow(10, fixed + 1) * n) / pow(10, 1)) / pow(10, fixed))
 
 /**
  * Create a cached version of a pure function.
@@ -481,20 +485,6 @@ const addCustomId = (data: any) => {
     }
 }
 
-// api 请求时后端把pageNum和pageSize写到了请求地址栏里， 请求参数里需要删除这两个字段
-const formatPaginationReqData = (data: any) => {
-    const obj = JSON.parse(JSON.stringify(data));
-    const pageNum = obj.pageNum;
-    const pageSize = obj.pageSize;
-    delete obj.pageNum;
-    delete obj.pageSize;
-    return {
-        pageNum,
-        pageSize,
-        data: obj
-    }
-}
-
 // 输出整数字符串， 可用在input输入事件中
 const customParseInt = (data: string) => {
     const num = data.replace(/[^0-9]/gi, '');
@@ -552,40 +542,30 @@ const objCoverAndInherit = (config: { [x: string]: any; }, midConfig: { [x: stri
     }
 }
 
+
 /**
- * 深入查找某一个对象的key为field，value为value 的对象， arr.find 的递归查找模式, 可批量查找 prop==='x'||prop==='y'||prop==='z'等
+ * 深入查找某一个对象的值， arr.find 的递归查找模式, 可批量查找 prop==='x'||prop==='y'||prop==='z'等
  * @param {*} data 值， 任意深度的list或者object
- * @param {*} field 要查找的字段 key
- * @param {*} value 要查找的字段value
- * @param {*} list 定义result 数组list
- * @param {*} condition 条件， 其他的复杂条件查找， 如果condition存在， field和value可填空
- * @returns
+ * @param {function} condition 条件查找， 接收一个data参数， 可为 (data)=> data[key] === value||data[key1] === value1
+ * @param {[]} list 定义result 数组list, 返回list 查找的结果
+ * @returns 
  */
-const findField = (data: any, field: string | number, value: any[], list: any[], condition: (arg0: any) => any) => {
+const findField = (data: any, condition: Function, list = []) => {
     if (isArray(data)) {
         for (let i = 0; i < data.length; i++) {
-            findField(data[i], field, value, list, condition)
+            findField(data[i], condition, list)
         }
     } else if (typeOf(data) === 'object') {
-        if (condition) {
-            // 条件查找
-            try {
-                if (condition(data)) {
-                    list.push(data);
-                }
-            } catch (error) {
-                console.log(error);
+        // 条件查找
+        try {
+            if (condition(data)) {
+                list.push((data as never));
             }
-        } else {
-            if (
-                (isArray(value) && value.some((x: any) => data[field] === x)) ||
-                ((isString(value) || isNumber(value)) && data[field] == value)) {
-                // 如果value是数组 那么就是批量查找field为每一个value的值， 如果value是字符串或者number 那么查找单一的field为value的值
-                list.push(data);
-            }
+        } catch (error) {
+            console.log(error);
         }
         Object.values(data).map(l => {
-            findField(l, field, value, list, condition);
+            findField(l, condition, list);
         })
     }
     return list;
@@ -593,17 +573,111 @@ const findField = (data: any, field: string | number, value: any[], list: any[],
 
 /**
  * 减法运算
- * 如果有一个被toNumber转化后不是数值， 那么返回false
- * 如果都是数值， 那么执行先扩大值， 再执行， 再缩回的方式进行减法操作， 保留两位小数
- * @param {*} a
- * @param {*} b
- * @returns
+ * @param {*} arg1 
+ * @param {*} arg2 
+ * @returns 
  */
-const subtract = (a: number, b: number, fixed = 2) => {
-    if (typeOf(toNumber(a)) !== 'number' || typeOf(toNumber(b)) !== 'number') {
-        return false;
+const subtract = (arg1: number, arg2: number) => {
+    let r1, r2, m, n;
+    try {
+        r1 = arg1.toString().split('.')[1].length;
+    } catch (error) {
+        r1 = 0;
+        // console.log(error);
     }
-    return toFixed((a * Math.pow(10, 5) - b * Math.pow(10, 5)) / Math.pow(10, 5), fixed);
+    try {
+        r2 = arg2.toString().split('.')[1].length;
+    } catch (error) {
+        r2 = 0;
+        // console.log(error);
+    }
+    m = pow(10, max(r1, r2));
+    n = (r1 >= r2) ? r1 : r2;
+    return ((arg1 * m - arg2 * m) / m).toFixed(n);
+}
+/**
+ * 加法运算
+ * @param {*} arg1 
+ * @param {*} arg2 
+ * @returns 
+ */
+const add = (arg1: number, arg2: number) => {
+    if (['number', 'string'].every(x => typeOf(arg1) !== x)) {
+        throw new Error('参数1必须是Number类型或者String类型');
+    }
+    if (['number', 'string'].every(x => typeOf(arg2) !== x)) {
+        throw new Error('参数2必须是Number类型或者String类型');
+    }
+    let r1, r2, m;
+    try {
+        r1 = arg1.toString().split('.')[1].length;
+    } catch (error) {
+        r1 = 0
+        // console.log(error);
+    }
+    try {
+        r2 = arg2.toString().split('.')[1].length;
+    } catch (error) {
+        r2 = 0
+        // console.log(error);
+    }
+    m = pow(10, max(r1, r2));
+    return (arg1 * m + arg2 * m) / m;
+}
+/**
+ * 乘法运算
+ * @param {*} arg1 
+ * @param {*} arg2 
+ * @returns 
+ */
+const multiply = (arg1: number, arg2: number) => {
+    if (['number', 'string'].every(x => typeOf(arg1) !== x)) {
+        throw new Error('参数1必须是Number类型或者String类型');
+    }
+    if (['number', 'string'].every(x => typeOf(arg2) !== x)) {
+        throw new Error('参数2必须是Number类型或者String类型');
+    }
+    let m = 0;
+    const s1: string = arg1.toString();
+    const s2: string = arg2.toString();
+    try {
+        m += s1.split('.')[1].length;
+    } catch (error) {
+        // console.log(error);
+    }
+    try {
+        m += s2.split('.')[1].length;
+    } catch (error) {
+        // console.log(error);
+
+    }
+
+    return (Number(s1.replace('.', '')) * Number(s2.replace('.', ''))) / pow(10, m);
+}
+
+/**
+ * 除法运算
+ * @param {*} arg1 
+ * @param {*} arg2 
+ * @returns 
+ */
+const divide = (arg1: { toString: () => string; }, arg2: { toString: () => string; }) => {
+    let t1 = 0, t2 = 0, r1, r2;
+    try {
+        t1 = arg1.toString().split('.')[1].length;
+    } catch (error) {
+        // console.log(error);
+    }
+    try {
+        t2 = arg2.toString().split('.')[1].length;
+    } catch (error) {
+        // console.log(error);
+    }
+    r1 = Number(arg1.toString().replace('.', ''))
+    r2 = Number(arg2.toString().replace('.', ''))
+    let intDiv = r1 / r2;
+    let newPow = pow(10, t2 - t1);
+    return multiply(intDiv, newPow);
 }
 
 /**
@@ -644,6 +718,30 @@ const textToVoice = (config: { text: string; lang: string; rate: number; }, isRe
     return u;
 }
 
+/**
+ * 根据字段进行排序 按照固定的值组成的sortList把list排序
+ * @param {any[]} list 
+ * @param {any[]} sortList 
+ * @param {string} sortProp 
+ * @returns 
+ */
+const sortByField = (list: any[], sortList: any[], sortProp: string) => {
+    const result = [];
+    const cloneList = JSON.parse(JSON.stringify(list));
+    for (let i = 0; i < sortList.length; i++) {
+        const val = sortList[i];
+        console.log(val);
+        for (let j = cloneList.length - 1; j >= 0; j--) {
+            console.log(cloneList[j]);
+            if (cloneList[j] === val || cloneList[j][sortProp] === val) {
+                result.push(cloneList[j]);
+                cloneList.splice(j, 1);
+            }
+        }
+    }
+    return result;
+};
+
 // 常用方法
 export {
     typeOf, // 类型判断
@@ -680,16 +778,19 @@ export {
     setSelectOptAllField, // 设置element的下拉选择框添加全部字段用来清空已经选择的
     getTimeRangeFromNowToPrev, // 获取现在到过去的某一个时间点的时间范围
     addCustomId, // 对object添加customId字段
-    formatPaginationReqData, // 格式化分页请求参数
     customParseFloat, // 输出fixedNum 位数的小数字符串
     customParseInt, // 输出整数字符串
     jsonParse, //  添加jsonparse条件判断
     objCoverAndInherit, // 简单的 针对于对象的参数覆盖和继承, 如果对象中的某一个value其中包含了数组类型 就直接覆盖
     findField, // 深入查找某一个对象的key为field，value为value 的对象， arr.find 的递归查找模式
     subtract, // 减法
+    add, // 加法
+    multiply, // 乘法
+    divide, // 除法
     getObjDeepField, // 校验返回默认值， 在html中代替 ?. 的使用， 低版本node下使用 ?. 会编译报错
     setStyle, // dom添加样式
-    textToVoice // 文字转语音
+    textToVoice, // 文字转语音
+    sortByField,
 };
 
 // 不常用
